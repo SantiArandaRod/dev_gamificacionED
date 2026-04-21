@@ -1,55 +1,81 @@
-const avatarContainer = document.getElementById('avatar-svg-container');
-const inputs = ['skin_color', 'face_shape', 'accessory'];
-
-const config = {
+// Definición global del estado del avatar para el jugador local
+let avatarConfig = {
     skin_color: "#ffdbac",
-    face_shape: "circle",
-    accessory: "none",
-    hair_color: "#4a2c2a", // Valores por defecto para el MVP
-    bg_color: "#e0e0e0",
-    eyes_style: "normal",
-    mouth_style: "smile"
+    face_shape: "circle", // circle, square, rounded
+    accessory: "none" // none, glasses, hat, crown, graduation
 };
 
-function renderAvatar() {
+// Función principal para generar el string SVG completo
+function generateAvatarSVG(config) {
     const { skin_color, face_shape, accessory } = config;
 
-    // Definición de formas de cara
-    const shapes = {
-        circle: `<circle cx="50" cy="50" r="40" fill="${skin_color}" />`,
-        square: `<rect x="15" y="15" width="70" height="70" rx="10" fill="${skin_color}" />`,
-        rounded: `<rect x="20" y="15" width="60" height="70" rx="25" fill="${skin_color}" />`
-    };
+    // Definición de las formas de la cara
+    let faceSVG = '';
+    switch (face_shape) {
+        case 'square': faceSVG = `<rect x="10" y="10" width="80" height="80" rx="5" fill="${skin_color}" stroke="#000" stroke-width="2"/>`; break;
+        case 'rounded': faceSVG = `<rect x="10" y="10" width="80" height="80" rx="25" fill="${skin_color}" stroke="#000" stroke-width="2"/>`; break;
+        default: // circle
+            faceSVG = `<circle cx="50" cy="50" r="40" fill="${skin_color}" stroke="#000" stroke-width="2"/>`;
+    }
 
-    // Definición de accesorios (posiciones simplificadas)
-    const accessories = {
-        none: '',
-        glasses: `<path d="M30 45 h10 M60 45 h10" stroke="black" stroke-width="3"/><rect x="25" y="40" width="20" height="15" fill="none" stroke="black"/><rect x="55" y="40" width="20" height="15" fill="none" stroke="black"/>`,
-        crown: `<path d="M20 30 L30 10 L50 25 L70 10 L80 30 Z" fill="gold" stroke="#b8860b"/>`,
-        graduation: `<rect x="20" y="10" width="60" height="10" fill="black"/><path d="M50 10 L50 30" stroke="black"/>`
-    };
-
-    const svg = `
-        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="50" cy="50" r="48" fill="${config.bg_color}" />
-            ${shapes[face_shape]}
-            <circle cx="35" cy="45" r="3" fill="black" />
-            <circle cx="65" cy="45" r="3" fill="black" />
-            <path d="M40 65 Q50 75 60 65" stroke="black" fill="none" stroke-width="2" />
-            ${accessories[accessory]}
-        </svg>
+    // Elementos fijos: Ojos y Boca simple
+    const featuresSVG = `
+        <circle cx="35" cy="40" r="4" fill="#000"/>
+        <circle cx="65" cy="40" r="4" fill="#000"/>
+        <path d="M 35 65 C 40 70, 60 70, 65 65" stroke="#000" stroke-width="3" fill="none" stroke-linecap="round"/>
     `;
 
-    avatarContainer.innerHTML = svg;
+    // Lógica de Accesorios (SVG simples pero reconocibles)
+    let accessorySVG = '';
+    switch (accessory) {
+        case 'glasses':
+            accessorySVG = `<path d="M 25 40 Q 35 30, 45 40 M 55 40 Q 65 30, 75 40 M 45 40 L 55 40" stroke="#000" stroke-width="3" fill="none"/>`;
+            break;
+        case 'hat':
+            accessorySVG = `<rect x="15" y="5" width="70" height="15" rx="3" fill="#333"/><rect x="25" y="-10" width="50" height="20" rx="3" fill="#333"/>`;
+            break;
+        case 'crown':
+            accessorySVG = `<path d="M 20 20 L 30 5 L 40 20 L 50 5 L 60 20 L 70 5 L 80 20 L 80 40 L 20 40 Z" fill="#f1c40f" stroke="#b7950b" stroke-width="2"/>`;
+            break;
+        case 'graduation':
+            accessorySVG = `<path d="M 10 20 L 50 5 L 90 20 L 50 35 Z" fill="#2c3e50"/><path d="M 90 20 L 90 40" stroke="#f1c40f" stroke-width="3"/>`;
+            break;
+    }
+
+    // Unimos todo en el contenedor SVG
+    return `
+        <svg viewBox="0 0 100 100" width="100%" height="100%">
+            ${faceSVG}
+            ${featuresSVG}
+            ${accessorySVG}
+        </svg>
+    `;
 }
 
-// Listeners para actualizar en tiempo real
-inputs.forEach(id => {
-    document.getElementById(id).addEventListener('input', (e) => {
-        config[id] = e.target.value;
-        renderAvatar();
-    });
-});
+// Lógica para el Lobby (DOMContentLoaded)
+document.addEventListener('DOMContentLoaded', () => {
+    const container = document.getElementById('avatar-svg-container');
+    const inputs = ['skin_color', 'face_shape', 'accessory'];
 
-// Inicializar
-renderAvatar();
+    if (container) {
+        // Función interna para actualizar la vista previa
+        const updatePreview = () => {
+            // Actualizamos la configuración global
+            inputs.forEach(id => {
+                avatarConfig[id] = document.getElementById(id).value;
+            });
+            // Renderizamos el SVG en el contenedor
+            container.innerHTML = generateAvatarSVG(avatarConfig);
+        };
+
+        // Asignamos eventos 'change' o 'input' a todos los controles
+        inputs.forEach(id => {
+            document.getElementById(id).addEventListener('change', updatePreview);
+            // Para el color, usamos 'input' para feedback en tiempo real
+            if (id === 'skin_color') document.getElementById(id).addEventListener('input', updatePreview);
+        });
+
+        // Renderizado inicial
+        updatePreview();
+    }
+});
