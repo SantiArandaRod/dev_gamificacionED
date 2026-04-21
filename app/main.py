@@ -14,7 +14,7 @@ app = FastAPI(
     description="Backend educativo para gamificación en el aula",
     version="0.1.0"
 )
-
+app.include_router(session.router, prefix="/api")
 @app.on_event("startup")
 async def load_data():
     path = "app/data/questions.json"
