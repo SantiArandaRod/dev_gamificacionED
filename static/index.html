@@ -1,43 +1,66 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snakes & Ladders - Lobby</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #1a1a2e; color: #fff; min-height: 100vh; display: flex; align-items: center; }
+        .card { background: #16213e; border: 1px solid #4ecca3; border-radius: 15px; color: white; }
+        #avatar-svg-container { background: #0f3460; border-radius: 50%; padding: 20px; border: 3px solid #4ecca3; width: 180px; height: 180px; margin: 0 auto; }
+        .form-control, .form-select { background: #0f3460; border: 1px solid #4ecca3; color: #fff; }
+        .form-control:focus, .form-select:focus { background: #16213e; color: #fff; border-color: #4ecca3; box-shadow: 0 0 10px #4ecca3; }
+        .btn-gaming { background: #4ecca3; color: #1a1a2e; font-weight: bold; border: none; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-gaming:hover { background: #45b393; color: #fff; }
+    </style>
 </head>
 <body>
-    <div class="lobby-container">
-        <h1>Serpientes & Escaleras</h1>
 
-        <div class="setup-grid">
-            <div class="avatar-preview">
-                <div id="avatar-svg-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <div class="card shadow-lg p-4">
+                    <h1 class="text-center mb-4" style="color: #4ecca3;">S&E: Educational Quest</h1>
+
+                    <div class="row g-4">
+                        <div class="col-md-6 text-center">
+                            <div id="avatar-svg-container" class="mb-3 d-flex align-items-center">
+                                </div>
+                            <input type="text" id="player-name" class="form-control text-center" placeholder="Alias del Jugador">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label">Tono de Piel</label>
+                            <input type="color" class="form-control form-control-color w-100 mb-2" id="skin_color" value="#ffdbac">
+
+                            <label class="form-label">Forma de Cara</label>
+                            <select id="face_shape" class="form-select mb-2">
+                                <option value="circle">Redonda</option>
+                                <option value="square">Cuadrada</option>
+                                <option value="rounded">Suave</option>
+                            </select>
+
+                            <label class="form-label">Accesorio</label>
+                            <select id="accessory" class="form-select mb-4">
+                                <option value="none">Ninguno</option>
+                                <option value="glasses">Gafas Pro</option>
+                                <option value="hat">Sombrero</option>
+                                <option value="crown">Corona</option>
+                                <option value="graduation">Grado</option>
+                            </select>
+                            <label class="form-label">Corte Académico</label>
+                            <select id="academic_cut" class="form-select mb-3">
+                                <option value="1">Corte 1 (Básico)</option>
+                                <option value="2">Corte 2 (Intermedio)</option>
+                                <option value="3">Corte 3 (Avanzado)</option>
+                            </select>
+                            <button id="btn-join" class="btn btn-gaming w-100 py-2">Iniciar Aventura</button>
+                        </div>
                     </div>
-                <input type="text" id="player-name" placeholder="Tu nombre artístico..." maxlength="15">
-            </div>
-
-            <div class="controls">
-                <label>Color de Piel</label>
-                <input type="color" id="skin_color" value="#ffdbac">
-
-                <label>Forma de Cara</label>
-                <select id="face_shape">
-                    <option value="circle">Redonda</option>
-                    <option value="square">Cuadrada</option>
-                    <option value="rounded">Suave</option>
-                </select>
-
-                <label>Accesorios</label>
-                <select id="accessory">
-                    <option value="none">Ninguno</option>
-                    <option value="glasses">Gafas</option>
-                    <option value="hat">Sombrero</option>
-                    <option value="crown">Corona</option>
-                    <option value="graduation">Grado</option>
-                </select>
-
-                <button id="btn-join" class="primary-btn">Entrar a la Partida</button>
+                </div>
             </div>
         </div>
     </div>

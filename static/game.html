@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>S&E: Ecuaciones Diferenciales</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    body { background: #1a1a2e; color: #fff; font-family: 'Segoe UI', sans-serif; }
+
+    /* CONTENEDOR DEL TABLERO: Aquí está el secreto del 5x5 */
+    .board-grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); /* 5 columnas */
+        grid-template-rows: repeat(5, 1fr);    /* 5 filas */
+        gap: 8px;
+        background: #0f3460;
+        padding: 15px;
+        border-radius: 12px;
+        border: 4px solid #4ecca3;
+
+        /* Forzar que sea cuadrado */
+        width: 100%;
+        max-width: 550px;
+        aspect-ratio: 1 / 1;
+        margin: 0 auto;
+        box-shadow: 0 0 20px rgba(78, 204, 163, 0.2);
+    }
+
+    .cell {
+        background: #16213e;
+        border-radius: 8px;
+        border: 1px solid #1a1a2e;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        transition: all 0.3s ease;
+    }
+
+    .cell span {
+        position: absolute;
+        top: 5px;
+        left: 8px;
+        color: #4ecca3;
+        font-weight: bold;
+        font-size: 0.8rem;
+        opacity: 0.5;
+    }
+
+    /* Diseño de casillas especiales */
+    .snake_head {
+        border: 2px dashed #e94560;
+        background: rgba(233, 69, 96, 0.15);
+    }
+    .ladder_bottom {
+        border: 2px dashed #4ecca3;
+        background: rgba(78, 204, 163, 0.15);
+    }
+    .question {
+        background: #533483;
+        cursor: pointer;
+        box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+    }
+    .question:hover {
+        background: #4ecca3;
+        transform: scale(1.02);
+    }
+
+    /* FICHAS DE JUGADORES */
+    .player-token {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        box-shadow: 0 0 10px rgba(0,0,0,0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: bold;
+        color: white;
+        text-shadow: 1px 1px 2px #000;
+        z-index: 10;
+        cursor: grab;
+        transition: transform 0.2s;
+    }
+    .player-token:active { cursor: grabbing; }
+
+    .sidebar {
+        background: #16213e;
+        border-radius: 15px;
+        padding: 25px;
+        border: 1px solid #4ecca3;
+        height: 100%;
+    }
+
+    #dice-value {
+        font-family: 'Courier New', monospace;
+        background: #1a1a2e !important;
+        color: #4ecca3 !important;
+        border: 3px solid #4ecca3 !important;
+        text-shadow: 0 0 10px #4ecca3;
+    }
+        body { background: #1a1a2e; color: #fff; font-family: 'Segoe UI', sans-serif; }
+        .board-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            grid-template-rows: repeat(5, 1fr);
+            gap: 8px;
+            background: #0f3460;
+            padding: 15px;
+            border-radius: 12px;
+            border: 4px solid #4ecca3;
+            width: 100%;
+            max-width: 550px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(78, 204, 163, 0.2);
+        }
+        .cell {
+            background: #16213e;
+            border-radius: 8px;
+            border: 1px solid #1a1a2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            transition: all 0.3s ease;
+            aspect-ratio: 1/1; /* Refuerzo para que cada celda sea cuadrada */
+        }
+        .cell span { position: absolute; top: 5px; left: 8px; color: #4ecca3; font-weight: bold; font-size: 0.8rem; opacity: 0.5; }
+
+        /* Estilos de casillas y fichas que ya tienes... */
+        .snake_head { border: 2px dashed #e94560; background: rgba(233, 69, 96, 0.15); }
+        .ladder_bottom { border: 2px dashed #4ecca3; background: rgba(78, 204, 163, 0.15); }
+        .question { background: #533483; cursor: pointer; }
+        .player-token {
+            width: 35px; height: 35px; border-radius: 50%; border: 2px solid #fff;
+            display: flex; justify-content: center; align-items: center;
+            font-weight: bold; color: white; z-index: 10; cursor: grab;
+        }
+        .sidebar { background: #16213e; border-radius: 15px; padding: 25px; border: 1px solid #4ecca3; }
+        #dice-value { font-family: 'Courier New', monospace; background: #1a1a2e !important; color: #4ecca3 !important; border: 3px solid #4ecca3 !important; }
+    </style>
+</head>
+<body>
+
+    <div class="container-fluid p-4">
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-7 d-flex justify-content-center">
+                <div id="board" class="board-grid">
+                    </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="sidebar">
+                    <h2 class="text-center mb-4" style="color: #4ecca3;">Panel de Control</h2>
+
+                    <div class="text-center mb-4">
+                        <div id="dice-value" class="display-1 mb-3 rounded" style="width: 100px; height: 100px; line-height: 100px; margin: 0 auto;">?</div>
+                        <button id="btn-roll" class="btn btn-lg btn-warning fw-bold w-100">LANZAR DADO</button>
+                    </div>
+
+                    <div class="alert alert-dark border-info text-info small">
+                        <strong>Instrucciones:</strong> Lanza el dado y arrastra tu ficha. Cada casilla te hará una pregunta de Ecuaciones Diferenciales.
+                    </div>
+
+                    <button onclick="location.href='index.html'" class="btn btn-outline-danger w-100">Abandonar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="qModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-dark text-white border-info">
+                <div class="modal-body text-center p-4">
+                    <h4 id="q-text" class="mb-4"></h4>
+                    <div id="q-options" class="d-grid gap-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/question-modal.js"></script>
+    <script src="js/board.js"></script>
+</body>
+</html>
