@@ -1,172 +1,149 @@
-// Variables de estado global
 const boardElement = document.getElementById('board');
-let boardData = null;
+
 let localPlayer = null;
+let sessionId = null;
+let currentTurn = null;
+let boardData = null;
 
-// Configuración de la física del tablero 5x5
-const SNAKES = { 24: 14, 17: 7, 12: 2 };
-const LADDERS = { 3: 11, 8: 18, 15: 23 };
-
-/**
- * Inicialización principal del juego
- */
+// 🔥 INIT PRINCIPAL
 async function initGame() {
-    console.log("🚀 Iniciando motor del juego...");
-    try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const cut = urlParams.get('cut') || 1;
-        const sId = urlParams.get('session');
+const urlParams = new URLSearchParams(window.location.search);
+sessionId = urlParams.get('session');
+const cut = urlParams.get('cut') || 1;
 
-        if (!sId) {
-            console.error("❌ No se detectó ID de sesión en la URL");
-            return;
-        }
+localPlayer = JSON.parse(sessionStorage.getItem('current_player'));
 
-        // 1. Obtener datos del tablero filtrados por CORTE
-        const boardRes = await fetch(`/api/board/?cut=${cut}`);
-        if (!boardRes.ok) throw new Error("Fallo al conectar con /api/board/");
-        boardData = await boardRes.json();
+try {
+    // 🔥 cargar tablero desde backend
+    const res = await fetch(`/api/board/?cut=${cut}`);
+    boardData = await res.json();
 
-        // 2. Dibujar la cuadrícula 5x5
-        renderBoard(boardData.cells);
+    renderBoard();
 
-        // 3. Recuperar jugador local de la sesión
-        const storedPlayer = sessionStorage.getItem('current_player');
-        if (storedPlayer) {
-            localPlayer = JSON.parse(storedPlayer);
-        }
+    startSync();
 
-        // 4. Cargar sesión completa para sincronizar otros jugadores
-        const sessionRes = await fetch(`/api/session/${sId}`);
-        const sessionData = await sessionRes.json();
-
-        // 5. Renderizar fichas (esperamos a que el DOM esté listo)
-        setTimeout(() => {
-            if (sessionData && sessionData.players) {
-                sessionData.players.forEach(p => renderPlayerToken(p));
-            }
-        }, 200);
-
-    } catch (error) {
-        console.error("⚠️ ERROR CRÍTICO EN INIT:", error);
-    }
+} catch (err) {
+    console.error("Error cargando tablero:", err);
 }
 
-/**
- * Dibuja las celdas en el DOM
- */
-function renderBoard(cells) {
-    if (!boardElement) return;
-    boardElement.innerHTML = '';
-
-    cells.forEach(cell => {
-        const cellDiv = document.createElement('div');
-        // Todas las casillas son interactivas
-        cellDiv.className = `cell question ${cell.cell_type || ''}`;
-        cellDiv.id = `cell-${cell.cell_number}`;
-        cellDiv.innerHTML = `<span>${cell.cell_number}</span>`;
-
-        // Evento de clic manual para ver la pregunta
-        cellDiv.addEventListener('click', () => {
-            if (cell.question_id) triggerQuestion(cell.question_id);
-        });
-
-        // Configuración para Drag & Drop
-        cellDiv.addEventListener('dragover', (e) => e.preventDefault());
-        cellDiv.addEventListener('drop', handleDrop);
-
-        boardElement.appendChild(cellDiv);
-    });
 }
 
-/**
- * Renderiza el avatar personalizado (SVG) en la casilla inicial
- */
-function renderPlayerToken(player) {
-    const startCell = document.getElementById(`cell-1`);
-    if (!startCell || document.getElementById(`token-${player.player_id}`)) return;
+// 🔥 RENDER TABLERO DINÁMICO
+function renderBoard() {
+boardElement.innerHTML = '';
 
-    const token = document.createElement('div');
-    token.id = `token-${player.player_id}`;
-    token.className = 'player-token';
+if (!boardData || !boardData.cells) return;
 
-    // Inyectamos el SVG generado por avatar-builder.js
-    if (player.avatar && typeof player.avatar === 'object') {
-        token.innerHTML = generateAvatarSVG(player.avatar);
-    } else {
-        token.style.backgroundColor = player.avatar || '#4ecca3';
-    }
+boardData.cells.forEach(cellData => {
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    cell.id = `cell-${cellData.cell_number}`;
 
-    token.draggable = true;
-    token.addEventListener('dragstart', (e) => {
-        e.dataTransfer.setData('player_id', player.player_id);
-    });
+    cell.innerHTML = `<span>${cellData.cell_number}</span>`;
 
-    startCell.appendChild(token);
+    boardElement.appendChild(cell);
+});
+
 }
 
-/**
- * Lógica del movimiento (Drag & Drop + Física S&E)
- */
-function handleDrop(e) {
-    e.preventDefault();
-    const cell = e.target.closest('.cell');
-    const playerId = e.dataTransfer.getData('player_id');
-    const token = document.getElementById(`token-${playerId}`);
+// 🔥 ACTUALIZAR JUGADORES
+function updatePlayers(players) {
+players.forEach(p => {
+let token = document.getElementById(`token-${p.player_id}`);
 
-    if (cell && token) {
-        const cellNum = parseInt(cell.id.split('-')[1]);
+    if (!token) {
+        token = document.createElement('div');
+        token.id = `token-${p.player_id}`;
+        token.className = 'player-token';
 
-        // Mover visualmente al lugar del drop
-        cell.appendChild(token);
-
-        // Validar si es una casilla especial
-        if (LADDERS[cellNum]) {
-            handleSpecialMove(playerId, LADDERS[cellNum], "¡GENIAL! Una escalera 🪜");
-        } else if (SNAKES[cellNum]) {
-            handleSpecialMove(playerId, SNAKES[cellNum], "¡UY! Una serpiente 🐍");
-        } else {
-            // Si es normal, disparamos la pregunta de una vez
-            checkIfQuestionAndTrigger(cellNum);
+        if (p.avatar) {
+            token.innerHTML = generateAvatarSVG(p.avatar);
         }
     }
+
+    const cell = document.getElementById(`cell-${p.position || 1}`);
+    if (cell) cell.appendChild(token);
+});
+
 }
 
-/**
- * Maneja el movimiento automático por serpientes o escaleras
- */
-function handleSpecialMove(playerId, destination, message) {
-    setTimeout(() => {
-        alert(message);
-        const token = document.getElementById(`token-${playerId}`);
-        const destCell = document.getElementById(`cell-${destination}`);
-        if (token && destCell) {
-            destCell.appendChild(token);
-            // Tras el movimiento automático, lanzamos la pregunta del destino
-            setTimeout(() => checkIfQuestionAndTrigger(destination), 300);
-        }
-    }, 400);
+// 🔥 SINCRONIZACIÓN
+async function sync() {
+try {
+const session = await api.getSession(sessionId);
+
+    currentTurn = session.current_turn;
+
+    updatePlayers(session.players);
+
+    updateTurnUI();
+
+} catch (err) {
+    console.error("Error en sync:", err);
 }
 
-function checkIfQuestionAndTrigger(cellNumber) {
-     const cellData = boardData.cells.find(c => c.cell_number === cellNumber);
-     if (cellData && cellData.question_id) {
-         triggerQuestion(cellData.question_id);
-     }
 }
 
-// Evento del Dado
-const btnRoll = document.getElementById('btn-roll');
-if (btnRoll) {
-    btnRoll.addEventListener('click', () => {
-        const diceDisplay = document.getElementById('dice-value');
-        let count = 0;
-        const interval = setInterval(() => {
-            diceDisplay.innerText = Math.floor(Math.random() * 6) + 1;
-            if (++count > 10) clearInterval(interval);
-        }, 50);
-    });
+// 🔥 LOOP DE SYNC
+function startSync() {
+setInterval(sync, 1500);
 }
 
-// Ejecutar inicio
+// 🔥 UI DE TURNOS
+function updateTurnUI() {
+const btn = document.getElementById('btn-roll');
+
+if (!btn) return;
+
+if (currentTurn === localPlayer.player_id) {
+    btn.disabled = false;
+    btn.innerText = "🎲 Tu turno";
+} else {
+    btn.disabled = true;
+    btn.innerText = "⏳ Espera turno";
+}
+
+}
+
+function handlePostMove(player) {
+    const cellNumber = player.position;
+
+    const cellData = boardData.cells.find(c => c.cell_number === cellNumber);
+
+    if (cellData && cellData.question_id) {
+
+        // 🔥 adaptar formato
+        const qId = `${cellData.question_id}`;
+
+        triggerQuestion(qId);
+    }
+}
+// 🔥 EVENTO DEL DADO
+document.getElementById('btn-roll').addEventListener('click', async () => {
+
+// 🔒 control de turno
+if (currentTurn !== localPlayer.player_id) return;
+
+// 🔒 bloquear mientras responde
+if (typeof isAnswering !== "undefined" && isAnswering) return;
+
+try {
+    const res = await api.rollDice(sessionId, localPlayer.player_id);
+
+    const dice = res.dice;
+
+    document.getElementById('dice-value').innerText = dice;
+
+    const moveRes = await api.movePlayer(sessionId, localPlayer.player_id, dice);
+
+    // 🔥 evaluar casilla
+    handlePostMove(moveRes);
+
+} catch (err) {
+    console.error("Error en turno:", err);
+}
+
+});
+
+// 🚀 START
 initGame();
