@@ -42,7 +42,7 @@ function generateAvatarSVG(config) {
             break;
     }
 
-    // Unimos todo en el contenedor SVG
+    // Unimos all en el contenedor SVG
     return `
         <svg viewBox="0 0 100 100" width="100%" height="100%">
             ${faceSVG}
