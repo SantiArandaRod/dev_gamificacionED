@@ -1,0 +1,179 @@
+:root {
+    --primary: #2d3436;
+    --accent: #0984e3;
+    --success: #00b894;
+    --danger: #d63031;
+    --warning: #f1c40f;
+    --bg: #f5f6fa;
+    --cell-size: 60px;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--bg);
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+/* --- LOBBY STYLES --- */
+.lobby-container {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.setup-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+}
+
+#avatar-svg-container {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+    border: 3px solid var(--accent);
+    border-radius: 50%;
+    padding: 10px;
+    background: #fff;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 0.8rem;
+}
+
+input[type="text"], select {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.primary-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: transform 0.2s;
+}
+
+.primary-btn:hover { transform: scale(1.05); }
+
+/* --- GAME BOARD STYLES --- */
+#game-container {
+    display: flex;
+    gap: 2rem;
+    padding: 20px;
+}
+
+/* En tu bloque de <style> o style.css */
+.board-grid {
+    display: grid;
+    /* Definimos 5 columnas iguales */
+    grid-template-columns: repeat(5, 1fr);
+    /* Definimos 5 filas iguales */
+    grid-template-rows: repeat(5, 1fr);
+    gap: 10px;
+    background: #0f3460;
+    padding: 15px;
+    border-radius: 10px;
+    border: 4px solid #4ecca3;
+    /* Ajustamos el ancho máximo para que sea cuadrado */
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 1 / 1; /* Esto obliga a que el contenedor sea cuadrado */
+    margin: 0 auto;
+}
+.cell {
+    background: #16213e;
+    border: 1px solid #1a1a2e;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    /* Eliminamos el width fijo para que el grid lo maneje */
+}
+.cell span { position: absolute; top: 2px; left: 2px; }
+
+/* Tipos de Casillas */
+.snake_head { background: #ffeaa7; border: 2px dashed var(--danger); }
+.ladder_bottom { background: #dff9fb; border: 2px dashed var(--success); }
+.question {
+    background: #a29bfe;
+    cursor: help;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.7; }
+    100% { opacity: 1; }
+}
+
+/* --- TOKEN STYLES --- */
+.player-token {
+    width: 20px;
+    height: 20px;
+    font-size: 8px;
+    border-radius: 50%;
+    cursor: grab;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.6rem;
+    font-weight: bold;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    border: 2px solid white;
+}
+
+.player-token:active { cursor: grabbing; }
+
+/* --- MODAL STYLES --- */
+.hidden { display: none !important; }
+
+#question-modal {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 400px;
+    text-align: center;
+}
+
+#q-options {
+    display: grid;
+    gap: 10px;
+    margin: 1.5rem 0;
+}
+
+#q-options button {
+    padding: 10px;
+    border: 1px solid var(--accent);
+    background: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#q-options button:hover { background: var(--accent); color: white; }
