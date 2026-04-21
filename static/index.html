@@ -1,71 +1,276 @@
 <!DOCTYPE html>
+
 <html lang="es">
-
 <head>
-
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snakes & Ladders - Lobby</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { background: #1a1a2e; color: #fff; min-height: 100vh; display: flex; align-items: center; }
-        .card { background: #16213e; border: 1px solid #4ecca3; border-radius: 15px; color: white; }
-        #avatar-svg-container { background: #0f3460; border-radius: 50%; padding: 20px; border: 3px solid #4ecca3; width: 180px; height: 180px; margin: 0 auto; }
-        .form-control, .form-select { background: #0f3460; border: 1px solid #4ecca3; color: #fff; }
-        .form-control:focus, .form-select:focus { background: #16213e; color: #fff; border-color: #4ecca3; box-shadow: 0 0 10px #4ecca3; }
-        .btn-gaming { background: #4ecca3; color: #1a1a2e; font-weight: bold; border: none; text-transform: uppercase; letter-spacing: 1px; }
-        .btn-gaming:hover { background: #45b393; color: #fff; }
-    </style>
+    <title>S&E: Ecuaciones Diferenciales - Lobby</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background: #1a1a2e;
+        color: #fff;
+        font-family: 'Segoe UI', sans-serif;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+    }
+
+    .card-custom {
+        background: #16213e;
+        border: 2px solid #4ecca3;
+        border-radius: 15px;
+        box-shadow: 0 0 20px rgba(78, 204, 163, 0.2);
+    }
+
+    #avatar-preview {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+        background: #0f3460;
+        border-radius: 50%;
+        padding: 10px;
+        border: 2px solid #4ecca3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form-control, .form-select {
+        background: #1a1a2e;
+        border: 1px solid #4ecca3;
+        color: white;
+    }
+
+    .form-control:focus, .form-select:focus {
+        background: #1a1a2e;
+        color: white;
+        border-color: #e94560;
+        box-shadow: none;
+    }
+
+    .btn-custom {
+        font-weight: bold;
+        padding: 12px;
+    }
+
+    .btn-create {
+        background: #28a745;
+        border: none;
+    }
+
+    .btn-join {
+        background: #17a2b8;
+        border: none;
+    }
+
+    .session-box {
+        background: #0f3460;
+        border-radius: 10px;
+        padding: 10px;
+        margin-top: 10px;
+    }
+
+    .copy-btn {
+        cursor: pointer;
+    }
+</style>
+
+
 </head>
+
 <body>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-5">
 
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8 col-lg-6">
-                <div class="card shadow-lg p-4">
-                    <h1 class="text-center mb-4" style="color: #4ecca3;">S&E: Educational Quest</h1>
 
-                    <div class="row g-4">
-                        <div class="col-md-6 text-center">
-                            <div id="avatar-svg-container" class="mb-3 d-flex align-items-center">
-                                </div>
-                            <input type="text" id="player-name" class="form-control text-center" placeholder="Alias del Jugador">
-                        </div>
+        <div class="card card-custom p-4">
 
-                        <div class="col-md-6">
-                            <label class="form-label">Tono de Piel</label>
-                            <input type="color" class="form-control form-control-color w-100 mb-2" id="skin_color" value="#ffdbac">
+            <h2 class="text-center mb-1" style="color:#4ecca3;">INGENIERÍA S&E</h2>
+            <p class="text-center small text-muted mb-3">
+                Gamificación de Ecuaciones Diferenciales
+            </p>
 
-                            <label class="form-label">Forma de Cara</label>
-                            <select id="face_shape" class="form-select mb-2">
-                                <option value="circle">Redonda</option>
-                                <option value="square">Cuadrada</option>
-                                <option value="rounded">Suave</option>
-                            </select>
+            <div class="alert alert-dark text-center small">
+                jugadores en tiempo real
+            </div>
 
-                            <label class="form-label">Accesorio</label>
-                            <select id="accessory" class="form-select mb-4">
-                                <option value="none">Ninguno</option>
-                                <option value="glasses">Gafas Pro</option>
-                                <option value="hat">Sombrero</option>
-                                <option value="crown">Corona</option>
-                                <option value="graduation">Grado</option>
-                            </select>
-                            <label class="form-label">Corte Académico</label>
-                            <select id="academic_cut" class="form-select mb-3">
-                                <option value="1">Corte 1 (Básico)</option>
-                                <option value="2">Corte 2 (Intermedio)</option>
-                                <option value="3">Corte 3 (Avanzado)</option>
-                            </select>
-                            <button id="btn-join" class="btn btn-gaming w-100 py-2">Iniciar Aventura</button>
-                        </div>
-                    </div>
+            <!-- Avatar -->
+            <h5 class="text-center mt-3">Tu Avatar</h5>
+            <div id="avatar-preview" class="mb-3">
+                <div id="avatar-svg-container"></div>
+            </div>
+
+            <!-- Config -->
+            <div class="row g-2 mb-3">
+                <div class="col-6">
+                    <label class="small">Piel</label>
+                    <input type="color" id="skin_color" class="form-control form-control-color w-100" value="#ffdbac">
+                </div>
+                <div class="col-6">
+                    <label class="small">Accesorio</label>
+                    <select id="accessory" class="form-select small">
+                        <option value="none">Ninguno</option>
+                        <option value="glasses">Gafas</option>
+                        <option value="hat">Gorra</option>
+                        <option value="crown">Corona</option>
+                        <option value="graduation">Birrete</option>
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label class="small">Forma de Cara</label>
+                    <select id="face_shape" class="form-select">
+                        <option value="circle">Circular</option>
+                        <option value="square">Cuadrada</option>
+                        <option value="rounded">Redondeada</option>
+                    </select>
                 </div>
             </div>
+
+            <!-- Datos -->
+            <div class="mb-3">
+                <input type="text" id="player-name" maxlength="20" class="form-control custom-placeholder" placeholder="Tu Nombre">
+            </div>
+
+            <div class="mb-3">
+                <select id="academic_cut" class="form-select">
+                    <option value="1">Corte 1: EDO 1er Orden</option>
+                    <option value="2">Corte 2: Orden Superior</option>
+                    <option value="3">Corte 3: Laplace</option>
+                </select>
+            </div>
+
+            <!-- Join -->
+            <div class="mb-3">
+                <input type="text" id="session-id-input" class="form-control border-secondary"
+                       placeholder="ID Sesión (para unirse)">
+            </div>
+
+            <!-- Botones -->
+            <div class="d-grid gap-2">
+                <button id="btn-create" class="btn btn-create btn-custom">
+                    Crear Partida
+                </button>
+
+                <button id="btn-join" class="btn btn-join btn-custom">
+                    Unirse a Partida
+                </button>
+            </div>
+
+            <!-- Session Info -->
+            <div id="session-info" class="text-center mt-3 d-none">
+                <small>ID de sesión:</small>
+                <div class="session-box d-flex justify-content-between align-items-center">
+                    <span id="session-id-display"></span>
+                    <button id="copy-session" class="btn btn-sm btn-outline-light copy-btn">Copiar</button>
+                </div>
+            </div>
+
         </div>
     </div>
+</div>
 
-    <script src="js/api.js"></script>
-    <script src="js/avatar-builder.js"></script>
+</div>
+
+<!-- Scripts (orden correcto) -->
+
+<script src="js/avatar-builder.js"></script>
+
+<script src="js/api.js"></script>
+
+<script>
+const nameInput = document.getElementById('player-name');
+const sessionInput = document.getElementById('session-id-input');
+
+const btnCreate = document.getElementById('btn-create');
+const btnJoin = document.getElementById('btn-join');
+
+function setLoading(btn, state, text="Procesando...") {
+    btn.disabled = state;
+    btn.innerText = state ? text : btn.dataset.original;
+}
+
+btnCreate.dataset.original = btnCreate.innerText;
+btnJoin.dataset.original = btnJoin.innerText;
+
+btnCreate.addEventListener('click', async () => {
+    const name = nameInput.value.trim();
+    const cut = document.getElementById('academic_cut').value;
+
+    if (!name) return alert("Ingresa tu nombre");
+
+    setLoading(btnCreate, true);
+
+    try {
+        const session = await api.createSession();
+
+        document.getElementById('session-info').classList.remove('d-none');
+        document.getElementById('session-id-display').innerText = session.session_id;
+
+        const playerData = {
+            player_id: crypto.randomUUID(),
+            session_id: session.session_id,
+            name,
+            order: 1,
+            avatar: avatarConfig,
+            position: 1,
+            is_active: true
+        };
+
+        sessionStorage.setItem('current_player', JSON.stringify(playerData));
+        await api.joinGame(session.session_id, playerData);
+
+        window.location.href = `game.html?session=${session.session_id}&cut=${cut}`;
+
+    } catch (e) {
+        alert("Error creando sesión");
+    }
+
+    setLoading(btnCreate, false);
+});
+
+btnJoin.addEventListener('click', async () => {
+    const name = nameInput.value.trim();
+    const sessionId = sessionInput.value.trim();
+    const cut = document.getElementById('academic_cut').value;
+
+    if (!name || !sessionId) return alert("Nombre e ID requeridos");
+
+    setLoading(btnJoin, true);
+
+    try {
+        const playerData = {
+            player_id: crypto.randomUUID(),
+            session_id: sessionId,
+            name,
+            order: 2,
+            avatar: avatarConfig,
+            position: 1,
+            is_active: true
+        };
+
+        sessionStorage.setItem('current_player', JSON.stringify(playerData));
+        await api.joinGame(sessionId, playerData);
+
+        window.location.href = `game.html?session=${sessionId}&cut=${cut}`;
+
+    } catch (e) {
+        alert("Error al unirse");
+    }
+
+    setLoading(btnJoin, false);
+});
+
+document.getElementById('copy-session').addEventListener('click', () => {
+    const text = document.getElementById('session-id-display').innerText;
+    navigator.clipboard.writeText(text);
+    alert("ID copiado");
+});
+</script>
+
 </body>
 </html>
