@@ -1,64 +1,93 @@
-// Variable para la instancia del modal de Bootstrap
 let questionModal;
+let isAnswering = false;
+let currentQuestion = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Inicializamos el modal de Bootstrap una sola vez
     const modalElement = document.getElementById('qModal');
     if (modalElement) {
         questionModal = new bootstrap.Modal(modalElement);
     }
 });
 
+
+// 🔥 TRIGGER PRINCIPAL
 async function triggerQuestion(questionId) {
-    if (!questionId) return;
-
     try {
-        // 1. Buscamos la pregunta en el estado global que ya cargó el tablero
-        // O hacemos un fetch directo si prefieres
-        const response = await fetch(`/api/questions/${questionId}`);
-        const question = await response.json();
+        const res = await fetch(`/api/questions/${questionId}`);
+        const question = await res.json();
 
-        if (!question) throw new Error("Pregunta no encontrada");
+        currentQuestion = question;
+        if (question) {
+    isAnswering = true;
+}
 
-        // 2. Llenar el contenido del modal
-        document.getElementById('q-text').innerText = question.text;
-        const optionsContainer = document.getElementById('q-options');
-        optionsContainer.innerHTML = ''; // Limpiar opciones anteriores
+        showQuestionModal(question);
 
-        question.options.forEach(option => {
-            const btn = document.createElement('button');
-            btn.className = 'btn btn-outline-info text-white py-3 fw-bold';
-            btn.innerText = option;
-
-            btn.onclick = () => {
-                checkAnswer(option, question.correct_answer);
-            };
-
-            optionsContainer.appendChild(btn);
-        });
-
-        // 3. ¡MOSTRAR EL MODAL!
-        if (questionModal) {
-            questionModal.show();
-        } else {
-            // Fallback si por alguna razón no se inicializó en el DOMContentLoaded
-            questionModal = new bootstrap.Modal(document.getElementById('qModal'));
-            questionModal.show();
-        }
-
-    } catch (error) {
-        console.error("Error al cargar la pregunta:", error);
+    } catch (err) {
+        console.error("Error cargando pregunta:", err);
     }
 }
 
-function checkAnswer(selected, correct) {
-    if (selected === correct) {
-        alert("¡CORRECTO! Ingeniero.");
-        questionModal.hide();
-        // Aquí podrías añadir lógica para dar puntos o permitir seguir moviendo
+
+// 🔥 RENDER MODAL (Bootstrap real)
+function showQuestionModal(question) {
+    const modal = document.getElementById('qModal');
+
+    const textEl = modal.querySelector('#q-text');
+    const optionsEl = modal.querySelector('#q-options');
+
+    if (!textEl || !optionsEl) {
+        console.error("❌ No se encontraron elementos del modal");
+        return;
+    }
+
+    textEl.innerText = question.text;
+    optionsEl.innerHTML = '';
+
+    question.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'btn btn-option w-100';
+        btn.innerText = opt;
+
+        btn.onclick = () => submitAnswer(opt);
+
+        optionsEl.appendChild(btn);
+    });
+
+    questionModal.show();
+}
+
+
+// 🔥 VALIDACIÓN CENTRAL
+async function submitAnswer(answer) {
+
+    if (!currentQuestion) return;
+
+    const correct = currentQuestion.correct_answer;
+
+    if (answer === correct) {
+        alert("correcto :)");;
+
     } else {
-        alert(`INCORRECTO. La respuesta era: ${correct}`);
-        questionModal.hide();
-        // Lógica de penalización (ej. volver a la casilla anterior)
+        alert("❌ Incorrecto");
+
+        // penalización real
+        await moveBack(localPlayer.player_id, 2);
+    }
+
+    // liberar estado
+    isAnswering = false;
+    currentQuestion = null;
+
+    questionModal.hide();
+}
+
+
+// 🔥 PENALIZACIÓN
+async function moveBack(playerId, steps) {
+    try {
+        await api.movePlayer(sessionId, playerId, -steps);
+    } catch (err) {
+        console.error("Error en penalización:", err);
     }
 }
