@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snakes & Ladders - Lobby</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="lobby-container">
+        <h1>Serpientes & Escaleras</h1>
+
+        <div class="setup-grid">
+            <div class="avatar-preview">
+                <div id="avatar-svg-container">
+                    </div>
+                <input type="text" id="player-name" placeholder="Tu nombre artístico..." maxlength="15">
+            </div>
+
+            <div class="controls">
+                <label>Color de Piel</label>
+                <input type="color" id="skin_color" value="#ffdbac">
+
+                <label>Forma de Cara</label>
+                <select id="face_shape">
+                    <option value="circle">Redonda</option>
+                    <option value="square">Cuadrada</option>
+                    <option value="rounded">Suave</option>
+                </select>
+
+                <label>Accesorios</label>
+                <select id="accessory">
+                    <option value="none">Ninguno</option>
+                    <option value="glasses">Gafas</option>
+                    <option value="hat">Sombrero</option>
+                    <option value="crown">Corona</option>
+                    <option value="graduation">Grado</option>
+                </select>
+
+                <button id="btn-join" class="primary-btn">Entrar a la Partida</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/avatar-builder.js"></script>
+</body>
+</html>
