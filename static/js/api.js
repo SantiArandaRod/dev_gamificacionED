@@ -29,39 +29,34 @@ const api = {
 
 // Lógica del botón entrar
 document.getElementById('btn-join').addEventListener('click', async () => {
-    // 1. Capturamos los valores justo cuando se hace click
     const name = document.getElementById('player-name').value;
     const cut = document.getElementById('academic_cut').value;
 
     if (!name) return alert("¡Ponte un nombre, ingeniero!");
 
     try {
-        // 2. Crear sesión
+        // 1. Crear sesión primero
         const session = await api.createSession();
 
-        // 3. Preparar datos del jugador
-        // Importante: posición inicial 1 para que aparezca en la primera casilla
+        // 2. Ahora sí preparamos los datos con el session_id real
         const playerData = {
             player_id: crypto.randomUUID(),
             session_id: session.session_id,
             name: name,
             order: 1,
-            avatar: typeof config !== 'undefined' ? config : { skin_color: "#ffdbac" },
+            avatar: avatarConfig, // Usamos el objeto global de avatar-builder.js
             position: 1
         };
 
-        // 4. Guardar localmente
+        // 3. Persistencia y registro
         sessionStorage.setItem('current_player', JSON.stringify(playerData));
-
-        // 5. Registrar en backend
         await api.joinGame(session.session_id, playerData);
 
-        // 6. Redirigir incluyendo el CORTE seleccionado
         console.log(`Redirigiendo a sesión ${session.session_id} con corte ${cut}`);
         window.location.href = `game.html?session=${session.session_id}&cut=${cut}`;
 
     } catch (error) {
         console.error("Fallo en el inicio:", error);
-        alert("Error de conexión con el servidor de FastAPI");
+        alert("Error de conexión con el servidor");
     }
 });
