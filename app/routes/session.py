@@ -1,46 +1,51 @@
 from fastapi import APIRouter, HTTPException
-from uuid import uuid4
-from datetime import datetime
+from app.services import game_service
 
-from app.models.session import GameSession
-from app.models.player import Player
-from app.game_state import sessions
-
-router = APIRouter()
-
+router = APIRouter(prefix="/session")
 
 @router.post("/create")
-async def create_session():
-    """Crea una nueva sesión de juego y devuelve su ID"""
-    session_id = str(uuid4())[:8]  # ID corto para facilitar compartirlo
-    new_session = GameSession(
-        session_id=session_id,
-        status="waiting",
-        players=[],
-        created_at=datetime.now()
-    )
-    sessions[session_id] = new_session
+def create():
+    session_id = game_service.create_session()
     return {"session_id": session_id}
 
 
-@router.get("/{session_id}")
-async def get_session(session_id: str):
-    """Obtiene el estado actual de una sesión"""
-    if session_id not in sessions:
-        raise HTTPException(status_code=404, detail="Sesión no encontrada")
-    return sessions[session_id]
-
-
 @router.post("/{session_id}/join")
-async def join_session(session_id: str, player_data: Player):
-    """Añade un jugador a la sesión (máximo 4)"""
-    if session_id not in sessions:
-        raise HTTPException(status_code=404, detail="Sesión no encontrada")
+def join(session_id: str, player: dict):
+    try:
+        game_service.join_session(session_id, player)
+        return {
+            "message": f"Bienvenido {player['name']}",
+            "player_id": player["player_id"]
+        }
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-    session = sessions[session_id]
 
-    if len(session.players) >= 4:
-        raise HTTPException(status_code=400, detail="Sesión llena")
+@router.get("/{session_id}")
+def get(session_id: str):
+    session = game_service.get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="No existe")
+    return session
 
-    session.players.append(player_data)
-    return {"message": f"Bienvenido {player_data.name}", "player_id": player_data.player_id}
+
+@router.post("/{session_id}/roll")
+def roll(session_id: str, data: dict):
+    try:
+        dice = game_service.roll_dice(session_id, data["player_id"])
+        return {"dice": dice}
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+
+@router.post("/{session_id}/move")
+def move(session_id: str, data: dict):
+    try:
+        player = game_service.move_player(
+            session_id,
+            data["player_id"],
+            data["steps"]
+        )
+        return player
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
