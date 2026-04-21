@@ -1,0 +1,47 @@
+[
+  {
+    "question_id": "550e8400-e29b-41d4-a716-446655440000",
+    "text": "¿Cuál es la complejidad temporal promedio de un Quicksort?",
+    "options": ["O(n)", "O(n log n)", "O(n²)", "O(1)"],
+    "correct_answer": "O(n log n)",
+    "academic_cut": 1,
+    "subject": "Algoritmos",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+    "text": "¿Qué comando en Linux se usa para cambiar los permisos de un archivo?",
+    "options": ["chown", "chmod", "pwd", "ls"],
+    "correct_answer": "chmod",
+    "academic_cut": 1,
+    "subject": "Sistemas Operativos",
+    "difficulty": "easy"
+  },
+  {
+    "question_id": "7da7b810-9dad-11d1-80b4-00c04fd430c9",
+    "text": "En FastAPI, ¿qué librería se encarga de la validación de datos?",
+    "options": ["Flask", "Django", "Pydantic", "SQLAlchemy"],
+    "correct_answer": "Pydantic",
+    "academic_cut": 2,
+    "subject": "Programación Web",
+    "difficulty": "medium"
+  },
+  {
+    "question_id": "8ea7b810-9dad-11d1-80b4-00c04fd430d0",
+    "text": "¿Cuál de estos es un protocolo de capa de transporte?",
+    "options": ["HTTP", "IP", "TCP", "Ethernet"],
+    "correct_answer": "TCP",
+    "academic_cut": 2,
+    "subject": "Redes",
+    "difficulty": "easy"
+  },
+  {
+    "question_id": "9fa7b810-9dad-11d1-80b4-00c04fd430d1",
+    "text": "¿Qué componente de una CPU realiza cálculos aritméticos y lógicos?",
+    "options": ["ALU", "CU", "RAM", "Cache"],
+    "correct_answer": "ALU",
+    "academic_cut": 3,
+    "subject": "Arquitectura",
+    "difficulty": "hard"
+  }
+]
