@@ -27,6 +27,22 @@ async def get_next_session_question(
     except Exception as e:
         raise HTTPException(status_code=404, detail=str(e))
 
+
+@router.post("/session/{session_id}/answer")
+async def submit_session_answer(session_id: str, data: dict):
+    try:
+        return game_service.submit_answer(
+            session_id,
+            data["player_id"],
+            data["question_id"],
+            data["answer"],
+            questions_db,
+        )
+    except KeyError as e:
+        raise HTTPException(status_code=400, detail=f"Campo requerido: {e}")
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
 @router.get("/{question_id}")
 async def get_single_question(question_id: str):
     """Busca una pregunta específica por ID"""

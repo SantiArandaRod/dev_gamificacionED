@@ -26,6 +26,7 @@ def join_session(session_id, player):
     if len(session["players"]) >= 4:
         raise Exception("Sesión llena")
 
+    player["score"] = 0
     session["players"].append(player)
 
     # primer jugador empieza
@@ -59,6 +60,39 @@ def get_next_question(session_id, cut, questions):
     session["used_question_ids"].append(str(question.question_id))
 
     return question
+
+
+def submit_answer(session_id, player_id, question_id, answer, questions):
+    if session_id not in sessions:
+        raise Exception("Sesion no existe")
+
+    session = sessions[session_id]
+    player = next(
+        (p for p in session["players"] if p["player_id"] == player_id),
+        None,
+    )
+
+    if not player:
+        raise Exception("Jugador no existe")
+
+    question = next(
+        (q for q in questions if str(q.question_id) == str(question_id)),
+        None,
+    )
+
+    if not question:
+        raise Exception("Pregunta no existe")
+
+    correct = answer == question.correct_answer
+    delta = 10 if correct else -5
+    player["score"] = player.get("score", 0) + delta
+
+    return {
+        "correct": correct,
+        "delta": delta,
+        "score": player["score"],
+        "correct_answer": question.correct_answer,
+    }
 
 
 def roll_dice(session_id, player_id):

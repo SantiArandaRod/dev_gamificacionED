@@ -36,5 +36,18 @@ const api = {
             body: JSON.stringify({ player_id: playerId, steps })
         });
         return res.json();
+    },
+
+    async submitAnswer(sessionId, playerId, questionId, answer) {
+        const res = await fetch(`${API_BASE}/questions/session/${sessionId}/answer`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                player_id: playerId,
+                question_id: questionId,
+                answer
+            })
+        });
+        return res.json();
     }
 };

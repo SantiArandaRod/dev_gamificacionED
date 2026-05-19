@@ -59,12 +59,43 @@ function updatePlayers(players) {
     });
 }
 
+function updateScoreboard(players) {
+    let scoreboard = document.getElementById('scoreboard');
+
+    if (!scoreboard) {
+        const sidebar = document.querySelector('.sidebar');
+        const closeButton = sidebar.querySelector('.btn-outline-danger');
+        const scoreCard = document.createElement('div');
+        scoreCard.className = 'card bg-dark border-success mb-4';
+        scoreCard.innerHTML = `
+            <div class="card-body text-light small">
+                <h6 class="card-title fw-bold text-success">Puntajes</h6>
+                <div id="scoreboard" class="d-grid gap-2"></div>
+            </div>
+        `;
+        sidebar.insertBefore(scoreCard, closeButton);
+        scoreboard = document.getElementById('scoreboard');
+    }
+
+    scoreboard.innerHTML = '';
+    players.forEach(player => {
+        const row = document.createElement('div');
+        row.className = 'd-flex justify-content-between align-items-center';
+        row.innerHTML = `
+            <span>${player.name}</span>
+            <strong>${player.score ?? 0} pts</strong>
+        `;
+        scoreboard.appendChild(row);
+    });
+}
+
 async function sync() {
     try {
         const session = await api.getSession(sessionId);
 
         currentTurn = session.current_turn;
         updatePlayers(session.players);
+        updateScoreboard(session.players);
         updateTurnUI();
     } catch (err) {
         console.error("Error en sync:", err);
@@ -72,6 +103,7 @@ async function sync() {
 }
 
 function startSync() {
+    sync();
     setInterval(sync, 1500);
 }
 
