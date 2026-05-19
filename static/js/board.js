@@ -5,6 +5,7 @@ let sessionId = null;
 let academicCut = 1;
 let currentTurn = null;
 let boardData = null;
+let currentPlayers = [];
 
 async function initGame() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -89,11 +90,22 @@ function updateScoreboard(players) {
     });
 }
 
+function updatePlayerScore(playerId, score) {
+    currentPlayers = currentPlayers.map(player => {
+        if (player.player_id === playerId) {
+            return { ...player, score };
+        }
+        return player;
+    });
+    updateScoreboard(currentPlayers);
+}
+
 async function sync() {
     try {
         const session = await api.getSession(sessionId);
 
         currentTurn = session.current_turn;
+        currentPlayers = session.players;
         updatePlayers(session.players);
         updateScoreboard(session.players);
         updateTurnUI();
@@ -104,7 +116,7 @@ async function sync() {
 
 function startSync() {
     sync();
-    setInterval(sync, 1500);
+    setInterval(sync, 1000);
 }
 
 function updateTurnUI() {

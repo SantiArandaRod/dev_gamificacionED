@@ -12,6 +12,7 @@ def create_session():
         "dice_value": None,
         "status": "waiting",
         "used_question_ids": [],
+        "scored_question_ids": [],
     }
 
     return session_id
@@ -83,11 +84,17 @@ def submit_answer(session_id, player_id, question_id, answer, questions):
     if not question:
         raise Exception("Pregunta no existe")
 
+    scored_question_ids = session.setdefault("scored_question_ids", [])
+    if str(question_id) in scored_question_ids:
+        raise Exception("Esta pregunta ya fue puntuada")
+
     correct = answer == question.correct_answer
     delta = 10 if correct else -5
     player["score"] = player.get("score", 0) + delta
+    scored_question_ids.append(str(question_id))
 
     return {
+        "player_id": player_id,
         "correct": correct,
         "delta": delta,
         "score": player["score"],

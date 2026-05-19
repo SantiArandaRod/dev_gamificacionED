@@ -51,7 +51,12 @@ function showQuestionModal(question) {
 }
 
 async function submitAnswer(answer) {
-    if (!currentQuestion) return;
+    if (!currentQuestion || !isAnswering) return;
+
+    isAnswering = false;
+    document.querySelectorAll('#q-options button').forEach(btn => {
+        btn.disabled = true;
+    });
 
     const result = await api.submitAnswer(
         sessionId,
@@ -60,6 +65,17 @@ async function submitAnswer(answer) {
         answer
     );
 
+    if (result.detail) {
+        alert(result.detail);
+        currentQuestion = null;
+        questionModal.hide();
+        await sync();
+        return;
+    }
+
+    updatePlayerScore(result.player_id, result.score);
+    await new Promise(resolve => requestAnimationFrame(resolve));
+
     if (result.correct) {
         alert(`Correcto. +10 puntos. Puntaje actual: ${result.score}`);
     } else {
@@ -67,7 +83,6 @@ async function submitAnswer(answer) {
         await moveBack(localPlayer.player_id, 2);
     }
 
-    isAnswering = false;
     currentQuestion = null;
     questionModal.hide();
     await sync();
