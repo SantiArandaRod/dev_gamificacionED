@@ -10,7 +10,8 @@ def create_session():
         "players": [],
         "current_turn": None,
         "dice_value": None,
-        "status": "waiting"
+        "status": "waiting",
+        "used_question_ids": [],
     }
 
     return session_id
@@ -36,6 +37,28 @@ def join_session(session_id, player):
 
 def get_session(session_id):
     return sessions.get(session_id)
+
+
+def get_next_question(session_id, cut, questions):
+    if session_id not in sessions:
+        raise Exception("Sesion no existe")
+
+    session = sessions[session_id]
+    used_question_ids = set(session.setdefault("used_question_ids", []))
+
+    available_questions = [
+        question
+        for question in questions
+        if question.academic_cut == cut and str(question.question_id) not in used_question_ids
+    ]
+
+    if not available_questions:
+        raise Exception("No quedan preguntas disponibles para esta sesion")
+
+    question = random.choice(available_questions)
+    session["used_question_ids"].append(str(question.question_id))
+
+    return question
 
 
 def roll_dice(session_id, player_id):

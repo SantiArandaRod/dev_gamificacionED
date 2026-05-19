@@ -91,3 +91,23 @@ async function moveBack(playerId, steps) {
         console.error("Error en penalización:", err);
     }
 }
+
+async function triggerNextQuestion(sessionId, cut) {
+    try {
+        const res = await fetch(`/api/questions/session/${sessionId}/next?cut=${cut}`);
+
+        if (!res.ok) {
+            const error = await res.json();
+            alert(error.detail || "No quedan preguntas disponibles para esta sesion");
+            return;
+        }
+
+        const question = await res.json();
+
+        currentQuestion = question;
+        isAnswering = true;
+        showQuestionModal(question);
+    } catch (err) {
+        console.error("Error cargando pregunta de la sesion:", err);
+    }
+}
