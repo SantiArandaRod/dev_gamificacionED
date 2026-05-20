@@ -9,7 +9,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.game_state import questions_db
 from app.models.question import Question
-from app.routes import board, questions, session
+from app.routes import avatar, board, questions, session
 
 BASE_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = BASE_DIR.parent
@@ -46,6 +46,7 @@ app.add_middleware(
 app.include_router(session.router, prefix="/api", tags=["Session"])
 app.include_router(questions.router, prefix="/api/questions", tags=["Questions"])
 app.include_router(board.router, prefix="/api/board", tags=["Board"])
+app.include_router(avatar.router, prefix="/avatar", tags=["Avatar"])
 
 app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 

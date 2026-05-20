@@ -9,5 +9,6 @@ class Player(BaseModel):
     name: str
     order: int
     avatar: AvatarConfig = Field(default_factory=AvatarConfig)
+    avatar_data: dict = Field(default_factory=dict)
     position: int = 0
     is_active: bool = True
