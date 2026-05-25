@@ -1,314 +1,179 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Ecuaciones Diferenciales - Lobby</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Variables al azar - S3E</title>
+    <style>
+        :root {
+            --bg: #1A1A2E;
+            --surface: #16213E;
+            --gold: #F39C12;
+            --snake: #00FF66;
+            --cyan: #00FFFF;
+            --magenta: #FF00FF;
+            --yellow: #FFE600;
+            --green: #39FF14;
+            --text: #F7FBFF;
+            --muted: #A7B0C8;
+        }
 
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="css/style.css" rel="stylesheet">
+        * {
+            box-sizing: border-box;
+        }
 
-<style>
-    body {
-        background: #1a1a2e;
-        color: #fff;
-        font-family: 'Segoe UI', sans-serif;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-    }
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            background:
+                linear-gradient(rgba(0, 255, 255, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 0, 255, 0.05) 1px, transparent 1px),
+                var(--bg);
+            background-size: 44px 44px;
+            color: var(--text);
+            font-family: "Trebuchet MS", Arial, sans-serif;
+        }
 
-    .card-custom {
-        background: #16213e;
-        border: 2px solid #4ecca3;
-        border-radius: 15px;
-        box-shadow: 0 0 20px rgba(78, 204, 163, 0.2);
-    }
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: repeating-linear-gradient(
+                0deg,
+                rgba(255, 255, 255, 0.04),
+                rgba(255, 255, 255, 0.04) 1px,
+                transparent 1px,
+                transparent 4px
+            );
+            mix-blend-mode: overlay;
+        }
 
-    #avatar-preview {
-        width: 120px;
-        height: 120px;
-        margin: 0 auto;
-        background: #0f3460;
-        border-radius: 50%;
-        padding: 10px;
-        border: 2px solid #4ecca3;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+        main {
+            width: min(920px, calc(100vw - 32px));
+            padding: clamp(28px, 6vw, 64px);
+            text-align: center;
+            background: rgba(22, 33, 62, 0.78);
+            border: 2px solid var(--cyan);
+            border-radius: 8px;
+            box-shadow:
+                0 0 18px rgba(0, 255, 255, 0.58),
+                inset 0 0 24px rgba(255, 0, 255, 0.16);
+        }
 
-    .form-control, .form-select {
-        background: #1a1a2e;
-        border: 1px solid #4ecca3;
-        color: white;
-    }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 34px;
+            margin-bottom: 22px;
+            padding: 7px 14px;
+            border: 1px solid var(--gold);
+            color: var(--yellow);
+            text-transform: uppercase;
+            letter-spacing: 0;
+            font-weight: 800;
+            text-shadow: 0 0 10px rgba(255, 230, 0, 0.8);
+        }
 
-    .form-control:focus, .form-select:focus {
-        background: #1a1a2e;
-        color: white;
-        border-color: #e94560;
-        box-shadow: none;
-    }
+        h1 {
+            margin: 0;
+            font-family: Impact, "Arial Black", sans-serif;
+            font-size: clamp(2.5rem, 9vw, 6.8rem);
+            line-height: 0.92;
+            letter-spacing: 0;
+            text-transform: uppercase;
+            color: var(--text);
+            text-shadow:
+                4px 0 0 var(--magenta),
+                -4px 0 0 var(--cyan),
+                0 0 22px rgba(0, 255, 102, 0.42);
+            animation: title-in 900ms cubic-bezier(.2,.9,.2,1) both, glitch 3.2s 1.1s infinite;
+        }
 
-    .btn-custom {
-        font-weight: bold;
-        padding: 12px;
-    }
+        .subtitle {
+            max-width: 620px;
+            margin: 24px auto 34px;
+            color: var(--muted);
+            font-size: clamp(1rem, 2.2vw, 1.25rem);
+            line-height: 1.5;
+        }
 
-    .btn-create {
-        background: #28a745;
-        border: none;
-    }
+        .play-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 210px;
+            min-height: 58px;
+            padding: 14px 28px;
+            border: 2px solid var(--green);
+            border-radius: 8px;
+            background: #0B1228;
+            color: var(--green);
+            font-size: 1.25rem;
+            font-weight: 900;
+            text-decoration: none;
+            text-transform: uppercase;
+            box-shadow: 0 0 18px rgba(57, 255, 20, 0.55);
+            transition: transform 180ms ease, background 180ms ease, color 180ms ease;
+        }
 
-    .btn-join {
-        background: #17a2b8;
-        border: none;
-    }
+        .play-button:hover,
+        .play-button:focus-visible {
+            transform: translateY(-2px) scale(1.03);
+            background: var(--green);
+            color: #07111F;
+            outline: none;
+        }
 
-    .local-player-list {
-        display: grid;
-        gap: 8px;
-    }
+        .arcade-track {
+            width: min(560px, 90%);
+            height: 8px;
+            margin: 32px auto 0;
+            background: linear-gradient(90deg, var(--cyan), var(--magenta), var(--yellow), var(--snake));
+            box-shadow: 0 0 18px rgba(255, 255, 255, 0.38);
+            animation: track-pulse 1.4s ease-in-out infinite;
+        }
 
-    .local-player-row {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        background: #0f3460;
-        border: 1px solid rgba(78, 204, 163, 0.35);
-        border-radius: 8px;
-        padding: 8px;
-    }
+        @keyframes title-in {
+            from {
+                opacity: 0;
+                transform: translateY(32px) scale(0.92);
+                filter: blur(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+                filter: blur(0);
+            }
+        }
 
-    .local-player-avatar {
-        width: 46px;
-        height: 46px;
-        flex: 0 0 46px;
-    }
+        @keyframes glitch {
+            0%, 92%, 100% { transform: translateX(0); }
+            94% { transform: translateX(-3px); }
+            96% { transform: translateX(3px); }
+            98% { transform: translateX(-1px); }
+        }
 
-    .local-player-avatar svg {
-        width: 100%;
-        height: 100%;
-        display: block;
-    }
-</style>
-
-
+        @keyframes track-pulse {
+            0%, 100% { opacity: 0.75; transform: scaleX(0.94); }
+            50% { opacity: 1; transform: scaleX(1); }
+        }
+    </style>
 </head>
-
 <body>
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-5">
-
-
-        <div class="card card-custom p-4">
-
-            <h2 class="text-center mb-1" style="color:#4ecca3;">Ecuaciones Diferenciales WEB</h2>
-            <p class="text-center small text-muted mb-3">
-                Gamificación de Ecuaciones Diferenciales
-            </p>
-
-            <div class="alert alert-dark text-center small">
-                Partida local en este equipo
-            </div>
-
-            <!-- Avatar -->
-            <h5 class="text-center mt-3">Tu Avatar</h5>
-            <div id="avatar-editor" class="avatar-editor">
-                <div class="avatar-preview-panel">
-                    <div id="avatar-preview" class="mb-3">
-                        <div id="avatar-svg-container"></div>
-                    </div>
-                    <div class="avatar-action-row">
-                        <button id="btn-random-avatar" type="button" class="btn btn-outline-light btn-sm">Aleatorio</button>
-                        <button id="btn-save-avatar" type="button" class="btn btn-success btn-sm">Guardar avatar</button>
-                    </div>
-                    <small id="avatar-save-status" class="avatar-save-status"></small>
-                </div>
-                <div class="avatar-options-panel">
-                    <div id="avatar-categories"></div>
-                </div>
-            </div>
-
-            <!-- Config -->
-            <div class="row g-2 mb-3 d-none" aria-hidden="true">
-                <div class="col-6">
-                    <label class="small">Piel</label>
-                    <input type="color" id="skin_color" class="form-control form-control-color w-100" value="#ffdbac">
-                </div>
-                <div class="col-6">
-                    <label class="small">Accesorio</label>
-                    <select id="accessory" class="form-select small">
-                        <option value="none">Ninguno</option>
-                        <option value="glasses">Gafas</option>
-                        <option value="hat">Gorra</option>
-                        <option value="crown">Corona</option>
-                        <option value="graduation">Birrete</option>
-                    </select>
-                </div>
-
-                <div class="col-12">
-                    <label class="small">Forma de Cara</label>
-                    <select id="face_shape" class="form-select">
-                        <option value="circle">Circular</option>
-                        <option value="square">Cuadrada</option>
-                        <option value="rounded">Redondeada</option>
-                    </select>
-                </div>
-            </div>
-
-            <!-- Datos -->
-            <div class="mb-3">
-                <input type="text" id="player-name" maxlength="20" class="form-control custom-placeholder" placeholder="Tu Nombre">
-            </div>
-
-            <div class="mb-3">
-                <select id="academic_cut" class="form-select">
-                    <option value="1">Corte 1: EDO 1er Orden</option>
-                    <option value="2">Corte 2: Orden Superior</option>
-                    <option value="3">Corte 3: Laplace</option>
-                </select>
-            </div>
-
-            <div class="mb-3">
-                <div class="d-flex justify-content-between align-items-center mb-2">
-                    <strong>Jugadores locales</strong>
-                    <small id="player-count" class="text-muted">0/4</small>
-                </div>
-                <div id="local-player-list" class="local-player-list"></div>
-            </div>
-
-            <!-- Botones -->
-            <div class="d-grid gap-2">
-                <button id="btn-create" class="btn btn-create btn-custom">
-                    Agregar Jugador
-                </button>
-
-                <button id="btn-join" class="btn btn-join btn-custom">
-                    Iniciar Partida Local
-                </button>
-            </div>
-
-            <div id="lobby-message" class="alert alert-dark text-center small mt-3 d-none"></div>
-
-        </div>
-    </div>
-</div>
-
-</div>
-
-<!-- Scripts (orden correcto) -->
-
-<script src="js/avatar-builder.js?v=avatar-colors-2"></script>
-
-<script src="js/api.js"></script>
-
-<script>
-const nameInput = document.getElementById('player-name');
-const btnCreate = document.getElementById('btn-create');
-const btnJoin = document.getElementById('btn-join');
-const playerList = document.getElementById('local-player-list');
-const playerCount = document.getElementById('player-count');
-let localPlayers = [];
-
-function setLoading(btn, state, text="Procesando...") {
-    btn.disabled = state;
-    btn.innerText = state ? text : btn.dataset.original;
-}
-
-function showLobbyMessage(message) {
-    const messageEl = document.getElementById('lobby-message');
-    messageEl.innerText = message;
-    messageEl.classList.remove('d-none');
-    window.setTimeout(() => messageEl.classList.add('d-none'), 2400);
-}
-
-btnCreate.dataset.original = btnCreate.innerText;
-btnJoin.dataset.original = btnJoin.innerText;
-
-function renderLocalPlayers() {
-    playerCount.innerText = `${localPlayers.length}/4`;
-    playerList.innerHTML = '';
-
-    if (!localPlayers.length) {
-        playerList.innerHTML = '<div class="text-muted small text-center py-2">Agrega entre 1 y 4 jugadores.</div>';
-        return;
-    }
-
-    localPlayers.forEach((player, index) => {
-        const row = document.createElement('div');
-        row.className = 'local-player-row';
-        row.innerHTML = `
-            <div class="local-player-avatar">${generateAvatarSVG(player.avatar_data || player.avatar)}</div>
-            <div class="flex-grow-1">
-                <strong>${player.name}</strong>
-                <div class="small text-muted">Turno ${index + 1}</div>
-            </div>
-            <button type="button" class="btn btn-sm btn-outline-danger" data-remove-player="${player.player_id}">Quitar</button>
-        `;
-        playerList.appendChild(row);
-    });
-
-    playerList.querySelectorAll('[data-remove-player]').forEach(button => {
-        button.addEventListener('click', () => {
-            localPlayers = localPlayers.filter(player => player.player_id !== button.dataset.removePlayer);
-            localPlayers = localPlayers.map((player, index) => ({ ...player, order: index + 1 }));
-            sessionStorage.setItem('current_player', JSON.stringify(localPlayers[0] || null));
-            renderLocalPlayers();
-        });
-    });
-}
-
-btnCreate.addEventListener('click', () => {
-    const name = nameInput.value.trim();
-
-    if (!name) return showLobbyMessage("Ingresa el nombre del jugador.");
-    if (localPlayers.length >= 4) return showLobbyMessage("La partida local permite hasta 4 jugadores.");
-
-    const playerData = {
-        player_id: crypto.randomUUID(),
-        name,
-        order: localPlayers.length + 1,
-        avatar: { ...avatarConfig },
-        avatar_data: { ...avatarConfig },
-        position: 1,
-        score: 0,
-        is_active: true
-    };
-
-    localPlayers.push(playerData);
-    sessionStorage.setItem('current_player', JSON.stringify(localPlayers[0]));
-    nameInput.value = '';
-    window.avatarBuilder?.randomize();
-    renderLocalPlayers();
-});
-
-btnJoin.addEventListener('click', () => {
-    const cut = document.getElementById('academic_cut').value;
-
-    if (!localPlayers.length) return showLobbyMessage("Agrega al menos un jugador.");
-
-    const gameState = {
-        mode: "local",
-        academic_cut: Number(cut),
-        players: localPlayers,
-        current_turn_index: 0,
-        dice_value: null,
-        used_question_ids: [],
-        scored_question_ids: [],
-        status: "playing"
-    };
-
-    localStorage.setItem('local_game_state', JSON.stringify(gameState));
-    sessionStorage.setItem('current_player', JSON.stringify(localPlayers[0]));
-    window.location.href = `game.html?local=1&cut=${cut}`;
-});
-
-renderLocalPlayers();
-</script>
-
+    <div class="scanlines"></div>
+    <main>
+        <div class="badge">Serpientes, escaleras y ecuaciones</div>
+        <h1>Variables al azar - S3E</h1>
+        <p class="subtitle">
+            Una partida local para resolver retos de Ecuaciones Diferenciales con dados,
+            avatares y decisiones honestas.
+        </p>
+        <a class="play-button" href="rules.html">Jugar</a>
+        <div class="arcade-track" aria-hidden="true"></div>
+    </main>
 </body>
 </html>

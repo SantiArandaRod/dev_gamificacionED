@@ -44,7 +44,7 @@ app.add_middleware(
 )
 
 app.include_router(session.router, prefix="/api", tags=["Session"])
-app.include_router(questions.router, prefix="/api/questions", tags=["Questions"])
+app.include_router(questions.router, prefix="/api", tags=["Questions"])
 app.include_router(board.router, prefix="/api/board", tags=["Board"])
 app.include_router(avatar.router, prefix="/avatar", tags=["Avatar"])
 

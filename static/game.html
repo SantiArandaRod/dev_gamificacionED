@@ -3,320 +3,893 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>S&E: Ecuaciones Diferenciales</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <title>Tablero - Variables al azar S3E</title>
     <style>
         :root {
-            --primary-bg: #1a1a2e;
-            --sidebar-bg: #16213e;
-            --board-bg: #0f3460;
-            --accent: #4ecca3;
-            --danger: #e94560;
+            --bg: #1A1A2E;
+            --surface: #16213E;
+            --gold: #F39C12;
+            --snake: #00FF66;
+            --cyan: #00FFFF;
+            --magenta: #FF00FF;
+            --yellow: #FFE600;
+            --green: #39FF14;
+            --text: #F7FBFF;
+            --muted: #A7B0C8;
+            --danger: #FF4E78;
         }
+
+        * { box-sizing: border-box; }
 
         body {
-            background: var(--primary-bg);
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
             margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Trebuchet MS", Arial, sans-serif;
         }
 
-        /* --- CONTENEDOR DEL TABLERO (5x5 CUADRADO) --- */
-        .board-grid {
+        main {
+            width: min(1320px, calc(100vw - 24px));
+            margin: 0 auto;
+            padding: 18px 0;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: minmax(320px, 720px) 360px;
+            gap: 18px;
+            align-items: start;
+        }
+
+        .board-wrap,
+        .panel {
+            background: var(--surface);
+            border: 2px solid var(--cyan);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.28);
+        }
+
+        .board-wrap {
+            position: relative;
+            padding: clamp(10px, 2vw, 18px);
+        }
+
+        .board {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             grid-template-rows: repeat(5, 1fr);
-            gap: 10px;
-            background: var(--board-bg);
-            padding: 20px;
-            border-radius: 15px;
-            border: 4px solid var(--accent);
+            gap: clamp(6px, 1.2vw, 10px);
             width: 100%;
-            max-width: 600px;
             aspect-ratio: 1 / 1;
-            margin: 0 auto;
-            box-shadow: 0 0 30px rgba(78, 204, 163, 0.15);
+            background: #0B1228;
+            border: 3px solid var(--gold);
+            border-radius: 8px;
+            padding: clamp(8px, 1.5vw, 14px);
+            box-shadow: inset 0 0 24px rgba(243, 156, 18, 0.18);
         }
 
-        /* --- CELDAS --- */
         .cell {
-            background: var(--sidebar-bg);
-            border-radius: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            justify-content: center;
-            align-items: center;
             position: relative;
-            transition: transform 0.2s, background 0.3s;
-        }
-
-        .cell span {
-            position: absolute;
-            top: 8px;
-            left: 10px;
-            color: var(--accent);
-            font-weight: bold;
-            font-size: 0.9rem;
-            opacity: 0.6;
-        }
-
-        /* --- CASILLAS ESPECIALES --- */
-        .snake_head {
-            border: 2px dashed var(--danger);
-            background: rgba(233, 69, 96, 0.1);
-        }
-        .ladder_bottom {
-            border: 2px dashed var(--accent);
-            background: rgba(78, 204, 163, 0.1);
-        }
-        .question {
-            cursor: pointer;
-            background: linear-gradient(145deg, #16213e, #1a1a2e);
-        }
-        .question:hover {
-            background: #1f2a44;
-            transform: scale(1.02);
-        }
-
-        /* --- AVATAR / FICHA --- */
-        .player-token {
-            width: 85%;
-            height: 85%;
-            z-index: 10;
-            cursor: grab;
+            min-width: 0;
+            min-height: 0;
             display: flex;
-            justify-content: center;
             align-items: center;
-            background: transparent !important;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            border-radius: 8px;
+            background: #16213E;
+            overflow: hidden;
+        }
+
+        .cell-number {
+            position: absolute;
+            top: 6px;
+            left: 8px;
+            color: var(--muted);
+            font-size: clamp(0.72rem, 1.5vw, 0.9rem);
+            font-weight: 900;
+        }
+
+        .cell.ladder {
+            border-color: var(--gold);
+            box-shadow: inset 0 0 18px rgba(243, 156, 18, 0.16);
+        }
+
+        .cell.snake {
+            border-color: var(--snake);
+            box-shadow: inset 0 0 18px rgba(0, 255, 102, 0.14);
+        }
+
+        .cell.target {
+            animation: target-pulse 900ms ease-in-out infinite;
+            border-color: var(--active-color);
+            box-shadow: 0 0 20px var(--active-color), inset 0 0 18px rgba(255, 255, 255, 0.13);
+        }
+
+        .cell-label {
+            position: absolute;
+            right: 6px;
+            bottom: 6px;
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            font-weight: 900;
+            opacity: 0.78;
+        }
+
+        .cell.ladder .cell-label { color: var(--gold); }
+        .cell.snake .cell-label { color: var(--snake); }
+
+        .token-stack {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            width: 72%;
+            height: 72%;
+            z-index: 2;
+        }
+
+        .player-token {
+            width: clamp(34px, 6vw, 58px);
+            height: clamp(34px, 6vw, 58px);
+            border: 3px solid currentColor;
+            border-radius: 50%;
+            background: #0B1228;
+            color: var(--cyan);
+            box-shadow: 0 0 15px currentColor;
+            touch-action: none;
+            cursor: grab;
+            overflow: hidden;
+            transition: transform 300ms ease-out;
+            z-index: 4;
         }
 
         .player-token svg {
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
-            animation: float 3s ease-in-out infinite;
+            display: block;
         }
 
-        .player-token:active { cursor: grabbing; }
-
-        .token-move svg {
-            animation: token-hop 0.7s ease both;
+        .player-token.dragging {
+            position: fixed;
+            cursor: grabbing;
+            pointer-events: none;
+            transform: scale(1.2);
+            transition: none;
+            z-index: 2000;
         }
 
-        .token-correct svg {
-            animation: token-correct 0.9s ease both;
-            filter: drop-shadow(0 0 12px rgba(78, 204, 163, 0.85));
+        .panel {
+            padding: 16px;
         }
 
-        .token-incorrect svg {
-            animation: token-incorrect 0.8s ease both;
-            filter: drop-shadow(0 0 12px rgba(233, 69, 96, 0.85));
+        h1 {
+            margin: 0 0 14px;
+            font-family: Impact, "Arial Black", sans-serif;
+            font-size: clamp(2rem, 4vw, 3.3rem);
+            line-height: 0.95;
+            letter-spacing: 0;
+            text-transform: uppercase;
+            text-shadow: 3px 0 0 var(--magenta), -3px 0 0 var(--cyan);
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
-        }
-
-        @keyframes token-hop {
-            0% { transform: translateY(0) scale(1); }
-            40% { transform: translateY(-18px) scale(1.08); }
-            100% { transform: translateY(0) scale(1); }
-        }
-
-        @keyframes token-correct {
-            0% { transform: scale(1); }
-            45% { transform: scale(1.16) rotate(-3deg); }
-            100% { transform: scale(1); }
-        }
-
-        @keyframes token-incorrect {
-            0%, 100% { transform: translateX(0); }
-            20% { transform: translateX(-8px); }
-            40% { transform: translateX(8px); }
-            60% { transform: translateX(-5px); }
-            80% { transform: translateX(5px); }
-        }
-
-        /* --- SIDEBAR --- */
-        .sidebar {
-            background: var(--sidebar-bg);
-            border-radius: 20px;
-            padding: 30px;
-            border: 1px solid var(--accent);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-        }
-
-        #dice-value {
-            font-family: 'Courier New', Courier, monospace;
-            background: var(--primary-bg) !important;
-            color: var(--accent) !important;
-            border: 3px solid var(--accent) !important;
-            text-shadow: 0 0 10px var(--accent);
-            font-weight: bold;
-        }
-
-        .dice-pop {
-            animation: dice-pop 0.42s ease both;
-        }
-
-        @keyframes dice-pop {
-            0% { transform: scale(0.88) rotate(-5deg); }
-            60% { transform: scale(1.08) rotate(3deg); }
-            100% { transform: scale(1) rotate(0); }
-        }
-
-        /* --- MODAL --- */
-        .modal-content {
-            background: var(--sidebar-bg);
-            border: 2px solid var(--accent);
-            border-radius: 15px;
-        }
-
-        .btn-option {
-            transition: all 0.2s;
-            border: 1px solid var(--accent);
-            color: white;
-        }
-
-        .btn-option:hover {
-            background: var(--accent);
-            color: var(--primary-bg);
-            font-weight: bold;
-        }
-
-        .question-feedback {
-            min-height: 0;
-            opacity: 0;
-            transform: translateY(8px);
-            transition: opacity 0.22s ease, transform 0.22s ease;
+        .turn-card {
+            padding: 12px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
             border-radius: 8px;
-            padding: 0;
-            font-weight: 700;
+            background: #101A35;
         }
 
-        .question-feedback.show {
-            opacity: 1;
-            transform: translateY(0);
-            margin-top: 18px;
-            padding: 12px 14px;
+        .turn-card strong {
+            display: block;
+            color: var(--yellow);
+            font-size: 1.2rem;
+            overflow-wrap: anywhere;
         }
 
-        .question-feedback.correct {
-            background: rgba(78, 204, 163, 0.16);
-            color: #8ef0cf;
-            border: 1px solid rgba(78, 204, 163, 0.55);
+        .dice {
+            width: 112px;
+            height: 112px;
+            margin: 14px auto;
+            display: grid;
+            place-items: center;
+            border: 3px solid var(--gold);
+            border-radius: 8px;
+            background: #0B1228;
+            color: var(--yellow);
+            font-family: Impact, "Arial Black", sans-serif;
+            font-size: 4rem;
+            box-shadow: 0 0 18px rgba(243, 156, 18, 0.45);
         }
 
-        .question-feedback.incorrect {
-            background: rgba(233, 69, 96, 0.16);
-            color: #ff9bad;
-            border: 1px solid rgba(233, 69, 96, 0.55);
+        .dice.rolling {
+            animation: dice-roll 520ms ease both;
         }
 
-        .question-feedback.neutral {
-            background: rgba(255, 193, 7, 0.16);
-            color: #ffe08a;
-            border: 1px solid rgba(255, 193, 7, 0.5);
+        button {
+            min-height: 48px;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 2px solid var(--green);
+            background: var(--green);
+            color: #07111F;
+            font: inherit;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 0 14px rgba(57, 255, 20, 0.35);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .secondary-button {
+            width: 100%;
+            margin-top: 12px;
+            border-color: var(--danger);
+            background: transparent;
+            color: var(--danger);
+            box-shadow: none;
+        }
+
+        #roll-button {
+            width: 100%;
+        }
+
+        .scoreboard {
+            display: grid;
+            gap: 8px;
+            margin-top: 16px;
         }
 
         .score-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: 6px;
-            padding: 6px 8px;
-            background: rgba(255, 255, 255, 0.04);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 10px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 8px;
+            background: #0B1228;
         }
 
         .score-row.active {
-            outline: 1px solid rgba(78, 204, 163, 0.72);
-            background: rgba(78, 204, 163, 0.12);
+            border-color: currentColor;
+            box-shadow: 0 0 14px currentColor;
         }
 
-        #game-notice {
-            position: fixed;
-            left: 50%;
-            bottom: 24px;
-            transform: translate(-50%, 12px);
-            z-index: 1200;
-            max-width: min(560px, calc(100vw - 32px));
-            background: #10192f;
-            border: 1px solid rgba(78, 204, 163, 0.55);
-            color: #f7fbff;
+        .score-row span {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .notice,
+        .confirm-box {
+            min-height: 24px;
+            margin-top: 12px;
+            color: var(--yellow);
+            font-weight: 800;
+        }
+
+        .confirm-box {
+            display: none;
+            padding: 12px;
+            border: 1px solid var(--danger);
             border-radius: 8px;
-            padding: 12px 16px;
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.35);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.22s ease, transform 0.22s ease;
+            color: var(--text);
+            background: rgba(255, 78, 120, 0.12);
         }
 
-        #game-notice.show {
-            opacity: 1;
-            transform: translate(-50%, 0);
+        .confirm-box.show {
+            display: block;
+        }
+
+        .confirm-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .confirm-actions button {
+            flex: 1;
+            min-height: 42px;
+            padding: 8px;
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            display: none;
+            place-items: center;
+            padding: 16px;
+            background: rgba(0, 0, 0, 0.74);
+            z-index: 1600;
+        }
+
+        .modal.show {
+            display: grid;
+        }
+
+        .modal-card {
+            width: min(680px, 100%);
+            background: var(--surface);
+            border: 2px solid var(--magenta);
+            border-radius: 8px;
+            padding: clamp(18px, 4vw, 28px);
+            box-shadow: 0 0 24px rgba(255, 0, 255, 0.5);
+        }
+
+        .modal-card h2 {
+            margin: 0 0 14px;
+            color: var(--cyan);
+            font-size: clamp(1.25rem, 3vw, 2rem);
+        }
+
+        .option-grid {
+            display: grid;
+            gap: 10px;
+        }
+
+        .option-button {
+            width: 100%;
+            text-align: left;
+            border-color: rgba(0, 255, 255, 0.45);
+            background: #0B1228;
+            color: var(--text);
+            box-shadow: none;
+            text-transform: none;
+        }
+
+        .option-button:hover,
+        .option-button.selected {
+            border-color: var(--yellow);
+            box-shadow: 0 0 14px rgba(255, 230, 0, 0.35);
+        }
+
+        .feedback {
+            display: none;
+            margin-top: 14px;
+            padding: 12px;
+            border-radius: 8px;
+            line-height: 1.45;
+            font-weight: 800;
+        }
+
+        .feedback.show {
+            display: block;
+        }
+
+        .feedback.correct {
+            border: 1px solid var(--green);
+            background: rgba(57, 255, 20, 0.12);
+            color: #B8FFAD;
+        }
+
+        .feedback.incorrect {
+            border: 1px solid var(--danger);
+            background: rgba(255, 78, 120, 0.12);
+            color: #FFC3D0;
+        }
+
+        .continue-feedback {
+            display: none;
+            width: 100%;
+            margin-top: 14px;
+        }
+
+        .continue-feedback.show {
+            display: block;
+        }
+
+        @keyframes target-pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        @keyframes dice-roll {
+            0% { transform: rotate(-8deg) scale(0.9); }
+            45% { transform: rotate(10deg) scale(1.1); }
+            100% { transform: rotate(0) scale(1); }
+        }
+
+        @media (max-width: 980px) {
+            .layout {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-
-    <div class="container-fluid p-4">
-        <div class="row g-4 align-items-center justify-content-center">
-
-            <div class="col-xl-6 col-lg-7 d-flex justify-content-center">
-                <div id="board" class="board-grid">
-                    </div>
+    <main>
+        <section class="layout">
+            <div class="board-wrap">
+                <div id="board" class="board"></div>
             </div>
 
-            <div class="col-xl-4 col-lg-5">
-                <div class="sidebar">
-                    <h2 class="text-center mb-4" style="color: var(--accent); letter-spacing: 2px;">PANEL DE JUEGO</h2>
-
-                    <div class="text-center mb-4">
-                        <div id="dice-value" class="display-1 mb-3 rounded d-flex align-items-center justify-content-center"
-                             style="width: 120px; height: 120px; margin: 0 auto;">?</div>
-                        <button id="btn-roll" class="btn btn-lg btn-warning fw-bold w-100 py-3 shadow">
-                            LANZAR DADO
-                        </button>
-                    </div>
-
-                    <div class="card bg-dark border-info mb-4">
-                        <div class="card-body text-info small">
-                            <h6 class="card-title fw-bold">Misión Actual:</h6>
-                            Lanza el dado. Si caes en una casilla de pregunta, resuelve el reto para mantener tu posición.
-                        </div>
-                    </div>
-
-                    <button onclick="location.href='index.html'" class="btn btn-outline-danger w-100">Salir</button>
+            <aside class="panel">
+                <h1>Panel de juego</h1>
+                <div class="turn-card">
+                    Turno actual
+                    <strong id="turn-name">-</strong>
+                    <span id="turn-state">Lanza el dado para empezar.</span>
                 </div>
-            </div>
+                <div id="dice" class="dice">?</div>
+                <button id="roll-button" type="button">Lanzar dado</button>
+                <div id="notice" class="notice" role="status" aria-live="polite"></div>
+                <div id="scoreboard" class="scoreboard"></div>
+                <button id="lobby-button" class="secondary-button" type="button">Volver al lobby</button>
+                <div id="confirm-box" class="confirm-box">
+                    Esto limpiara la partida local.
+                    <div class="confirm-actions">
+                        <button id="cancel-lobby" type="button">Cancelar</button>
+                        <button id="confirm-lobby" type="button">Salir</button>
+                    </div>
+                </div>
+            </aside>
+        </section>
+    </main>
+
+    <div id="question-modal" class="modal" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="question-title">
+            <h2 id="question-title">Reto academico</h2>
+            <p id="question-text"></p>
+            <div id="question-options" class="option-grid"></div>
+            <div id="feedback" class="feedback"></div>
+            <button id="continue-feedback" class="continue-feedback" type="button">Continuar</button>
         </div>
     </div>
 
-    <div class="modal fade" id="qModal" data-bs-backdrop="static" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header border-0 justify-content-center">
-                    <h5 class="modal-title text-info">RETO ACADÉMICO</h5>
-                </div>
-                <div class="modal-body text-center p-4">
-                    <h4 id="q-text" class="mb-4 fw-light"></h4>
-                    <div id="q-options" class="d-grid gap-3">
-                        </div>
-                    <div id="q-feedback" class="question-feedback"></div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script>
+        const PLAYER_COLORS = ["#00FFFF", "#FF00FF", "#FFE600", "#39FF14"];
+        const VISUAL_ORDER = [21, 22, 23, 24, 25, 20, 19, 18, 17, 16, 11, 12, 13, 14, 15, 10, 9, 8, 7, 6, 1, 2, 3, 4, 5];
+        const LADDERS = { 3: 11, 6: 17, 9: 14 };
+        const SNAKES = { 24: 16, 19: 8, 15: 5 };
 
-    <div id="game-notice" role="status" aria-live="polite"></div>
+        const board = document.getElementById("board");
+        const dice = document.getElementById("dice");
+        const rollButton = document.getElementById("roll-button");
+        const turnName = document.getElementById("turn-name");
+        const turnState = document.getElementById("turn-state");
+        const notice = document.getElementById("notice");
+        const scoreboard = document.getElementById("scoreboard");
+        const modal = document.getElementById("question-modal");
+        const questionText = document.getElementById("question-text");
+        const questionOptions = document.getElementById("question-options");
+        const feedback = document.getElementById("feedback");
+        const continueFeedback = document.getElementById("continue-feedback");
+        const confirmBox = document.getElementById("confirm-box");
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/avatar-builder.js?v=avatar-colors-2"></script> <script src="js/question-modal.js"></script>
-    <script src="js/board.js"></script>
+        let session = null;
+        let pendingMove = null;
+        let currentQuestion = null;
+        let answeredResult = null;
+        let dragState = null;
+
+        function readSession() {
+            try {
+                session = JSON.parse(localStorage.getItem("vae_session") || "null");
+            } catch (error) {
+                session = null;
+            }
+
+            if (!session || !Array.isArray(session.players) || !session.players.length) {
+                window.location.href = "index.html";
+            }
+
+            pendingMove = session.pendingMove || null;
+            currentQuestion = session.currentQuestion || null;
+        }
+
+        function saveSession() {
+            localStorage.setItem("vae_session", JSON.stringify(session));
+        }
+
+        function getActivePlayer() {
+            return session.players.find(player => player.id === session.currentTurn) || session.players[0];
+        }
+
+        function playerColor(player) {
+            return PLAYER_COLORS[(player.id - 1) % PLAYER_COLORS.length];
+        }
+
+        function wait(ms) {
+            return new Promise(resolve => window.setTimeout(resolve, ms));
+        }
+
+        async function loadQuestionsOnce() {
+            if (Array.isArray(session.questions) && session.questions.length) return;
+
+            showNotice("Cargando preguntas del corte seleccionado...");
+            const response = await fetch(`/api/questions?difficulty=${encodeURIComponent(session.difficulty || "easy")}`);
+            if (!response.ok) throw new Error("No se pudieron cargar las preguntas");
+            session.questions = await response.json();
+            session.usedQuestions = [];
+            saveSession();
+        }
+
+        function showNotice(message) {
+            notice.textContent = message;
+        }
+
+        function renderBoard() {
+            board.innerHTML = "";
+            VISUAL_ORDER.forEach(number => {
+                const cell = document.createElement("div");
+                cell.id = `cell-${number}`;
+                cell.className = "cell";
+                cell.dataset.cell = String(number);
+
+                if (LADDERS[number]) cell.classList.add("ladder");
+                if (SNAKES[number]) cell.classList.add("snake");
+
+                cell.innerHTML = `
+                    <span class="cell-number">${number}</span>
+                    <span class="cell-label">${LADDERS[number] ? "L" : SNAKES[number] ? "S" : ""}</span>
+                    <div class="token-stack"></div>
+                `;
+                board.appendChild(cell);
+            });
+        }
+
+        function renderTokens() {
+            document.querySelectorAll(".token-stack").forEach(stack => stack.innerHTML = "");
+
+            session.players.forEach(player => {
+                const stack = document.querySelector(`#cell-${player.position || 1} .token-stack`);
+                if (!stack) return;
+
+                const token = document.createElement("div");
+                token.id = `token-${player.id}`;
+                token.className = "player-token";
+                token.style.color = playerColor(player);
+                token.title = player.name;
+                token.innerHTML = player.avatar?.svg || fallbackTokenSvg(player);
+                token.addEventListener("pointerdown", event => startDrag(event, player));
+                stack.appendChild(token);
+            });
+        }
+
+        function fallbackTokenSvg(player) {
+            return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="${player.name}">
+                <circle cx="40" cy="40" r="34" fill="${playerColor(player)}"/>
+                <text x="40" y="50" text-anchor="middle" font-size="30" font-weight="900" fill="#07111F">${player.id}</text>
+            </svg>`;
+        }
+
+        function renderPanel() {
+            const activePlayer = getActivePlayer();
+            turnName.textContent = activePlayer.name;
+            turnName.style.color = playerColor(activePlayer);
+            turnState.textContent = stateText();
+            dice.textContent = session.lastDiceRoll || "?";
+            rollButton.disabled = session.gameState !== "waiting_dice_roll";
+
+            scoreboard.innerHTML = "";
+            session.players.forEach(player => {
+                const row = document.createElement("div");
+                row.className = `score-row ${player.id === activePlayer.id ? "active" : ""}`;
+                row.style.color = playerColor(player);
+                row.innerHTML = `
+                    <div><strong>${player.name}</strong><br><span>Casilla ${player.position}</span></div>
+                    <strong>${player.score} pts</strong>
+                `;
+                scoreboard.appendChild(row);
+            });
+        }
+
+        function stateText() {
+            if (session.gameState === "dragging_token") return `Arrastra la ficha a la casilla ${pendingMove?.to}.`;
+            if (session.gameState === "answering_question") return "Responde el reto para resolver el movimiento.";
+            return "Lanza el dado para calcular tu destino.";
+        }
+
+        function renderTarget() {
+            document.querySelectorAll(".cell").forEach(cell => {
+                cell.classList.remove("target");
+                cell.style.removeProperty("--active-color");
+            });
+
+            if (!pendingMove || session.gameState !== "dragging_token") return;
+            const activePlayer = getActivePlayer();
+            const cell = document.getElementById(`cell-${pendingMove.to}`);
+            if (cell) {
+                cell.classList.add("target");
+                cell.style.setProperty("--active-color", playerColor(activePlayer));
+            }
+        }
+
+        function renderAll() {
+            renderTokens();
+            renderTarget();
+            renderPanel();
+        }
+
+        function advanceTurn() {
+            const currentIndex = session.players.findIndex(player => player.id === session.currentTurn);
+            const nextPlayer = session.players[(currentIndex + 1) % session.players.length];
+            session.currentTurn = nextPlayer.id;
+            session.lastDiceRoll = null;
+            session.gameState = "waiting_dice_roll";
+            pendingMove = null;
+            session.pendingMove = null;
+            session.currentQuestion = null;
+            saveSession();
+            renderAll();
+        }
+
+        async function rollDice() {
+            if (session.gameState !== "waiting_dice_roll") return;
+
+            const activePlayer = getActivePlayer();
+            const roll = Math.floor(Math.random() * 6) + 1;
+            session.lastDiceRoll = roll;
+            dice.classList.remove("rolling");
+            dice.textContent = roll;
+            void dice.offsetWidth;
+            dice.classList.add("rolling");
+
+            const tentative = activePlayer.position + roll;
+            if (tentative > 25) {
+                showNotice(`${activePlayer.name} saco ${roll}, pero pasa de 25. Turno siguiente.`);
+                saveSession();
+                renderPanel();
+                await wait(900);
+                advanceTurn();
+                return;
+            }
+
+            pendingMove = { playerId: activePlayer.id, from: activePlayer.position, to: tentative, roll };
+            session.pendingMove = pendingMove;
+            session.gameState = "dragging_token";
+            saveSession();
+            showNotice(`Destino valido: casilla ${tentative}. Arrastra la ficha ahi.`);
+            renderAll();
+        }
+
+        function startDrag(event, player) {
+            if (session.gameState !== "dragging_token" || !pendingMove || player.id !== pendingMove.playerId) return;
+
+            const token = event.currentTarget;
+            const rect = token.getBoundingClientRect();
+            dragState = {
+                token,
+                player,
+                offsetX: event.clientX - rect.left,
+                offsetY: event.clientY - rect.top,
+                originLeft: rect.left,
+                originTop: rect.top,
+                width: rect.width,
+                height: rect.height
+            };
+
+            token.setPointerCapture(event.pointerId);
+            token.classList.add("dragging");
+            token.style.width = `${rect.width}px`;
+            token.style.height = `${rect.height}px`;
+            token.style.left = `${rect.left}px`;
+            token.style.top = `${rect.top}px`;
+            document.body.appendChild(token);
+            moveDrag(event);
+        }
+
+        function moveDrag(event) {
+            if (!dragState) return;
+            dragState.token.style.left = `${event.clientX - dragState.offsetX}px`;
+            dragState.token.style.top = `${event.clientY - dragState.offsetY}px`;
+        }
+
+        async function endDrag(event) {
+            if (!dragState) return;
+
+            const { token } = dragState;
+            const droppedElement = document.elementFromPoint(event.clientX, event.clientY);
+            const droppedCell = droppedElement?.closest?.(".cell");
+            const droppedNumber = Number(droppedCell?.dataset.cell);
+            const valid = droppedNumber === pendingMove.to;
+
+            if (valid) {
+                resetDraggedToken(token, pendingMove.from);
+                await openQuestion();
+            } else {
+                await snapBack(token);
+            }
+
+            dragState = null;
+        }
+
+        async function snapBack(token) {
+            showNotice(`Esa no es la casilla destino. Vuelve a intentar: ${pendingMove.to}.`);
+            token.style.transition = "left 300ms ease-out, top 300ms ease-out, transform 300ms ease-out";
+            token.style.left = `${dragState.originLeft}px`;
+            token.style.top = `${dragState.originTop}px`;
+            token.style.transform = "scale(1)";
+            await wait(320);
+            resetDraggedToken(token, pendingMove.from);
+            renderAll();
+        }
+
+        function resetDraggedToken(token, cellNumber) {
+            token.classList.remove("dragging");
+            token.removeAttribute("style");
+            const stack = document.querySelector(`#cell-${cellNumber} .token-stack`);
+            if (stack) stack.appendChild(token);
+        }
+
+        document.addEventListener("pointermove", moveDrag);
+        document.addEventListener("pointerup", endDrag);
+
+        function pickQuestion() {
+            const used = new Set(session.usedQuestions || []);
+            let available = session.questions.filter(question => !used.has(String(question.question_id)));
+
+            if (!available.length) {
+                session.usedQuestions = [];
+                available = [...session.questions];
+            }
+
+            const question = available[Math.floor(Math.random() * available.length)];
+            session.usedQuestions.push(String(question.question_id));
+            saveSession();
+            return question;
+        }
+
+        async function openQuestion() {
+            currentQuestion = pickQuestion();
+            answeredResult = null;
+            session.gameState = "answering_question";
+            session.pendingMove = pendingMove;
+            session.currentQuestion = currentQuestion;
+            saveSession();
+            renderAll();
+
+            showQuestionModal();
+        }
+
+        function showQuestionModal() {
+            if (!currentQuestion) return;
+
+            questionText.textContent = currentQuestion.text;
+            feedback.className = "feedback";
+            feedback.textContent = "";
+            continueFeedback.classList.remove("show");
+            questionOptions.innerHTML = "";
+
+            currentQuestion.options.forEach(option => {
+                const button = document.createElement("button");
+                button.className = "option-button";
+                button.type = "button";
+                button.textContent = option;
+                button.addEventListener("click", () => submitAnswer(option, button));
+                questionOptions.appendChild(button);
+            });
+
+            modal.classList.add("show");
+            modal.setAttribute("aria-hidden", "false");
+        }
+
+        async function submitAnswer(answer, selectedButton) {
+            questionOptions.querySelectorAll("button").forEach(button => button.disabled = true);
+            selectedButton.classList.add("selected");
+
+            const response = await fetch("/api/validate", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ question_id: currentQuestion.question_id, answer })
+            });
+
+            answeredResult = await response.json();
+            feedback.className = `feedback show ${answeredResult.correct ? "correct" : "incorrect"}`;
+            feedback.textContent = answeredResult.feedback || "Respuesta procesada.";
+            continueFeedback.classList.add("show");
+        }
+
+        continueFeedback.addEventListener("click", async () => {
+            modal.classList.remove("show");
+            modal.setAttribute("aria-hidden", "true");
+            await resolveAnsweredQuestion();
+        });
+
+        async function resolveAnsweredQuestion() {
+            const player = session.players.find(item => item.id === pendingMove.playerId);
+            if (!player || !answeredResult) return;
+
+            if (answeredResult.correct) {
+                player.score += 10;
+                await animateMove(player, pendingMove.from, pendingMove.to);
+                player.position = pendingMove.to;
+                saveSession();
+                renderAll();
+
+                if (player.position === 25) {
+                session.gameState = "finished";
+                    session.pendingMove = null;
+                    session.currentQuestion = null;
+                    saveSession();
+                    window.location.href = "podium.html";
+                    return;
+                }
+
+                if (LADDERS[player.position]) {
+                    showNotice(`${player.name} sube por escalera hasta ${LADDERS[player.position]}.`);
+                    await wait(450);
+                    await animateMove(player, player.position, LADDERS[player.position]);
+                    player.position = LADDERS[player.position];
+                    saveSession();
+                    renderAll();
+                }
+            } else {
+                player.score -= 10;
+                if (SNAKES[player.position]) {
+                    showNotice(`${player.name} fallo y baja por serpiente hasta ${SNAKES[player.position]}.`);
+                    await wait(450);
+                    await animateMove(player, player.position, SNAKES[player.position]);
+                    player.position = SNAKES[player.position];
+                    saveSession();
+                    renderAll();
+                }
+            }
+
+            await wait(500);
+            advanceTurn();
+        }
+
+        async function animateMove(player, from, to) {
+            const step = to > from ? 1 : -1;
+            let current = from;
+            while (current !== to) {
+                current += step;
+                player.position = current;
+                saveSession();
+                renderAll();
+                const token = document.getElementById(`token-${player.id}`);
+                if (token) {
+                    token.style.transform = "translateY(-8px) scale(1.08)";
+                    await wait(120);
+                    token.style.transform = "";
+                }
+                await wait(130);
+            }
+        }
+
+        rollButton.addEventListener("click", rollDice);
+
+        document.getElementById("lobby-button").addEventListener("click", () => {
+            confirmBox.classList.add("show");
+        });
+
+        document.getElementById("cancel-lobby").addEventListener("click", () => {
+            confirmBox.classList.remove("show");
+        });
+
+        document.getElementById("confirm-lobby").addEventListener("click", () => {
+            localStorage.removeItem("vae_session");
+            localStorage.removeItem("vae_difficulty");
+            window.location.href = "index.html";
+        });
+
+        async function init() {
+            readSession();
+            renderBoard();
+            try {
+                await loadQuestionsOnce();
+            } catch (error) {
+                showNotice("No se pudieron cargar las preguntas. Revisa el backend.");
+            }
+            if (!["waiting_dice_roll", "dragging_token", "answering_question"].includes(session.gameState)) {
+                session.gameState = "waiting_dice_roll";
+                saveSession();
+            }
+            renderAll();
+            if (session.gameState === "answering_question" && pendingMove && currentQuestion) {
+                showQuestionModal();
+            }
+        }
+
+        init();
+    </script>
 </body>
 </html>

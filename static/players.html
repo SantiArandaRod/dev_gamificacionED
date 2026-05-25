@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jugadores - Variables al azar S3E</title>
+    <style>
+        :root {
+            --bg: #1A1A2E;
+            --surface: #16213E;
+            --gold: #F39C12;
+            --snake: #00FF66;
+            --cyan: #00FFFF;
+            --magenta: #FF00FF;
+            --yellow: #FFE600;
+            --green: #39FF14;
+            --text: #F7FBFF;
+            --muted: #A7B0C8;
+            --danger: #FF4E78;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            display: grid;
+            place-items: center;
+            background:
+                linear-gradient(rgba(0, 255, 102, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                var(--bg);
+            background-size: 42px 42px;
+            color: var(--text);
+            font-family: "Trebuchet MS", Arial, sans-serif;
+        }
+
+        main {
+            width: min(820px, calc(100vw - 32px));
+            padding: clamp(22px, 5vw, 42px);
+            background: var(--surface);
+            border: 2px solid var(--cyan);
+            border-radius: 8px;
+            box-shadow: 0 0 22px rgba(0, 255, 255, 0.42), inset 0 0 22px rgba(255, 0, 255, 0.12);
+        }
+
+        h1 {
+            margin: 0 0 24px;
+            font-family: Impact, "Arial Black", sans-serif;
+            font-size: clamp(2rem, 7vw, 4.6rem);
+            line-height: 0.95;
+            letter-spacing: 0;
+            text-transform: uppercase;
+            color: var(--text);
+            text-shadow: 3px 0 0 var(--magenta), -3px 0 0 var(--cyan);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        input {
+            width: 100%;
+            min-height: 54px;
+            padding: 0 16px;
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            border-radius: 8px;
+            background: #0B1228;
+            color: var(--text);
+            font: inherit;
+            font-size: 1.05rem;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--yellow);
+            box-shadow: 0 0 14px rgba(255, 230, 0, 0.35);
+        }
+
+        button,
+        a {
+            min-height: 54px;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font: inherit;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        button {
+            border: 2px solid var(--green);
+            background: var(--green);
+            color: #07111F;
+            cursor: pointer;
+            box-shadow: 0 0 16px rgba(57, 255, 20, 0.38);
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .message {
+            min-height: 24px;
+            color: var(--yellow);
+            font-weight: 800;
+        }
+
+        .player-list {
+            display: grid;
+            gap: 10px;
+            margin: 20px 0 28px;
+        }
+
+        .player-row {
+            display: grid;
+            grid-template-columns: 54px 1fr auto;
+            align-items: center;
+            gap: 12px;
+            min-height: 72px;
+            padding: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 8px;
+            background: #101A35;
+        }
+
+        .token {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: 3px solid #FFFFFF;
+            box-shadow: 0 0 18px currentColor;
+        }
+
+        .player-row strong {
+            display: block;
+            font-size: 1.1rem;
+            overflow-wrap: anywhere;
+        }
+
+        .player-row span {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        .remove-button {
+            min-height: 42px;
+            padding: 8px 12px;
+            border-color: var(--danger);
+            background: transparent;
+            color: var(--danger);
+            box-shadow: none;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 14px;
+        }
+
+        a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--cyan);
+            color: var(--cyan);
+            background: transparent;
+            text-decoration: none;
+        }
+
+        @media (max-width: 660px) {
+            .form-row,
+            .player-row {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Registro de jugadores</h1>
+        <form id="player-form" class="form-row">
+            <input id="player-name" type="text" maxlength="20" autocomplete="off" placeholder="Nombre del jugador">
+            <button id="add-button" type="submit">Agregar</button>
+        </form>
+        <div id="message" class="message" role="status" aria-live="polite"></div>
+
+        <div id="player-list" class="player-list"></div>
+
+        <div class="actions">
+            <a href="rules.html">Volver</a>
+            <button id="continue-button" type="button" disabled>Continuar</button>
+        </div>
+    </main>
+
+    <script>
+        const PLAYER_COLORS = ["#00FFFF", "#FF00FF", "#FFE600", "#39FF14"];
+        const DEFAULT_AVATAR = {
+            skin_color: "skin_1",
+            head_shape: "head_round",
+            hair_style: "hair_short",
+            hair_color: "hair_black",
+            eye_type: "eyes_normal",
+            eye_color: "eye_brown",
+            eyebrow_type: "brow_flat",
+            eyebrow_color: "brow_black",
+            nose_type: "nose_normal",
+            mouth_type: "mouth_smile",
+            mouth_color: "lip_natural",
+            accessory: "acc_none",
+            svg: ""
+        };
+
+        const form = document.getElementById("player-form");
+        const nameInput = document.getElementById("player-name");
+        const playerList = document.getElementById("player-list");
+        const message = document.getElementById("message");
+        const continueButton = document.getElementById("continue-button");
+
+        let players = [];
+
+        function showMessage(text) {
+            message.textContent = text;
+        }
+
+        function normalizeName(name) {
+            return name.trim().replace(/\s+/g, " ");
+        }
+
+        function renderPlayers() {
+            playerList.innerHTML = "";
+
+            if (!players.length) {
+                playerList.innerHTML = "<p>No hay jugadores todavia. Agrega entre 2 y 4.</p>";
+            }
+
+            players.forEach((player, index) => {
+                const row = document.createElement("div");
+                row.className = "player-row";
+                row.innerHTML = `
+                    <div class="token" style="color: ${PLAYER_COLORS[index]}; background: ${PLAYER_COLORS[index]};"></div>
+                    <div>
+                        <strong>${player.name}</strong>
+                        <span>Ficha ${index + 1} - inicia en casilla 1</span>
+                    </div>
+                    <button class="remove-button" type="button" data-id="${player.id}">Quitar</button>
+                `;
+                playerList.appendChild(row);
+            });
+
+            playerList.querySelectorAll(".remove-button").forEach(button => {
+                button.addEventListener("click", () => {
+                    players = players
+                        .filter(player => String(player.id) !== button.dataset.id)
+                        .map((player, index) => ({ ...player, id: index + 1 }));
+                    renderPlayers();
+                });
+            });
+
+            document.getElementById("add-button").disabled = players.length >= 4;
+            continueButton.disabled = players.length < 2;
+        }
+
+        function readExistingPlayers() {
+            try {
+                const session = JSON.parse(localStorage.getItem("vae_session") || "null");
+                if (session && Array.isArray(session.players)) {
+                    players = session.players.map((player, index) => ({
+                        id: index + 1,
+                        name: player.name,
+                        position: 1,
+                        score: 0,
+                        avatar: { ...DEFAULT_AVATAR, ...(player.avatar || {}) }
+                    })).slice(0, 4);
+                }
+            } catch (error) {
+                players = [];
+            }
+        }
+
+        form.addEventListener("submit", event => {
+            event.preventDefault();
+            const name = normalizeName(nameInput.value);
+
+            if (!name) {
+                showMessage("Escribe un nombre para agregarlo.");
+                return;
+            }
+
+            if (players.length >= 4) {
+                showMessage("La partida permite maximo 4 jugadores.");
+                return;
+            }
+
+            players.push({
+                id: players.length + 1,
+                name,
+                position: 1,
+                score: 0,
+                avatar: { ...DEFAULT_AVATAR }
+            });
+
+            nameInput.value = "";
+            showMessage(players.length < 2 ? "Agrega al menos un jugador mas." : "Listo para continuar.");
+            renderPlayers();
+            nameInput.focus();
+        });
+
+        continueButton.addEventListener("click", () => {
+            if (players.length < 2 || players.length > 4) return;
+
+            const difficulty = localStorage.getItem("vae_difficulty") || "easy";
+            const session = {
+                sessionId: crypto.randomUUID(),
+                players: players.map((player, index) => ({
+                    id: index + 1,
+                    name: player.name,
+                    position: 1,
+                    score: 0,
+                    avatar: { ...DEFAULT_AVATAR, ...(player.avatar || {}) }
+                })),
+                currentTurn: 1,
+                gameState: "avatar_setup",
+                difficulty,
+                questions: [],
+                usedQuestions: [],
+                lastDiceRoll: null
+            };
+
+            localStorage.setItem("vae_session", JSON.stringify(session));
+            window.location.href = "avatar.html";
+        });
+
+        readExistingPlayers();
+        renderPlayers();
+        showMessage(players.length ? "Puedes ajustar la lista antes de continuar." : "Agrega entre 2 y 4 jugadores.");
+    </script>
+</body>
+</html>

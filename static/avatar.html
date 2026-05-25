@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avatares - Variables al azar S3E</title>
+    <style>
+        :root {
+            --bg: #1A1A2E;
+            --surface: #16213E;
+            --gold: #F39C12;
+            --snake: #00FF66;
+            --cyan: #00FFFF;
+            --magenta: #FF00FF;
+            --yellow: #FFE600;
+            --green: #39FF14;
+            --text: #F7FBFF;
+            --muted: #A7B0C8;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Trebuchet MS", Arial, sans-serif;
+        }
+
+        main {
+            width: min(1180px, calc(100vw - 28px));
+            margin: 0 auto;
+            padding: 24px 0;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 18px;
+            margin-bottom: 18px;
+        }
+
+        h1 {
+            margin: 0;
+            font-family: Impact, "Arial Black", sans-serif;
+            font-size: clamp(2rem, 6vw, 4.4rem);
+            line-height: 0.95;
+            letter-spacing: 0;
+            text-transform: uppercase;
+            text-shadow: 3px 0 0 var(--magenta), -3px 0 0 var(--cyan);
+        }
+
+        .player-pill {
+            padding: 10px 14px;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            color: var(--yellow);
+            font-weight: 900;
+            box-shadow: 0 0 16px rgba(243, 156, 18, 0.35);
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 18px;
+            align-items: start;
+        }
+
+        .preview-panel,
+        .editor-panel {
+            background: var(--surface);
+            border: 2px solid rgba(0, 255, 255, 0.52);
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        }
+
+        .preview-panel {
+            position: sticky;
+            top: 18px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .avatar-frame {
+            width: min(240px, 80vw);
+            aspect-ratio: 1 / 1.1;
+            margin: 0 auto 14px;
+            display: grid;
+            place-items: center;
+            background: #0B1228;
+            border: 2px solid var(--magenta);
+            border-radius: 8px;
+            box-shadow: inset 0 0 22px rgba(255, 0, 255, 0.18);
+        }
+
+        .avatar-frame svg {
+            width: 92%;
+            height: 92%;
+        }
+
+        .editor-panel {
+            padding: 16px;
+        }
+
+        .category {
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            border-radius: 8px;
+            background: #101A35;
+        }
+
+        .category h2 {
+            margin: 0 0 10px;
+            color: var(--cyan);
+            font-size: 1rem;
+            text-transform: uppercase;
+        }
+
+        .option-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(96px, 1fr));
+            gap: 8px;
+        }
+
+        .color-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .part-option,
+        .color-option {
+            border: 2px solid rgba(255, 255, 255, 0.18);
+            border-radius: 8px;
+            background: #0B1228;
+            color: var(--text);
+            cursor: pointer;
+            transition: transform 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+        }
+
+        .part-option {
+            min-height: 50px;
+            padding: 8px;
+            font: inherit;
+            font-weight: 800;
+        }
+
+        .color-option {
+            width: 38px;
+            height: 38px;
+        }
+
+        .part-option.active,
+        .color-option.active {
+            border-color: var(--yellow);
+            box-shadow: 0 0 14px rgba(255, 230, 0, 0.44);
+            transform: translateY(-1px);
+        }
+
+        .actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-top: 14px;
+        }
+
+        button,
+        a {
+            min-height: 50px;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font: inherit;
+            font-weight: 900;
+            text-transform: uppercase;
+        }
+
+        button {
+            border: 2px solid var(--green);
+            background: var(--green);
+            color: #07111F;
+            cursor: pointer;
+            box-shadow: 0 0 14px rgba(57, 255, 20, 0.35);
+        }
+
+        button.secondary,
+        a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--cyan);
+            background: transparent;
+            color: var(--cyan);
+            text-decoration: none;
+            box-shadow: none;
+        }
+
+        button:disabled {
+            opacity: 0.48;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        #status {
+            min-height: 24px;
+            margin-top: 10px;
+            color: var(--yellow);
+            font-weight: 800;
+        }
+
+        @media (max-width: 840px) {
+            header,
+            .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .layout {
+                grid-template-columns: 1fr;
+            }
+
+            .preview-panel {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Personaliza tu avatar</h1>
+            <div id="player-pill" class="player-pill">Jugador</div>
+        </header>
+
+        <section class="layout">
+            <aside class="preview-panel">
+                <div id="avatar-preview" class="avatar-frame"></div>
+                <strong id="player-name"></strong>
+                <div id="status" role="status" aria-live="polite"></div>
+            </aside>
+
+            <section class="editor-panel">
+                <div id="editor"></div>
+                <div class="actions">
+                    <a href="players.html">Volver</a>
+                    <button id="previous-button" class="secondary" type="button">Anterior</button>
+                    <button id="next-button" type="button">Siguiente jugador</button>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const DEFAULT_AVATAR = {
+            skin_color: "skin_1",
+            head_shape: "head_round",
+            hair_style: "hair_short",
+            hair_color: "hair_black",
+            eye_type: "eyes_normal",
+            eye_color: "eye_brown",
+            eyebrow_type: "brow_flat",
+            eyebrow_color: "brow_black",
+            nose_type: "nose_normal",
+            mouth_type: "mouth_smile",
+            mouth_color: "lip_natural",
+            accessory: "acc_none",
+            svg: ""
+        };
+
+        const CATEGORIES = [
+            { key: "skin_color", title: "Tono de piel", catalog: "skin_colors", type: "color", fallback: "skin_1" },
+            { key: "head_shape", title: "Forma de cabeza", catalog: "head_shapes", type: "part", fallback: "head_round" },
+            { key: "hair_style", title: "Cabello", catalog: "hair_styles", type: "part", fallback: "hair_short" },
+            { key: "hair_color", title: "Color de cabello", catalog: "hair_colors", type: "color", fallback: "hair_black" },
+            { key: "eye_type", title: "Ojos", catalog: "eyes", type: "part", fallback: "eyes_normal" },
+            { key: "eye_color", title: "Color de ojos", catalog: "eye_colors", type: "color", fallback: "eye_brown" },
+            { key: "eyebrow_type", title: "Cejas", catalog: "eyebrows", type: "part", fallback: "brow_flat" },
+            { key: "eyebrow_color", title: "Color de cejas", catalog: "eyebrow_colors", type: "color", fallback: "brow_black" },
+            { key: "nose_type", title: "Nariz", catalog: "noses", type: "part", fallback: "nose_normal" },
+            { key: "mouth_type", title: "Boca", catalog: "mouths", type: "part", fallback: "mouth_smile" },
+            { key: "mouth_color", title: "Color de boca", catalog: "mouth_colors", type: "color", fallback: "lip_natural" },
+            { key: "accessory", title: "Accesorios", catalog: "accessories", type: "part", fallback: "acc_none" }
+        ];
+
+        let session = null;
+        let parts = null;
+        let playerIndex = 0;
+        let avatarState = { ...DEFAULT_AVATAR };
+
+        const preview = document.getElementById("avatar-preview");
+        const editor = document.getElementById("editor");
+        const status = document.getElementById("status");
+        const playerName = document.getElementById("player-name");
+        const playerPill = document.getElementById("player-pill");
+        const previousButton = document.getElementById("previous-button");
+        const nextButton = document.getElementById("next-button");
+
+        function loadSession() {
+            try {
+                session = JSON.parse(localStorage.getItem("vae_session") || "null");
+            } catch (error) {
+                session = null;
+            }
+
+            if (!session || !Array.isArray(session.players) || !session.players.length) {
+                window.location.href = "players.html";
+            }
+        }
+
+        async function loadParts() {
+            const response = await fetch("/avatar/parts");
+            if (!response.ok) throw new Error("No se pudo cargar el catalogo de avatar");
+            parts = await response.json();
+        }
+
+        function getItem(category, id, fallback) {
+            const items = parts[category] || [];
+            return items.find(item => item.id === id) || items.find(item => item.id === fallback) || {};
+        }
+
+        function getColor(category, id, fallback) {
+            return getItem(category, id, fallback).hex || "#000000";
+        }
+
+        function renderAvatarSvg(data) {
+            const skin = getColor("skin_colors", data.skin_color, "skin_1");
+            const hair = getColor("hair_colors", data.hair_color, "hair_black");
+            const eye = getColor("eye_colors", data.eye_color, "eye_brown");
+            const brow = getColor("eyebrow_colors", data.eyebrow_color, "brow_black");
+            const mouth = getColor("mouth_colors", data.mouth_color, "lip_natural");
+
+            const head = getItem("head_shapes", data.head_shape, "head_round").svg_path || "";
+            const hairPart = getItem("hair_styles", data.hair_style, "hair_short").svg_group || "";
+            const eyes = getItem("eyes", data.eye_type, "eyes_normal").svg_group || "";
+            const eyebrows = getItem("eyebrows", data.eyebrow_type, "brow_flat").svg_group || "";
+            const nose = getItem("noses", data.nose_type, "nose_normal").svg_group || "";
+            const mouthPart = getItem("mouths", data.mouth_type, "mouth_smile").svg_group || "";
+            const accessory = getItem("accessories", data.accessory, "acc_none").svg_group || "";
+
+            return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" role="img" aria-label="Avatar">
+  <style>
+    .avatar-skin-fill { fill: ${skin}; }
+    .avatar-hair-fill { fill: ${hair}; }
+    .avatar-eye-fill { fill: ${eye}; }
+    .avatar-brow-fill { fill: ${brow}; }
+    .avatar-brow-stroke { stroke: ${brow}; }
+    .avatar-mouth-fill { fill: ${mouth}; }
+    .avatar-mouth-stroke { stroke: ${mouth}; }
+  </style>
+  <ellipse cx="100" cy="196" rx="55" ry="12" fill="rgba(0,0,0,0.18)"/>
+  <g id="avatar-ears">
+    <ellipse class="avatar-skin-fill" cx="40" cy="112" rx="13" ry="20" stroke="#402819" stroke-width="3"/>
+    <ellipse class="avatar-skin-fill" cx="160" cy="112" rx="13" ry="20" stroke="#402819" stroke-width="3"/>
+    <path d="M40 105 C34 112 35 122 42 127" fill="none" stroke="#9A6648" stroke-width="2" stroke-linecap="round"/>
+    <path d="M160 105 C166 112 165 122 158 127" fill="none" stroke="#9A6648" stroke-width="2" stroke-linecap="round"/>
+  </g>
+  <g id="avatar-head">${head}</g>
+  <g id="avatar-hair">${hairPart}</g>
+  <g id="avatar-eyes">${eyes}</g>
+  <g id="avatar-eyebrows">${eyebrows}</g>
+  <g id="avatar-nose">${nose}</g>
+  <g id="avatar-mouth">${mouthPart}</g>
+  <g id="avatar-accessory">${accessory}</g>
+</svg>`;
+        }
+
+        function renderPreview() {
+            const svg = renderAvatarSvg(avatarState);
+            avatarState.svg = svg;
+            preview.innerHTML = svg;
+            renderActiveOptions();
+        }
+
+        function renderEditor() {
+            editor.innerHTML = "";
+            CATEGORIES.forEach(category => {
+                const section = document.createElement("section");
+                section.className = "category";
+                section.innerHTML = `<h2>${category.title}</h2>`;
+
+                const grid = document.createElement("div");
+                grid.className = category.type === "color" ? "color-grid" : "option-grid";
+
+                (parts[category.catalog] || []).forEach(item => {
+                    const button = document.createElement("button");
+                    button.type = "button";
+                    button.dataset.key = category.key;
+                    button.dataset.value = item.id;
+                    button.className = category.type === "color" ? "color-option" : "part-option";
+                    button.title = item.label || item.id;
+
+                    if (category.type === "color") {
+                        button.style.background = item.hex;
+                        button.setAttribute("aria-label", item.label || item.id);
+                    } else {
+                        button.textContent = item.label || item.id;
+                    }
+
+                    button.addEventListener("click", () => {
+                        avatarState[category.key] = item.id;
+                        renderPreview();
+                    });
+
+                    grid.appendChild(button);
+                });
+
+                section.appendChild(grid);
+                editor.appendChild(section);
+            });
+        }
+
+        function renderActiveOptions() {
+            editor.querySelectorAll("[data-key]").forEach(button => {
+                button.classList.toggle("active", avatarState[button.dataset.key] === button.dataset.value);
+            });
+        }
+
+        function saveCurrentAvatar() {
+            const player = session.players[playerIndex];
+            const svg = renderAvatarSvg(avatarState);
+            session.players[playerIndex] = {
+                ...player,
+                avatar: {
+                    ...DEFAULT_AVATAR,
+                    ...avatarState,
+                    svg
+                }
+            };
+            localStorage.setItem("vae_session", JSON.stringify(session));
+        }
+
+        function loadPlayer(index) {
+            playerIndex = Math.max(0, Math.min(index, session.players.length - 1));
+            const player = session.players[playerIndex];
+            avatarState = { ...DEFAULT_AVATAR, ...(player.avatar || {}) };
+
+            playerName.textContent = player.name;
+            playerPill.textContent = `Jugador ${playerIndex + 1} de ${session.players.length}`;
+            previousButton.disabled = playerIndex === 0;
+            nextButton.textContent = playerIndex === session.players.length - 1 ? "Terminar" : "Siguiente jugador";
+            status.textContent = "Cambios guardados localmente.";
+            renderPreview();
+        }
+
+        previousButton.addEventListener("click", () => {
+            saveCurrentAvatar();
+            loadPlayer(playerIndex - 1);
+        });
+
+        nextButton.addEventListener("click", () => {
+            saveCurrentAvatar();
+
+            if (playerIndex < session.players.length - 1) {
+                loadPlayer(playerIndex + 1);
+                return;
+            }
+
+            session.gameState = "waiting_dice_roll";
+            localStorage.setItem("vae_session", JSON.stringify(session));
+            window.location.href = "game.html";
+        });
+
+        async function init() {
+            loadSession();
+            try {
+                await loadParts();
+                renderEditor();
+                loadPlayer(0);
+            } catch (error) {
+                status.textContent = "No se pudo cargar el editor de avatar.";
+            }
+        }
+
+        init();
+    </script>
+</body>
+</html>
