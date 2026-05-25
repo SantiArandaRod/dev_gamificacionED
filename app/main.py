@@ -5,6 +5,7 @@ import json
 import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
 from app.game_state import questions_db
@@ -48,14 +49,12 @@ app.include_router(questions.router, prefix="/api", tags=["Questions"])
 app.include_router(board.router, prefix="/api/board", tags=["Board"])
 app.include_router(avatar.router, prefix="/avatar", tags=["Avatar"])
 
-app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 @app.get("/")
-async def root():
-    return {
-        "message": "Bienvenido al API de Serpientes & Escaleras. Ve a /static/index.html para jugar."
-    }
+def root():
+    return RedirectResponse(url="/static/index.html", status_code=302)
 
 
 if __name__ == "__main__":

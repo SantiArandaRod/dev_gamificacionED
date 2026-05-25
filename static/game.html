@@ -446,8 +446,14 @@
     <script>
         const PLAYER_COLORS = ["#00FFFF", "#FF00FF", "#FFE600", "#39FF14"];
         const VISUAL_ORDER = [21, 22, 23, 24, 25, 20, 19, 18, 17, 16, 11, 12, 13, 14, 15, 10, 9, 8, 7, 6, 1, 2, 3, 4, 5];
-        const LADDERS = { 3: 11, 6: 17, 9: 14 };
-        const SNAKES = { 24: 16, 19: 8, 15: 5 };
+        const LADDERS = { 3: 11, 6: 17, 14: 22 };
+        const SNAKES = { 19: 8, 23: 5, 24: 9 };
+        const TOKEN_OFFSETS = [
+            { dx: 0, dy: 0 },
+            { dx: 14, dy: 0 },
+            { dx: 0, dy: 14 },
+            { dx: 14, dy: 14 }
+        ];
 
         const board = document.getElementById("board");
         const dice = document.getElementById("dice");
@@ -480,11 +486,27 @@
                 window.location.href = "index.html";
             }
 
+            session.players.forEach(player => {
+                player.position = Number(player.position) || 1;
+            });
             pendingMove = session.pendingMove || null;
+            if (pendingMove) {
+                pendingMove = {
+                    ...pendingMove,
+                    from: Number(pendingMove.from) || 1,
+                    to: Number(pendingMove.to) || 1,
+                    roll: Number(pendingMove.roll) || null
+                };
+                session.pendingMove = pendingMove;
+            }
             currentQuestion = session.currentQuestion || null;
+            saveSession();
         }
 
         function saveSession() {
+            session.players.forEach(player => {
+                player.position = Number(player.position) || 1;
+            });
             localStorage.setItem("vae_session", JSON.stringify(session));
         }
 
@@ -539,13 +561,17 @@
             document.querySelectorAll(".token-stack").forEach(stack => stack.innerHTML = "");
 
             session.players.forEach(player => {
-                const stack = document.querySelector(`#cell-${player.position || 1} .token-stack`);
+                player.position = Number(player.position) || 1;
+                const stack = document.querySelector(`#cell-${player.position} .token-stack`);
                 if (!stack) return;
 
+                const sameCell = session.players.filter(item => Number(item.position) === Number(player.position));
+                const offset = TOKEN_OFFSETS[sameCell.indexOf(player)] || TOKEN_OFFSETS[0];
                 const token = document.createElement("div");
                 token.id = `token-${player.id}`;
                 token.className = "player-token";
                 token.style.color = playerColor(player);
+                token.style.transform = `translate(${offset.dx}px, ${offset.dy}px)`;
                 token.title = player.name;
                 token.innerHTML = player.avatar?.svg || fallbackTokenSvg(player);
                 token.addEventListener("pointerdown", event => startDrag(event, player));
@@ -625,14 +651,28 @@
             if (session.gameState !== "waiting_dice_roll") return;
 
             const activePlayer = getActivePlayer();
+            activePlayer.position = Number(activePlayer.position) || 1;
             const roll = Math.floor(Math.random() * 6) + 1;
+            const numericPosition = Number(activePlayer.position);
+            const diceRoll = Number(roll);
+            const tentative = numericPosition + diceRoll;
+
+            if (!Number.isFinite(numericPosition) || !Number.isFinite(diceRoll) || !Number.isFinite(tentative)) {
+                console.error("Movimiento invalido", {
+                    playerId: activePlayer.id,
+                    position: activePlayer.position,
+                    diceRoll: roll
+                });
+                showNotice("No se pudo calcular el movimiento. Revisa la posicion del jugador.");
+                return;
+            }
+
             session.lastDiceRoll = roll;
             dice.classList.remove("rolling");
             dice.textContent = roll;
             void dice.offsetWidth;
             dice.classList.add("rolling");
 
-            const tentative = activePlayer.position + roll;
             if (tentative > 25) {
                 showNotice(`${activePlayer.name} saco ${roll}, pero pasa de 25. Turno siguiente.`);
                 saveSession();
@@ -642,7 +682,7 @@
                 return;
             }
 
-            pendingMove = { playerId: activePlayer.id, from: activePlayer.position, to: tentative, roll };
+            pendingMove = { playerId: activePlayer.id, from: numericPosition, to: Number(tentative), roll: diceRoll };
             session.pendingMove = pendingMove;
             session.gameState = "dragging_token";
             saveSession();
@@ -689,7 +729,7 @@
             const droppedElement = document.elementFromPoint(event.clientX, event.clientY);
             const droppedCell = droppedElement?.closest?.(".cell");
             const droppedNumber = Number(droppedCell?.dataset.cell);
-            const valid = droppedNumber === pendingMove.to;
+            const valid = droppedNumber === Number(pendingMove.to);
 
             if (valid) {
                 resetDraggedToken(token, pendingMove.from);
@@ -715,7 +755,7 @@
         function resetDraggedToken(token, cellNumber) {
             token.classList.remove("dragging");
             token.removeAttribute("style");
-            const stack = document.querySelector(`#cell-${cellNumber} .token-stack`);
+            const stack = document.querySelector(`#cell-${Number(cellNumber) || 1} .token-stack`);
             if (stack) stack.appendChild(token);
         }
 
@@ -798,14 +838,17 @@
             if (!player || !answeredResult) return;
 
             if (answeredResult.correct) {
+                player.position = Number(player.position) || 1;
                 player.score += 10;
                 await animateMove(player, pendingMove.from, pendingMove.to);
-                player.position = pendingMove.to;
+                const newPosition = Number(pendingMove.to);
+                const destLadder = LADDERS[Number(newPosition)];
+                player.position = Number(destLadder ?? newPosition);
                 saveSession();
                 renderAll();
 
                 if (player.position === 25) {
-                session.gameState = "finished";
+                    session.gameState = "finished";
                     session.pendingMove = null;
                     session.currentQuestion = null;
                     saveSession();
@@ -813,21 +856,28 @@
                     return;
                 }
 
-                if (LADDERS[player.position]) {
-                    showNotice(`${player.name} sube por escalera hasta ${LADDERS[player.position]}.`);
+                if (destLadder) {
+                    showNotice(`${player.name} sube por escalera hasta ${destLadder}.`);
                     await wait(450);
-                    await animateMove(player, player.position, LADDERS[player.position]);
-                    player.position = LADDERS[player.position];
+                    await animateMove(player, newPosition, destLadder);
+                    player.position = Number(destLadder);
                     saveSession();
                     renderAll();
                 }
             } else {
+                player.position = Number(player.position) || 1;
                 player.score -= 10;
-                if (SNAKES[player.position]) {
-                    showNotice(`${player.name} fallo y baja por serpiente hasta ${SNAKES[player.position]}.`);
+                const currentPosition = Number(player.position);
+                const destSnake = SNAKES[Number(currentPosition)];
+                player.position = Number(destSnake ?? currentPosition);
+                saveSession();
+                renderAll();
+
+                if (destSnake) {
+                    showNotice(`${player.name} fallo y baja por serpiente hasta ${destSnake}.`);
                     await wait(450);
-                    await animateMove(player, player.position, SNAKES[player.position]);
-                    player.position = SNAKES[player.position];
+                    await animateMove(player, currentPosition, destSnake);
+                    player.position = Number(destSnake);
                     saveSession();
                     renderAll();
                 }
@@ -838,11 +888,18 @@
         }
 
         async function animateMove(player, from, to) {
-            const step = to > from ? 1 : -1;
-            let current = from;
-            while (current !== to) {
+            const start = Number(from);
+            const destination = Number(to);
+            if (!Number.isFinite(start) || !Number.isFinite(destination)) {
+                console.error("Animacion invalida", { from, to, playerId: player.id });
+                return;
+            }
+
+            const step = destination > start ? 1 : -1;
+            let current = start;
+            while (current !== destination) {
                 current += step;
-                player.position = current;
+                player.position = Number(current);
                 saveSession();
                 renderAll();
                 const token = document.getElementById(`token-${player.id}`);
