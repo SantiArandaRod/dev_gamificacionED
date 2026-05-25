@@ -272,7 +272,22 @@ class AvatarBuilder {
     async saveForCurrentPlayer() {
         const player = JSON.parse(sessionStorage.getItem("current_player") || "null");
         if (!player || !player.player_id) {
-            this.setStatus("Crea o unete a una partida para guardar.");
+            this.setStatus("Agrega el jugador para guardar su avatar.");
+            return;
+        }
+
+        const localGame = JSON.parse(localStorage.getItem("local_game_state") || "null");
+        if (localGame?.mode === "local") {
+            const saved = this.getAvatarData();
+            localGame.players = (localGame.players || []).map(item => {
+                if (item.player_id !== player.player_id) return item;
+                return { ...item, avatar: saved, avatar_data: saved };
+            });
+            player.avatar = saved;
+            player.avatar_data = saved;
+            localStorage.setItem("local_game_state", JSON.stringify(localGame));
+            sessionStorage.setItem("current_player", JSON.stringify(player));
+            this.setStatus("Avatar guardado localmente.");
             return;
         }
 

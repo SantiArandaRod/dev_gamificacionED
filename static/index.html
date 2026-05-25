@@ -67,15 +67,31 @@
         border: none;
     }
 
-    .session-box {
-        background: #0f3460;
-        border-radius: 10px;
-        padding: 10px;
-        margin-top: 10px;
+    .local-player-list {
+        display: grid;
+        gap: 8px;
     }
 
-    .copy-btn {
-        cursor: pointer;
+    .local-player-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #0f3460;
+        border: 1px solid rgba(78, 204, 163, 0.35);
+        border-radius: 8px;
+        padding: 8px;
+    }
+
+    .local-player-avatar {
+        width: 46px;
+        height: 46px;
+        flex: 0 0 46px;
+    }
+
+    .local-player-avatar svg {
+        width: 100%;
+        height: 100%;
+        display: block;
     }
 </style>
 
@@ -96,7 +112,7 @@
             </p>
 
             <div class="alert alert-dark text-center small">
-                jugadores en tiempo real
+                Partida local en este equipo
             </div>
 
             <!-- Avatar -->
@@ -157,31 +173,26 @@
                 </select>
             </div>
 
-            <!-- Join -->
             <div class="mb-3">
-                <input type="text" id="session-id-input" class="form-control border-secondary"
-                       placeholder="ID Sesión (para unirse)">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <strong>Jugadores locales</strong>
+                    <small id="player-count" class="text-muted">0/4</small>
+                </div>
+                <div id="local-player-list" class="local-player-list"></div>
             </div>
 
             <!-- Botones -->
             <div class="d-grid gap-2">
                 <button id="btn-create" class="btn btn-create btn-custom">
-                    Crear Partida
+                    Agregar Jugador
                 </button>
 
                 <button id="btn-join" class="btn btn-join btn-custom">
-                    Unirse a Partida
+                    Iniciar Partida Local
                 </button>
             </div>
 
-            <!-- Session Info -->
-            <div id="session-info" class="text-center mt-3 d-none">
-                <small>ID de sesión:</small>
-                <div class="session-box d-flex justify-content-between align-items-center">
-                    <span id="session-id-display"></span>
-                    <button id="copy-session" class="btn btn-sm btn-outline-light copy-btn">Copiar</button>
-                </div>
-            </div>
+            <div id="lobby-message" class="alert alert-dark text-center small mt-3 d-none"></div>
 
         </div>
     </div>
@@ -197,94 +208,106 @@
 
 <script>
 const nameInput = document.getElementById('player-name');
-const sessionInput = document.getElementById('session-id-input');
-
 const btnCreate = document.getElementById('btn-create');
 const btnJoin = document.getElementById('btn-join');
+const playerList = document.getElementById('local-player-list');
+const playerCount = document.getElementById('player-count');
+let localPlayers = [];
 
 function setLoading(btn, state, text="Procesando...") {
     btn.disabled = state;
     btn.innerText = state ? text : btn.dataset.original;
 }
 
+function showLobbyMessage(message) {
+    const messageEl = document.getElementById('lobby-message');
+    messageEl.innerText = message;
+    messageEl.classList.remove('d-none');
+    window.setTimeout(() => messageEl.classList.add('d-none'), 2400);
+}
+
 btnCreate.dataset.original = btnCreate.innerText;
 btnJoin.dataset.original = btnJoin.innerText;
 
-btnCreate.addEventListener('click', async () => {
-    const name = nameInput.value.trim();
-    const cut = document.getElementById('academic_cut').value;
+function renderLocalPlayers() {
+    playerCount.innerText = `${localPlayers.length}/4`;
+    playerList.innerHTML = '';
 
-    if (!name) return alert("Ingresa tu nombre");
-
-    setLoading(btnCreate, true);
-
-    try {
-        const session = await api.createSession();
-
-        document.getElementById('session-info').classList.remove('d-none');
-        document.getElementById('session-id-display').innerText = session.session_id;
-
-        const playerData = {
-            player_id: crypto.randomUUID(),
-            session_id: session.session_id,
-            name,
-            order: 1,
-            avatar: avatarConfig,
-            avatar_data: avatarConfig,
-            position: 1,
-            is_active: true
-        };
-
-        sessionStorage.setItem('current_player', JSON.stringify(playerData));
-        await api.joinGame(session.session_id, playerData);
-
-        window.location.href = `game.html?session=${session.session_id}&cut=${cut}`;
-
-    } catch (e) {
-        alert("Error creando sesión");
+    if (!localPlayers.length) {
+        playerList.innerHTML = '<div class="text-muted small text-center py-2">Agrega entre 1 y 4 jugadores.</div>';
+        return;
     }
 
-    setLoading(btnCreate, false);
+    localPlayers.forEach((player, index) => {
+        const row = document.createElement('div');
+        row.className = 'local-player-row';
+        row.innerHTML = `
+            <div class="local-player-avatar">${generateAvatarSVG(player.avatar_data || player.avatar)}</div>
+            <div class="flex-grow-1">
+                <strong>${player.name}</strong>
+                <div class="small text-muted">Turno ${index + 1}</div>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-danger" data-remove-player="${player.player_id}">Quitar</button>
+        `;
+        playerList.appendChild(row);
+    });
+
+    playerList.querySelectorAll('[data-remove-player]').forEach(button => {
+        button.addEventListener('click', () => {
+            localPlayers = localPlayers.filter(player => player.player_id !== button.dataset.removePlayer);
+            localPlayers = localPlayers.map((player, index) => ({ ...player, order: index + 1 }));
+            sessionStorage.setItem('current_player', JSON.stringify(localPlayers[0] || null));
+            renderLocalPlayers();
+        });
+    });
+}
+
+btnCreate.addEventListener('click', () => {
+    const name = nameInput.value.trim();
+
+    if (!name) return showLobbyMessage("Ingresa el nombre del jugador.");
+    if (localPlayers.length >= 4) return showLobbyMessage("La partida local permite hasta 4 jugadores.");
+
+    const playerData = {
+        player_id: crypto.randomUUID(),
+        name,
+        order: localPlayers.length + 1,
+        avatar: { ...avatarConfig },
+        avatar_data: { ...avatarConfig },
+        position: 1,
+        score: 0,
+        is_active: true
+    };
+
+    localPlayers.push(playerData);
+    sessionStorage.setItem('current_player', JSON.stringify(localPlayers[0]));
+    nameInput.value = '';
+    window.avatarBuilder?.randomize();
+    renderLocalPlayers();
 });
 
-btnJoin.addEventListener('click', async () => {
-    const name = nameInput.value.trim();
-    const sessionId = sessionInput.value.trim();
+btnJoin.addEventListener('click', () => {
     const cut = document.getElementById('academic_cut').value;
 
-    if (!name || !sessionId) return alert("Nombre e ID requeridos");
+    if (!localPlayers.length) return showLobbyMessage("Agrega al menos un jugador.");
 
-    setLoading(btnJoin, true);
+    const gameState = {
+        mode: "local",
+        academic_cut: Number(cut),
+        players: localPlayers,
+        current_turn_index: 0,
+        dice_value: null,
+        used_question_ids: [],
+        scored_question_ids: [],
+        status: "playing"
+    };
 
-    try {
-        const playerData = {
-            player_id: crypto.randomUUID(),
-            session_id: sessionId,
-            name,
-            order: 2,
-            avatar: avatarConfig,
-            avatar_data: avatarConfig,
-            position: 1,
-            is_active: true
-        };
-
-        sessionStorage.setItem('current_player', JSON.stringify(playerData));
-        await api.joinGame(sessionId, playerData);
-
-        window.location.href = `game.html?session=${sessionId}&cut=${cut}`;
-
-    } catch (e) {
-        alert("Error al unirse");
-    }
-
-    setLoading(btnJoin, false);
+    localStorage.setItem('local_game_state', JSON.stringify(gameState));
+    sessionStorage.setItem('current_player', JSON.stringify(localPlayers[0]));
+    window.location.href = `game.html?local=1&cut=${cut}`;
 });
 
-document.getElementById('copy-session').addEventListener('click', () => {
-    const text = document.getElementById('session-id-display').innerText;
-    navigator.clipboard.writeText(text);
-    alert("ID copiado");
-});
+renderLocalPlayers();
 </script>
 
 </body>
