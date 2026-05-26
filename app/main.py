@@ -49,7 +49,7 @@ app.include_router(questions.router, prefix="/api", tags=["Questions"])
 app.include_router(board.router, prefix="/api/board", tags=["Board"])
 app.include_router(avatar.router, prefix="/avatar", tags=["Avatar"])
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
 
 
 @app.get("/")
