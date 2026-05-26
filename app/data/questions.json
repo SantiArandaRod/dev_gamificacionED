@@ -1,29 +1,29 @@
 [
   {
     "question_id": "1-1",
-    "text": "Que es una ecuacion diferencial?",
+    "text": "¿Qué es una ecuación diferencial?",
     "options": [
-      "Una ecuacion algebraica",
+      "Una ecuación algebraica",
       "Una integral",
-      "Una ecuacion con derivadas",
+      "Una ecuación con derivadas",
       "Una matriz"
     ],
-    "correct_answer": "Una ecuacion con derivadas",
+    "correct_answer": "Una ecuación con derivadas",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Una ecuacion con derivadas'."
+      "correct": "Correcto. Una ecuación diferencial es, por definición, una ecuación que involucra derivadas de una función desconocida.",
+      "incorrect": "La respuesta correcta es 'Una ecuación con derivadas'. Las otras opciones (algebraica, integral, matriz) son conceptos matemáticos diferentes que no involucran derivadas."
     }
   },
   {
     "question_id": "1-2",
-    "text": "Que representa el orden de una ecuacion diferencial?",
+    "text": "¿Qué representa el orden de una ecuación diferencial?",
     "options": [
       "La cantidad de soluciones",
       "La derivada de mayor grado",
-      "El numero de variables",
+      "El número de variables",
       "La constante principal"
     ],
     "correct_answer": "La derivada de mayor grado",
@@ -31,16 +31,16 @@
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'La derivada de mayor grado'."
+      "correct": "Correcto. El orden de una ecuación diferencial está determinado por la derivada de mayor orden presente en ella.",
+      "incorrect": "La respuesta correcta es 'La derivada de mayor grado'. Recuerda que el orden no se refiere a la cantidad de soluciones, número de variables o una constante, sino al nivel más alto de derivación."
     }
   },
   {
     "question_id": "1-3",
-    "text": "Cual de las siguientes es una ecuacion diferencial ordinaria?",
+    "text": "¿Cuál de las siguientes es una ecuación diferencial ordinaria?",
     "options": [
-      "x^2 + y^2 = 1",
-      "integral x dx",
+      "x² + y² = 1",
+      "∫x dx",
       "3x + 2 = 0",
       "dy/dx = x + y"
     ],
@@ -49,31 +49,31 @@
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'dy/dx = x + y'."
+      "correct": "Muy bien. 'dy/dx = x + y' es una ecuación diferencial ordinaria porque contiene derivadas de una función con respecto a una sola variable independiente.",
+      "incorrect": "La respuesta correcta es 'dy/dx = x + y'. Las otras opciones son una ecuación algebraica, una integral y otra ecuación algebraica, ninguna contiene derivadas."
     }
   },
   {
     "question_id": "1-4",
-    "text": "Que significa resolver una ecuacion diferencial?",
+    "text": "¿Qué significa resolver una ecuación diferencial?",
     "options": [
-      "Calcular limites",
+      "Calcular límites",
       "Multiplicar derivadas",
-      "Encontrar una funcion solucion",
+      "Encontrar una función solución",
       "Eliminar constantes"
     ],
-    "correct_answer": "Encontrar una funcion solucion",
+    "correct_answer": "Encontrar una función solución",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Encontrar una funcion solucion'."
+      "correct": "Correcto. Resolver una ecuación diferencial significa hallar la función o familia de funciones que, al sustituirse, satisfacen la igualdad.",
+      "incorrect": "La respuesta correcta es 'Encontrar una función solución'. Resolver no implica calcular límites, multiplicar derivadas o simplemente eliminar constantes, sino determinar la función que cumple la ecuación."
     }
   },
   {
     "question_id": "1-5",
-    "text": "Que caracteriza a una ecuacion separable?",
+    "text": "¿Qué caracteriza a una ecuación separable?",
     "options": [
       "Las variables pueden separarse",
       "Siempre es lineal",
@@ -85,17 +85,17 @@
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Las variables pueden separarse'."
+      "correct": "Correcto. La principal característica de una ecuación separable es que se puede reescribir para dejar todos los términos de una variable a un lado de la ecuación y los de la otra al otro lado.",
+      "incorrect": "La respuesta correcta es 'Las variables pueden separarse'. No todas las separables son lineales, sí tienen derivadas y pueden tener infinitas soluciones, su rasgo distintivo es la separación de variables."
     }
   },
   {
     "question_id": "1-6",
-    "text": "Cual de las siguientes ecuaciones es separable?",
+    "text": "¿Cuál de las siguientes ecuaciones es separable?",
     "options": [
       "dy/dx + y = x",
       "dy/dx = xy",
-      "x^2 + y^2 = 4",
+      "x² + y² = 4",
       "y'' + y = 0"
     ],
     "correct_answer": "dy/dx = xy",
@@ -103,355 +103,355 @@
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'dy/dx = xy'."
+      "correct": "Excelente. La ecuación dy/dx = xy se puede reescribir como (1/y) dy = x dx, separando perfectamente las variables 'x' y 'y'.",
+      "incorrect": "La respuesta correcta es 'dy/dx = xy'. Esta ecuación permite separar las variables, a diferencia de dy/dx + y = x (lineal pero no separable) y las otras que no son ecuaciones diferenciales."
     }
   },
   {
     "question_id": "1-7",
-    "text": "Que metodo se utiliza para resolver ecuaciones separables?",
+    "text": "¿Qué método se utiliza para resolver ecuaciones separables?",
     "options": [
       "Matrices inversas",
-      "Separacion de variables",
+      "Separación de variables",
       "Regla de Cramer",
-      "Derivacion implicita"
+      "Derivación implícita"
     ],
-    "correct_answer": "Separacion de variables",
+    "correct_answer": "Separación de variables",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Separacion de variables'."
+      "correct": "Correcto. El método de 'Separación de variables' es el procedimiento estándar y directo para resolver este tipo de ecuaciones diferenciales.",
+      "incorrect": "La respuesta correcta es 'Separación de variables'. Métodos como matrices inversas o la regla de Cramer son propios del álgebra lineal, y la derivación implícita es una técnica de derivación, no de resolución de EDOs separables."
     }
   },
   {
     "question_id": "1-8",
-    "text": "Cual es la forma estandar de una ecuacion lineal de primer orden?",
+    "text": "¿Cuál es la forma estándar de una ecuación lineal de primer orden?",
     "options": [
-      "dy/dx = y^2",
-      "x^2 + y^2 = 0",
+      "dy/dx = y²",
+      "x² + y² = 0",
       "F = ma",
       "dy/dx + P(x)y = Q(x)"
     ],
     "correct_answer": "dy/dx + P(x)y = Q(x)",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'dy/dx + P(x)y = Q(x)'."
+      "correct": "Muy bien. La forma estándar 'dy/dx + P(x)y = Q(x)' es la representación canónica de una ecuación diferencial lineal de primer orden.",
+      "incorrect": "La respuesta correcta es 'dy/dx + P(x)y = Q(x)'. Las otras opciones no representan la forma lineal estándar: la primera es no lineal, la segunda es algebraica y la tercera es una ley de la física."
     }
   },
   {
     "question_id": "1-9",
-    "text": "Que se usa para resolver ecuaciones lineales de primer orden?",
+    "text": "¿Qué se usa para resolver ecuaciones lineales de primer orden?",
     "options": [
       "Factor integrante",
-      "Teorema de Pitagoras",
+      "Teorema de Pitágoras",
       "Matrices",
       "Series de Fourier"
     ],
     "correct_answer": "Factor integrante",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Factor integrante'."
+      "correct": "Correcto. El método del 'Factor integrante' permite transformar la ecuación en una derivada de un producto, facilitando su integración y solución.",
+      "incorrect": "La respuesta correcta es 'Factor integrante'. El teorema de Pitágoras es geométrico, las matrices son para sistemas lineales y las series de Fourier para análisis de funciones periódicas; ninguno es el método específico para EDOs lineales de primer orden."
     }
   },
   {
     "question_id": "1-10",
-    "text": "Que condicion debe cumplir una ecuacion exacta?",
+    "text": "¿Qué condición debe cumplir una ecuación exacta?",
     "options": [
       "x = y",
       "dy/dx = 0",
-      "dM/dy = dN/dx",
+      "∂M/∂y = ∂N/∂x",
       "M = N"
     ],
-    "correct_answer": "dM/dy = dN/dx",
+    "correct_answer": "∂M/∂y = ∂N/∂x",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'dM/dy = dN/dx'."
+      "correct": "Correcto. La condición de exactitud para una ecuación M(x,y)dx + N(x,y)dy = 0 es que la derivada parcial de M con respecto a 'y' sea igual a la derivada parcial de N con respecto a 'x', es decir, ∂M/∂y = ∂N/∂x.",
+      "incorrect": "La respuesta correcta es '∂M/∂y = ∂N/∂x'. Esta igualdad es la condición necesaria y suficiente (bajo ciertas condiciones de continuidad) para que la ecuación diferencial sea exacta."
     }
   },
   {
     "question_id": "1-11",
-    "text": "Que describe un crecimiento exponencial?",
+    "text": "¿Qué describe un crecimiento exponencial?",
     "options": [
-      "Una funcion constante",
+      "Una función constante",
       "Una suma algebraica",
-      "Una variacion proporcional a la cantidad existente",
-      "Un triangulo rectangulo"
+      "Una variación proporcional a la cantidad existente",
+      "Un triángulo rectángulo"
     ],
-    "correct_answer": "Una variacion proporcional a la cantidad existente",
+    "correct_answer": "Una variación proporcional a la cantidad existente",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Una variacion proporcional a la cantidad existente'."
+      "correct": "Correcto. El crecimiento exponencial se modela con la ecuación dy/dt = ky, lo que significa que la tasa de cambio es proporcional a la cantidad presente.",
+      "incorrect": "La respuesta correcta es 'Una variación proporcional a la cantidad existente'. Esta es la esencia del modelo exponencial: cuanto más hay, más rápido crece (o decrece si k es negativo)."
     }
   },
   {
     "question_id": "1-12",
-    "text": "Cual es la solucion general de dy/dx = ky?",
+    "text": "¿Cuál es la solución general de dy/dx = ky?",
     "options": [
       "y = kx",
       "y = ln(x)",
       "y = Ce^(kx)",
-      "y = x^2"
+      "y = x²"
     ],
     "correct_answer": "y = Ce^(kx)",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'y = Ce^(kx)'."
+      "correct": "Muy bien. La solución general de la ecuación dy/dx = ky es y = Ce^(kx), donde 'C' es la constante de integración.",
+      "incorrect": "La respuesta correcta es 'y = Ce^(kx)'. Esta es una función exponencial, mientras que y = kx es lineal, y = ln(x) es logarítmica e y = x² es cuadrática. Solo la exponencial satisface dy/dx = ky."
     }
   },
   {
     "question_id": "1-13",
-    "text": "Que sucede cuando k > 0 en un modelo exponencial?",
+    "text": "¿Qué sucede cuando k > 0 en un modelo exponencial?",
     "options": [
-      "La funcion crece",
+      "La función crece",
       "La derivada desaparece",
-      "La funcion se anula",
-      "La funcion decrece"
+      "La función se anula",
+      "La función decrece"
     ],
-    "correct_answer": "La funcion crece",
+    "correct_answer": "La función crece",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'La funcion crece'."
+      "correct": "Correcto. En el modelo y = Ce^(kx), si la constante k es positiva, la función exponencial crece a medida que 'x' aumenta.",
+      "incorrect": "La respuesta correcta es 'La función crece'. Un valor de k positivo implica un crecimiento exponencial, mientras que un k negativo (k < 0) describiría un decrecimiento o decaimiento exponencial."
     }
   },
   {
     "question_id": "1-14",
-    "text": "Que representa la constante C en una solucion general?",
+    "text": "¿Qué representa la constante C en una solución general?",
     "options": [
-      "Una raiz cuadrada",
+      "Una raíz cuadrada",
       "Una derivada",
       "Una pendiente",
-      "Una constante de integracion"
+      "Una constante de integración"
     ],
-    "correct_answer": "Una constante de integracion",
+    "correct_answer": "Una constante de integración",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Una constante de integracion'."
+      "correct": "Correcto. La constante 'C' aparece al integrar una ecuación diferencial y representa una familia de soluciones, de ahí su nombre: constante de integración.",
+      "incorrect": "La respuesta correcta es 'Una constante de integración'. Esta constante es el resultado de la integral indefinida y permite generar la familia de curvas solución."
     }
   },
   {
     "question_id": "1-15",
-    "text": "Que fenomeno puede modelarse con crecimiento exponencial?",
+    "text": "¿Qué fenómeno puede modelarse con crecimiento exponencial?",
     "options": [
-      "Teorema de Pitagoras",
+      "Teorema de Pitágoras",
       "Decaimiento radioactivo",
-      "Area de un cuadrado",
+      "Área de un cuadrado",
       "Suma de vectores"
     ],
     "correct_answer": "Decaimiento radioactivo",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Decaimiento radioactivo'."
+      "correct": "Excelente. El decaimiento radioactivo es un proceso clásico modelado por una ecuación diferencial exponencial, en este caso con k < 0 para representar la disminución de la masa.",
+      "incorrect": "La respuesta correcta es 'Decaimiento radioactivo'. El teorema de Pitágoras es geométrico, el área de un cuadrado es algebraico y la suma de vectores es del álgebra lineal. El decaimiento radioactivo es un ejemplo típico de modelo exponencial."
     }
   },
   {
     "question_id": "1-16",
-    "text": "Que indica una solucion particular?",
+    "text": "¿Qué indica una solución particular?",
     "options": [
-      "Una solucion especifica de la ecuacion",
+      "Una solución específica de la ecuación",
       "Una derivada nula",
-      "Una ecuacion lineal",
+      "Una ecuación lineal",
       "Una constante negativa"
     ],
-    "correct_answer": "Una solucion especifica de la ecuacion",
+    "correct_answer": "Una solución específica de la ecuación",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Una solucion especifica de la ecuacion'."
+      "correct": "Correcto. Una solución particular es aquella que se obtiene a partir de la solución general al asignar un valor concreto a la constante (o constantes) de integración, usualmente mediante una condición inicial.",
+      "incorrect": "La respuesta correcta es 'Una solución específica de la ecuación'. Una solución particular no es una derivada nula, no define la linealidad ni se caracteriza por una constante negativa, sino por ser un miembro único de la familia de soluciones."
     }
   },
   {
     "question_id": "1-17",
-    "text": "Que ocurre al integrar ambos lados de una ecuacion diferencial?",
+    "text": "¿Qué ocurre al integrar ambos lados de una ecuación diferencial?",
     "options": [
       "Se eliminan las variables",
-      "Se obtiene una funcion solucion",
-      "La ecuacion desaparece",
+      "Se obtiene una función solución",
+      "La ecuación desaparece",
       "Se convierte en matriz"
     ],
-    "correct_answer": "Se obtiene una funcion solucion",
+    "correct_answer": "Se obtiene una función solución",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Se obtiene una funcion solucion'."
+      "correct": "Correcto. La integración es la operación inversa a la derivación, por lo que aplicarla a una ecuación diferencial nos permite encontrar la función original que la satisface, es decir, la solución.",
+      "incorrect": "La respuesta correcta es 'Se obtiene una función solución'. Integrar no elimina las variables, no hace desaparecer la ecuación (la transforma en una ecuación integral) ni la convierte en una matriz, sino que es el paso fundamental para hallar la solución."
     }
   },
   {
     "question_id": "1-18",
-    "text": "Que representa dy/dx?",
+    "text": "¿Qué representa dy/dx?",
     "options": [
       "Una suma",
       "Una integral",
-      "La pendiente o razon de cambio",
+      "La pendiente o razón de cambio",
       "Un producto algebraico"
     ],
-    "correct_answer": "La pendiente o razon de cambio",
+    "correct_answer": "La pendiente o razón de cambio",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'La pendiente o razon de cambio'."
+      "correct": "Correcto. dy/dx es la notación de Leibniz para la derivada, que geométricamente representa la pendiente de la recta tangente a una curva en un punto y, físicamente, la razón de cambio instantánea.",
+      "incorrect": "La respuesta correcta es 'La pendiente o razón de cambio'. dy/dx es una derivada, no una suma, integral o producto algebraico. Es uno de los conceptos centrales del cálculo diferencial."
     }
   },
   {
     "question_id": "1-19",
-    "text": "Que herramienta matematica es fundamental en ecuaciones diferenciales?",
+    "text": "¿Qué herramienta matemática es fundamental en ecuaciones diferenciales?",
     "options": [
-      "Integracion",
+      "Integración",
       "Vectores",
       "Matrices",
-      "Geometria analitica"
+      "Geometría analítica"
     ],
-    "correct_answer": "Integracion",
+    "correct_answer": "Integración",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Integracion'."
+      "correct": "Correcto. La integración es la herramienta fundamental para resolver ecuaciones diferenciales, ya que permite revertir el proceso de derivación y encontrar las funciones solución.",
+      "incorrect": "La respuesta correcta es 'Integración'. Aunque los vectores, matrices y la geometría analítica son útiles en contextos específicos de las EDOs (como en sistemas lineales), la integración es la base para resolver la inmensa mayoría de ellas."
     }
   },
   {
     "question_id": "1-20",
-    "text": "Que tipo de ecuacion es dy/dx = 3x?",
+    "text": "¿Qué tipo de ecuación es dy/dx = 3x?",
     "options": [
-      "Ecuacion separable",
-      "Ecuacion exacta",
-      "Ecuacion homogenea",
-      "Ecuacion trigonometrica"
+      "Ecuación separable",
+      "Ecuación exacta",
+      "Ecuación homogénea",
+      "Ecuación trigonométrica"
     ],
-    "correct_answer": "Ecuacion separable",
+    "correct_answer": "Ecuación separable",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Ecuacion separable'."
+      "correct": "Correcto. dy/dx = 3x es separable porque se puede escribir como dy = 3x dx, dejando todas las 'y' de un lado y todas las 'x' del otro.",
+      "incorrect": "La respuesta correcta es 'Ecuación separable'. Si bien podría ser exacta, su forma más simple y directa de clasificación es como separable. No es homogénea (en el sentido de EDOs homogéneas) ni trigonométrica."
     }
   },
   {
     "question_id": "1-21",
-    "text": "Que representa una solucion general?",
+    "text": "¿Qué representa una solución general?",
     "options": [
-      "Una unica respuesta",
+      "Una única respuesta",
       "Un conjunto de soluciones con constantes",
-      "Una ecuacion sin derivadas",
-      "Una funcion constante"
+      "Una ecuación sin derivadas",
+      "Una función constante"
     ],
     "correct_answer": "Un conjunto de soluciones con constantes",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Un conjunto de soluciones con constantes'."
+      "correct": "Muy bien. La solución general representa una familia de soluciones que dependen de una o más constantes arbitrarias, abarcando todos los casos posibles.",
+      "incorrect": "La respuesta correcta es 'Un conjunto de soluciones con constantes'. No es una única respuesta (esa es la solución particular), no es una ecuación sin derivadas (la solución general sí satisface la EDO) y no es necesariamente una función constante."
     }
   },
   {
     "question_id": "1-22",
-    "text": "Que sucede si una ecuacion diferencial no tiene solucion analitica?",
+    "text": "¿Qué sucede si una ecuación diferencial no tiene solución analítica?",
     "options": [
       "No puede resolverse",
       "Se elimina la derivada",
-      "Pueden emplearse metodos numericos",
+      "Pueden emplearse métodos numéricos",
       "Siempre es exacta"
     ],
-    "correct_answer": "Pueden emplearse metodos numericos",
+    "correct_answer": "Pueden emplearse métodos numéricos",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Pueden emplearse metodos numericos'."
+      "correct": "Correcto. Cuando no es posible encontrar una solución analítica (una fórmula explícita), se recurre a métodos numéricos como Euler o Runge-Kutta para obtener aproximaciones de la solución.",
+      "incorrect": "La respuesta correcta es 'Pueden emplearse métodos numéricos'. La falta de una solución analítica no significa que la EDO no tenga solución o que sea siempre exacta; simplemente implica que debemos aproximarla numéricamente, lo cual es muy común en aplicaciones reales."
     }
   },
   {
     "question_id": "1-23",
-    "text": "Que representa una ecuacion diferencial lineal?",
+    "text": "¿Qué representa una ecuación diferencial lineal?",
     "options": [
       "Las variables aparecen elevadas al cuadrado",
       "Las derivadas aparecen linealmente",
       "No existen constantes",
-      "Siempre tiene una sola solucion"
+      "Siempre tiene una sola solución"
     ],
     "correct_answer": "Las derivadas aparecen linealmente",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Las derivadas aparecen linealmente'."
+      "correct": "Correcto. Una EDO es lineal si la variable dependiente y todas sus derivadas aparecen elevadas a la potencia 1 y no se multiplican entre sí. Es decir, aparecen de forma lineal.",
+      "incorrect": "La respuesta correcta es 'Las derivadas aparecen linealmente'. La linealidad no se refiere a las variables independientes, no implica la ausencia de constantes y una ecuación lineal puede tener infinitas soluciones (solución general). La característica clave es la linealidad en la función y sus derivadas."
     }
   },
   {
     "question_id": "1-24",
-    "text": "Que es una condicion inicial?",
+    "text": "¿Qué es una condición inicial?",
     "options": [
       "Una derivada parcial",
       "Una constante algebraica",
-      "Un valor especifico de la solucion",
+      "Un valor específico de la solución",
       "Una integral indefinida"
     ],
-    "correct_answer": "Un valor especifico de la solucion",
+    "correct_answer": "Un valor específico de la solución",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Un valor especifico de la solucion'."
+      "correct": "Correcto. Una condición inicial es un dato que especifica el valor de la función solución (y posiblemente de sus derivadas) en un punto particular, permitiendo determinar la solución única de un problema de valor inicial.",
+      "incorrect": "La respuesta correcta es 'Un valor específico de la solución'. No es una derivada parcial, una constante algebraica genérica ni una integral indefinida, sino un valor concreto que sirve para seleccionar una solución particular de la familia dada por la solución general."
     }
   },
   {
     "question_id": "1-25",
-    "text": "En que area se aplican las ecuaciones diferenciales?",
+    "text": "¿En qué área se aplican las ecuaciones diferenciales?",
     "options": [
-      "Solo en geometria",
-      "Unicamente en algebra",
-      "Exclusivamente en estadistica",
-      "En fisica, ingenieria y ciencias"
+      "Solo en geometría",
+      "Únicamente en álgebra",
+      "Exclusivamente en estadística",
+      "En física, ingeniería y ciencias"
     ],
-    "correct_answer": "En fisica, ingenieria y ciencias",
+    "correct_answer": "En física, ingeniería y ciencias",
     "academic_cut": 1,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "easy",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'En fisica, ingenieria y ciencias'."
+      "correct": "Excelente. Las ecuaciones diferenciales son una de las herramientas matemáticas más poderosas y versátiles, con aplicaciones que abarcan prácticamente todas las ramas de la física, la ingeniería, la biología, la economía y otras ciencias.",
+      "incorrect": "La respuesta correcta es 'En física, ingeniería y ciencias'. Su aplicación no se limita a una sola área como la geometría, el álgebra o la estadística; son fundamentales para modelar sistemas dinámicos en una enorme variedad de disciplinas."
     }
   },
   {
     "question_id": "2-1",
-    "text": "Que caracteriza a una ecuacion diferencial de orden superior?",
+    "text": "¿Qué caracteriza a una ecuación diferencial de orden superior?",
     "options": [
       "Siempre es lineal",
       "Contiene derivadas de orden mayor que uno",
@@ -461,195 +461,195 @@
     "correct_answer": "Contiene derivadas de orden mayor que uno",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Contiene derivadas de orden mayor que uno'."
+      "correct": "Correcto. La característica principal de una ecuación de orden superior es que incluye derivadas de segundo orden o más (y''', y'''' , etc.).",
+      "incorrect": "La respuesta correcta es 'Contiene derivadas de orden mayor que uno'. Una ecuación de orden superior no tiene por qué ser siempre lineal, sí contiene derivadas (a diferencia de las otras opciones) y su solución general no se compone solo de constantes."
     }
   },
   {
     "question_id": "2-2",
-    "text": "Cual es un ejemplo de ecuacion diferencial de segundo orden?",
+    "text": "¿Cuál es un ejemplo de ecuación diferencial de segundo orden?",
     "options": [
-      "integral x dx",
+      "∫x dx",
       "y'' + y = 0",
       "dy/dx = x",
-      "x^2 + y^2 = 1"
+      "x² + y² = 1"
     ],
     "correct_answer": "y'' + y = 0",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'y'' + y = 0'."
+      "correct": "Correcto. La ecuación y'' + y = 0 incluye una derivada de segundo orden (y''), lo que la define como una ecuación de segundo orden.",
+      "incorrect": "La respuesta correcta es 'y'' + y = 0'. Las otras opciones son: una integral, una ecuación de primer orden (dy/dx = x) y una ecuación algebraica, ninguna contiene una derivada segunda."
     }
   },
   {
     "question_id": "2-3",
-    "text": "Que significa que una ecuacion diferencial sea homogenea?",
+    "text": "¿Qué significa que una ecuación diferencial sea homogénea?",
     "options": [
       "Siempre es separable",
-      "El lado derecho de la ecuacion es cero",
+      "El lado derecho de la ecuación es cero",
       "No posee derivadas",
       "Tiene coeficientes negativos"
     ],
-    "correct_answer": "El lado derecho de la ecuacion es cero",
+    "correct_answer": "El lado derecho de la ecuación es cero",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'El lado derecho de la ecuacion es cero'."
+      "correct": "Muy bien. Una ecuación lineal homogénea tiene la forma a_n(x)y^{(n)} + ... + a_0(x)y = 0, es decir, el término independiente (el lado derecho) es igual a cero.",
+      "incorrect": "La respuesta correcta es 'El lado derecho de la ecuación es cero'. Ser homogénea no implica que siempre sea separable, claramente posee derivadas y los coeficientes pueden ser positivos o negativos. La condición clave es que el término no dependiente de 'y' (ni de sus derivadas) es nulo."
     }
   },
   {
     "question_id": "2-4",
-    "text": "Que metodo se utiliza para resolver ecuaciones homogeneas lineales?",
+    "text": "¿Qué método se utiliza para resolver ecuaciones homogéneas lineales?",
     "options": [
       "Matrices inversas",
       "Regla de tres",
-      "Derivacion implicita",
-      "Ecuacion caracteristica"
+      "Derivación implícita",
+      "Ecuación característica"
     ],
-    "correct_answer": "Ecuacion caracteristica",
+    "correct_answer": "Ecuación característica",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Ecuacion caracteristica'."
+      "correct": "Correcto. Para ecuaciones lineales homogéneas con coeficientes constantes, se propone una solución del tipo y = e^{rx}, lo que conduce a una ecuación polinómica llamada ecuación característica.",
+      "incorrect": "La respuesta correcta es 'Ecuación característica'. Las matrices inversas se usan en álgebra lineal, la regla de tres es una proporción y la derivación implícita es una técnica de derivación. El método estándar para este tipo de EDOs es la ecuación característica."
     }
   },
   {
     "question_id": "2-5",
-    "text": "Que ocurre cuando las raices de la ecuacion caracteristica son reales y diferentes?",
+    "text": "¿Qué ocurre cuando las raíces de la ecuación característica son reales y diferentes?",
     "options": [
-      "La solucion incluye exponenciales distintas",
-      "No existe solucion",
-      "Se usan funciones trigonometricas",
-      "La ecuacion desaparece"
+      "La solución incluye exponenciales distintas",
+      "No existe solución",
+      "Se usan funciones trigonométricas",
+      "La ecuación desaparece"
     ],
-    "correct_answer": "La solucion incluye exponenciales distintas",
+    "correct_answer": "La solución incluye exponenciales distintas",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'La solucion incluye exponenciales distintas'."
+      "correct": "Correcto. Si las raíces son r₁, r₂, ..., rₙ (todas reales y distintas), la solución general es una combinación lineal de exponenciales: y = C₁e^{r₁x} + C₂e^{r₂x} + ...",
+      "incorrect": "La respuesta correcta es 'La solución incluye exponenciales distintas'. Siempre existe solución (a menos que no se pueda determinar), las funciones trigonométricas aparecen con raíces complejas y la ecuación no desaparece, se resuelve."
     }
   },
   {
     "question_id": "2-6",
-    "text": "Que tipo de raices producen soluciones trigonometricas?",
+    "text": "¿Qué tipo de raíces producen soluciones trigonométricas?",
     "options": [
-      "Raices positivas",
-      "Raices complejas",
-      "Raices racionales",
-      "Raices enteras"
+      "Raíces positivas",
+      "Raíces complejas",
+      "Raíces racionales",
+      "Raíces enteras"
     ],
-    "correct_answer": "Raices complejas",
+    "correct_answer": "Raíces complejas",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Raices complejas'."
+      "correct": "Excelente. Cuando la ecuación característica tiene raíces complejas conjugadas de la forma α ± βi, la solución involucra términos como e^{αx}(C₁ cos(βx) + C₂ sen(βx)).",
+      "incorrect": "La respuesta correcta es 'Raíces complejas'. Las raíces reales (positivas, negativas, racionales o enteras) producen soluciones exponenciales, no trigonométricas. La trigonometría surge únicamente de la parte imaginaria de las raíces complejas."
     }
   },
   {
     "question_id": "2-7",
-    "text": "Que caracteriza a una ecuacion diferencial no homogenea?",
+    "text": "¿Qué caracteriza a una ecuación diferencial no homogénea?",
     "options": [
-      "Tiene un termino independiente distinto de cero",
+      "Tiene un término independiente distinto de cero",
       "No posee derivadas",
       "Siempre es lineal",
-      "No tiene solucion"
+      "No tiene solución"
     ],
-    "correct_answer": "Tiene un termino independiente distinto de cero",
+    "correct_answer": "Tiene un término independiente distinto de cero",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Tiene un termino independiente distinto de cero'."
+      "correct": "Correcto. Una ecuación lineal no homogénea tiene la forma a_n(x)y^{(n)} + ... + a_0(x)y = f(x), donde f(x) ≠ 0 es el término independiente.",
+      "incorrect": "La respuesta correcta es 'Tiene un término independiente distinto de cero'. La no homogeneidad no implica ausencia de derivadas, no es condición para la linealidad (pueden ser no homogéneas tanto lineales como no lineales) y sí tienen solución (la suma de la homogénea más una particular)."
     }
   },
   {
     "question_id": "2-8",
-    "text": "Que representa la solucion general de una ecuacion no homogenea?",
+    "text": "¿Qué representa la solución general de una ecuación no homogénea?",
     "options": [
-      "Solo la solucion homogenea",
+      "Solo la solución homogénea",
       "Una derivada constante",
-      "La suma de solucion homogenea y particular",
-      "Solo la solucion particular"
+      "La suma de solución homogénea y particular",
+      "Solo la solución particular"
     ],
-    "correct_answer": "La suma de solucion homogenea y particular",
+    "correct_answer": "La suma de solución homogénea y particular",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'La suma de solucion homogenea y particular'."
+      "correct": "Correcto. La estructura de la solución general para una EDO lineal no homogénea es y_g = y_h + y_p, donde y_h es la solución de la homogénea asociada e y_p es una solución particular.",
+      "incorrect": "La respuesta correcta es 'La suma de solución homogénea y particular'. No es solo la homogénea ni solo la particular, ya que se necesitan ambas. Tampoco es una derivada constante, sino una función."
     }
   },
   {
     "question_id": "2-9",
-    "text": "Que metodo se usa frecuentemente para hallar soluciones particulares?",
+    "text": "¿Qué método se usa frecuentemente para hallar soluciones particulares?",
     "options": [
       "Regla de Cramer",
       "Coeficientes indeterminados",
-      "Teorema de Pitagoras",
-      "Metodo grafico"
+      "Teorema de Pitágoras",
+      "Método gráfico"
     ],
     "correct_answer": "Coeficientes indeterminados",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Coeficientes indeterminados'."
+      "correct": "Correcto. El método de coeficientes indeterminados es muy utilizado para encontrar una solución particular cuando el término no homogéneo f(x) es una combinación de polinomios, exponenciales, senos y cosenos.",
+      "incorrect": "La respuesta correcta es 'Coeficientes indeterminados'. La regla de Cramer es para sistemas de ecuaciones lineales algebraicas, el teorema de Pitágoras es geométrico y el método gráfico es para aproximaciones. El método analítico estándar para este fin es el de coeficientes indeterminados (o variación de parámetros)."
     }
   },
   {
     "question_id": "2-10",
-    "text": "Que sucede cuando una ecuacion caracteristica tiene raices repetidas?",
+    "text": "¿Qué sucede cuando una ecuación característica tiene raíces repetidas?",
     "options": [
-      "No existe solucion",
-      "La solucion es constante",
-      "La solucion incluye terminos con x multiplicando exponenciales",
-      "La ecuacion se vuelve homogenea"
+      "No existe solución",
+      "La solución es constante",
+      "La solución incluye términos con x multiplicando exponenciales",
+      "La ecuación se vuelve homogénea"
     ],
-    "correct_answer": "La solucion incluye terminos con x multiplicando exponenciales",
+    "correct_answer": "La solución incluye términos con x multiplicando exponenciales",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'La solucion incluye terminos con x multiplicando exponenciales'."
+      "correct": "Correcto. Si una raíz r tiene multiplicidad m, las soluciones linealmente independientes asociadas son e^{rx}, x e^{rx}, x² e^{rx}, ..., x^{m-1} e^{rx}.",
+      "incorrect": "La respuesta correcta es 'La solución incluye términos con x multiplicando exponenciales'. Siempre existe solución (a menos que el problema esté mal planteado), la solución no es constante a menos que r=0, y la ecuación ya era homogénea de partida. La particularidad son los términos con 'x' que 'separan' las raíces repetidas."
     }
   },
   {
     "question_id": "2-11",
-    "text": "Que representa un sistema masa-resorte?",
+    "text": "¿Qué representa un sistema masa-resorte?",
     "options": [
       "Un sistema algebraico",
-      "Un movimiento rectilineo uniforme",
+      "Un movimiento rectilíneo uniforme",
       "Un modelo de movimiento oscilatorio",
-      "Una ecuacion constante"
+      "Una ecuación constante"
     ],
     "correct_answer": "Un modelo de movimiento oscilatorio",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Un modelo de movimiento oscilatorio'."
+      "correct": "Correcto. El sistema masa-resorte es un ejemplo clásico de un oscilador armónico, que produce un movimiento vibratorio u oscilatorio alrededor de una posición de equilibrio.",
+      "incorrect": "La respuesta correcta es 'Un modelo de movimiento oscilatorio'. No es un sistema puramente algebraico, no es un movimiento rectilíneo uniforme (su velocidad no es constante) y no es una ecuación constante, sino un sistema dinámico modelado por una EDO."
     }
   },
   {
     "question_id": "2-12",
-    "text": "Que ley fisica se aplica en sistemas masa-resorte?",
+    "text": "¿Qué ley física se aplica en sistemas masa-resorte?",
     "options": [
       "Ley de Coulomb",
       "Ley de Newton del enfriamiento",
@@ -661,17 +661,17 @@
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Ley de Hooke'."
+      "correct": "Correcto. La ley de Hooke establece que la fuerza restauradora ejercida por un resorte es proporcional y opuesta al desplazamiento (F = -kx).",
+      "incorrect": "La respuesta correcta es 'Ley de Hooke'. La ley de Coulomb es para fuerzas eléctricas o de fricción, la ley de Newton del enfriamiento es para transferencia de calor y la ley de Ohm es para circuitos eléctricos. La ley que rige la elasticidad de los resortes es la de Hooke."
     }
   },
   {
     "question_id": "2-13",
-    "text": "Que expresa la ley de Hooke?",
+    "text": "¿Qué expresa la ley de Hooke?",
     "options": [
       "La fuerza es proporcional al desplazamiento",
       "La velocidad es constante",
-      "La energia es cero",
+      "La energía es cero",
       "La masa desaparece"
     ],
     "correct_answer": "La fuerza es proporcional al desplazamiento",
@@ -679,85 +679,85 @@
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'La fuerza es proporcional al desplazamiento'."
+      "correct": "Muy bien. La ley de Hooke se escribe como F = -kx, donde F es la fuerza, k la constante del resorte y x el desplazamiento. La fuerza es directamente proporcional al desplazamiento (y de sentido opuesto).",
+      "incorrect": "La respuesta correcta es 'La fuerza es proporcional al desplazamiento'. La velocidad no es constante en un sistema masa-resorte (oscila), la energía se conserva (no es cero) y la masa no desaparece. La relación fundamental es entre fuerza y desplazamiento."
     }
   },
   {
     "question_id": "2-14",
-    "text": "Que tipo de ecuacion modela un sistema masa-resorte sin amortiguamiento?",
+    "text": "¿Qué tipo de ecuación modela un sistema masa-resorte sin amortiguamiento?",
     "options": [
       "Sistema algebraico",
       "Integral definida",
-      "Ecuacion cuadratica",
-      "Ecuacion diferencial lineal de segundo orden"
+      "Ecuación cuadrática",
+      "Ecuación diferencial lineal de segundo orden"
     ],
-    "correct_answer": "Ecuacion diferencial lineal de segundo orden",
+    "correct_answer": "Ecuación diferencial lineal de segundo orden",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Ecuacion diferencial lineal de segundo orden'."
+      "correct": "Correcto. La segunda ley de Newton (F = ma) combinada con la ley de Hooke produce la ecuación m y'' + k y = 0, que es una EDO lineal homogénea de segundo orden.",
+      "incorrect": "La respuesta correcta es 'Ecuación diferencial lineal de segundo orden'. No es un sistema algebraico (involucra derivadas), no es una integral definida y no es una ecuación cuadrática (aunque su ecuación característica sí lo sea). El modelo es una EDO de segundo orden."
     }
   },
   {
     "question_id": "2-15",
-    "text": "Que representa el amortiguamiento en un sistema masa-resorte?",
+    "text": "¿Qué representa el amortiguamiento en un sistema masa-resorte?",
     "options": [
-      "Perdida de energia en el sistema",
+      "Pérdida de energía en el sistema",
       "Ausencia de fuerzas",
       "Movimiento uniforme",
-      "Aumento infinito de energia"
+      "Aumento infinito de energía"
     ],
-    "correct_answer": "Perdida de energia en el sistema",
+    "correct_answer": "Pérdida de energía en el sistema",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Perdida de energia en el sistema'."
+      "correct": "Correcto. El amortiguamiento (como el de un amortiguador o la fricción) disipa la energía mecánica del sistema, generalmente transformándola en calor, lo que hace que las oscilaciones disminuyan en amplitud con el tiempo.",
+      "incorrect": "La respuesta correcta es 'Pérdida de energía en el sistema'. El amortiguamiento no es ausencia de fuerzas (es una fuerza más), no produce un movimiento uniforme y, al disipar energía, no la aumenta infinitamente. Su efecto es la disminución gradual de la amplitud oscilatoria."
     }
   },
   {
     "question_id": "2-16",
-    "text": "Que significa la letra L en un circuito LRC?",
+    "text": "¿Qué significa la letra L en un circuito LRC?",
     "options": [
-      "Logica",
+      "Lógica",
       "Longitud",
       "Inductancia",
-      "Limite"
+      "Límite"
     ],
     "correct_answer": "Inductancia",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Inductancia'."
+      "correct": "Correcto. En el contexto de circuitos eléctricos, la letra L representa la inductancia, medida en henrios (H), y está asociada a las bobinas o inductores.",
+      "incorrect": "La respuesta correcta es 'Inductancia'. L no significa lógica, longitud (aunque la 'l' minúscula a veces se usa para longitud, la mayúscula L es estándar para inductancia) ni límite. Es el símbolo universal para la inductancia."
     }
   },
   {
     "question_id": "2-17",
-    "text": "Que significa la letra R en un circuito LRC?",
+    "text": "¿Qué significa la letra R en un circuito LRC?",
     "options": [
-      "Rotacion",
-      "Relacion",
-      "Reflexion",
+      "Rotación",
+      "Relación",
+      "Reflexión",
       "Resistencia"
     ],
     "correct_answer": "Resistencia",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Resistencia'."
+      "correct": "Correcto. En un circuito LRC, la letra R representa la resistencia, medida en ohmios (Ω), y corresponde a los resistores que se oponen al flujo de corriente.",
+      "incorrect": "La respuesta correcta es 'Resistencia'. R no se refiere a rotación, relación o reflexión en este contexto. Es el símbolo estándar para la resistencia eléctrica."
     }
   },
   {
     "question_id": "2-18",
-    "text": "Que representa la letra C en un circuito LRC?",
+    "text": "¿Qué representa la letra C en un circuito LRC?",
     "options": [
       "Corriente",
       "Conductividad",
@@ -767,159 +767,159 @@
     "correct_answer": "Capacitancia",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Capacitancia'."
+      "correct": "Excelente. La letra C en un circuito LRC representa la capacitancia, medida en faradios (F), y está asociada a los capacitores o condensadores.",
+      "incorrect": "La respuesta correcta es 'Capacitancia'. La corriente se representa con I, la conductividad con σ o G, y la carga con Q (minúscula q). C es el símbolo universal para la capacitancia."
     }
   },
   {
     "question_id": "2-19",
-    "text": "Que tipo de ecuaciones modelan circuitos LRC?",
+    "text": "¿Qué tipo de ecuaciones modelan circuitos LRC?",
     "options": [
       "Matrices diagonales",
       "Funciones constantes",
-      "Ecuaciones cuadraticas",
+      "Ecuaciones cuadráticas",
       "Ecuaciones diferenciales de segundo orden"
     ],
     "correct_answer": "Ecuaciones diferenciales de segundo orden",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Ecuaciones diferenciales de segundo orden'."
+      "correct": "Correcto. Aplicando las leyes de Kirchhoff a un circuito LRC en serie, se obtiene una ecuación diferencial lineal de segundo orden para la carga Q(t) o la corriente I(t): L Q'' + R Q' + (1/C) Q = V(t).",
+      "incorrect": "La respuesta correcta es 'Ecuaciones diferenciales de segundo orden'. No son matrices diagonales, no son funciones constantes (son funciones del tiempo) y no son ecuaciones cuadráticas (aunque su ecuación característica lo sea). El modelo fundamental es una EDO de segundo orden."
     }
   },
   {
     "question_id": "2-20",
-    "text": "Que representa la corriente electrica en un circuito LRC?",
+    "text": "¿Qué representa la corriente eléctrica en un circuito LRC?",
     "options": [
       "La masa del conductor",
       "La temperatura del circuito",
       "La fuerza gravitacional",
-      "El flujo de carga electrica"
+      "El flujo de carga eléctrica"
     ],
-    "correct_answer": "El flujo de carga electrica",
+    "correct_answer": "El flujo de carga eléctrica",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'El flujo de carga electrica'."
+      "correct": "Correcto. La corriente eléctrica (I) se define como la tasa de flujo de carga eléctrica a través de una superficie, es decir, I = dQ/dt, donde Q es la carga.",
+      "incorrect": "La respuesta correcta es 'El flujo de carga eléctrica'. No es la masa, ni la temperatura, ni una fuerza gravitacional. Es el movimiento de cargas (generalmente electrones) lo que constituye la corriente eléctrica."
     }
   },
   {
     "question_id": "2-21",
-    "text": "Que ocurre cuando un sistema masa-resorte no tiene amortiguamiento?",
+    "text": "¿Qué ocurre cuando un sistema masa-resorte no tiene amortiguamiento?",
     "options": [
-      "Las oscilaciones continuan indefinidamente",
+      "Las oscilaciones continúan indefinidamente",
       "La masa desaparece",
-      "El sistema se detiene instantaneamente",
+      "El sistema se detiene instantáneamente",
       "No existe movimiento"
     ],
-    "correct_answer": "Las oscilaciones continuan indefinidamente",
+    "correct_answer": "Las oscilaciones continúan indefinidamente",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Las oscilaciones continuan indefinidamente'."
+      "correct": "Correcto. En un sistema ideal sin amortiguamiento (b = 0) y sin fuerzas externas, la energía mecánica se conserva. La masa oscilará con amplitud constante para siempre (movimiento armónico simple).",
+      "incorrect": "La respuesta correcta es 'Las oscilaciones continúan indefinidamente'. La masa no desaparece, el sistema no se detiene (pierde energía si hay amortiguamiento, pero aquí no lo hay) y sí existe movimiento (oscilatorio). La característica es la persistencia de las oscilaciones."
     }
   },
   {
     "question_id": "2-22",
-    "text": "Que representa una solucion particular?",
+    "text": "¿Qué representa una solución particular?",
     "options": [
-      "Una ecuacion algebraica",
-      "Una raiz imaginaria",
-      "Una solucion especifica de la ecuacion no homogenea",
+      "Una ecuación algebraica",
+      "Una raíz imaginaria",
+      "Una solución específica de la ecuación no homogénea",
       "La derivada de una constante"
     ],
-    "correct_answer": "Una solucion especifica de la ecuacion no homogenea",
+    "correct_answer": "Una solución específica de la ecuación no homogénea",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Una solucion especifica de la ecuacion no homogenea'."
+      "correct": "Correcto. En el contexto de EDOs lineales no homogéneas, una solución particular (y_p) es cualquier función que satisface la ecuación completa, sin incluir constantes arbitrarias.",
+      "incorrect": "La respuesta correcta es 'Una solución específica de la ecuación no homogénea'. No es una ecuación algebraica, no es una raíz imaginaria (eso es de la ecuación característica) ni es una derivada. Es una función concreta que satisface la EDO no homogénea."
     }
   },
   {
     "question_id": "2-23",
-    "text": "Que comportamiento presentan los sistemas oscilatorios?",
+    "text": "¿Qué comportamiento presentan los sistemas oscilatorios?",
     "options": [
-      "Movimiento estatico",
+      "Movimiento estático",
       "Movimiento aleatorio",
       "Movimiento lineal uniforme",
-      "Movimiento periodico"
+      "Movimiento periódico"
     ],
-    "correct_answer": "Movimiento periodico",
+    "correct_answer": "Movimiento periódico",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Movimiento periodico'."
+      "correct": "Correcto. Los sistemas oscilatorios, como un péndulo o un sistema masa-resorte, presentan un movimiento que se repite en intervalos regulares de tiempo, es decir, un movimiento periódico (o casi periódico si hay amortiguamiento).",
+      "incorrect": "La respuesta correcta es 'Movimiento periódico'. No es estático (hay movimiento), no es aleatorio (es determinista) y no es lineal uniforme (la velocidad no es constante). Su característica fundamental es la repetición del movimiento."
     }
   },
   {
     "question_id": "2-24",
-    "text": "Que sucede si un circuito LRC tiene resistencia elevada?",
+    "text": "¿Qué sucede si un circuito LRC tiene resistencia elevada?",
     "options": [
       "La inductancia desaparece",
       "La corriente aumenta infinitamente",
-      "La corriente disminuye mas rapidamente",
+      "La corriente disminuye más rápidamente",
       "No existe voltaje"
     ],
-    "correct_answer": "La corriente disminuye mas rapidamente",
+    "correct_answer": "La corriente disminuye más rápidamente",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'La corriente disminuye mas rapidamente'."
+      "correct": "Correcto. Una mayor resistencia (R) significa una mayor disipación de energía por efecto Joule. En un circuito transitorio, esto hace que la corriente decaiga a cero más rápidamente (amortiguamiento crítico o sobreamortiguamiento).",
+      "incorrect": "La respuesta correcta es 'La corriente disminuye más rápidamente'. La inductancia (L) es un valor físico de la bobina y no desaparece, la corriente no aumenta infinitamente (de hecho, se extingue más rápido) y el voltaje sigue presente. La resistencia acelera la extinción de la corriente transitoria."
     }
   },
   {
     "question_id": "2-25",
-    "text": "Que metodo permite resolver ecuaciones diferenciales lineales homogeneas?",
+    "text": "¿Qué método permite resolver ecuaciones diferenciales lineales homogéneas?",
     "options": [
-      "Metodo grafico",
-      "Ecuacion caracteristica",
+      "Método gráfico",
+      "Ecuación característica",
       "Regla de signos",
-      "Factorizacion prima"
+      "Factorización prima"
     ],
-    "correct_answer": "Ecuacion caracteristica",
+    "correct_answer": "Ecuación característica",
     "academic_cut": 2,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "medium",
+    "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Ecuacion caracteristica'."
+      "correct": "Excelente. El método de la ecuación característica (o polinomio característico) es el enfoque estándar y más potente para resolver EDOs lineales homogéneas con coeficientes constantes de cualquier orden.",
+      "incorrect": "La respuesta correcta es 'Ecuación característica'. El método gráfico es para visualizaciones aproximadas, la regla de signos de Descartes es para raíces de polinomios reales (no para resolver EDOs) y la factorización prima es aritmética. El método analítico por excelencia es la ecuación característica."
     }
   },
   {
     "question_id": "3-1",
-    "text": "Que es la transformada de Laplace?",
+    "text": "¿Qué es la transformada de Laplace?",
     "options": [
-      "Una ecuacion homogenea",
+      "Una ecuación homogénea",
       "Una derivada parcial",
-      "Una transformacion integral",
-      "Un metodo algebraico"
+      "Una transformación integral",
+      "Un método algebraico"
     ],
-    "correct_answer": "Una transformacion integral",
+    "correct_answer": "Una transformación integral",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Una transformacion integral'."
+      "correct": "Correcto. La transformada de Laplace es una transformación integral que convierte una función del tiempo (dominio t) en una función de la variable compleja s (dominio de Laplace).",
+      "incorrect": "La respuesta correcta es 'Una transformación integral'. No es una ecuación homogénea (eso es un tipo de EDO), ni una derivada parcial, ni un método puramente algebraico (aunque transforma EDOs en ecuaciones algebraicas). Es fundamentalmente una integral impropia."
     }
   },
   {
     "question_id": "3-2",
-    "text": "Que variable se utiliza normalmente en la transformada de Laplace?",
+    "text": "¿Qué variable se utiliza normalmente en la transformada de Laplace?",
     "options": [
       "x",
       "s",
@@ -929,15 +929,15 @@
     "correct_answer": "s",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 's'."
+      "correct": "Correcto. La variable 's' es la variable compleja estándar en el dominio de Laplace, también conocida como frecuencia compleja.",
+      "incorrect": "La respuesta correcta es 's'. Aunque 'x' e 'y' son comunes en otros contextos matemáticos, la convención universal para la transformada de Laplace es usar 's' como variable independiente en el dominio transformado."
     }
   },
   {
     "question_id": "3-3",
-    "text": "Cual es la transformada de Laplace de 1?",
+    "text": "¿Cuál es la transformada de Laplace de 1?",
     "options": [
       "1/s",
       "0",
@@ -947,53 +947,53 @@
     "correct_answer": "1/s",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es '1/s'."
+      "correct": "Muy bien. La transformada de Laplace de la función constante f(t)=1 es 1/s, siempre que Re(s) > 0 para que la integral converja.",
+      "incorrect": "La respuesta correcta es '1/s'. No es 0 (la transformada de 1 no se anula), no es 's' (esa sería la transformada de la función delta de Dirac) ni e^s (que no corresponde a ninguna transformada básica)."
     }
   },
   {
     "question_id": "3-4",
-    "text": "Que permite hacer la transformada de Laplace?",
+    "text": "¿Qué permite hacer la transformada de Laplace?",
     "options": [
       "Calcular matrices",
       "Eliminar funciones",
-      "Resolver limites",
+      "Resolver límites",
       "Convertir derivadas en expresiones algebraicas"
     ],
     "correct_answer": "Convertir derivadas en expresiones algebraicas",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Convertir derivadas en expresiones algebraicas'."
+      "correct": "Correcto. La gran utilidad de la transformada de Laplace es que transforma la derivación en multiplicación por 's' (restando las condiciones iniciales), convirtiendo una EDO en una ecuación algebraica mucho más sencilla.",
+      "incorrect": "La respuesta correcta es 'Convertir derivadas en expresiones algebraicas'. No se usa para calcular matrices (eso es álgebra lineal), no elimina funciones (las transforma) y no es principalmente un método para resolver límites (aunque los involucra)."
     }
   },
   {
     "question_id": "3-5",
-    "text": "Que representa la transformada inversa de Laplace?",
+    "text": "¿Qué representa la transformada inversa de Laplace?",
     "options": [
       "Transformar integrales",
-      "Regresar a la funcion original",
+      "Regresar a la función original",
       "Eliminar constantes",
       "Resolver derivadas"
     ],
-    "correct_answer": "Regresar a la funcion original",
+    "correct_answer": "Regresar a la función original",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Regresar a la funcion original'."
+      "correct": "Correcto. La transformada inversa de Laplace, denotada como L⁻¹, recupera la función original f(t) en el dominio del tiempo a partir de su transformada F(s).",
+      "incorrect": "La respuesta correcta es 'Regresar a la función original'. No transforma integrales (eso es la transformada directa de integrales), no elimina constantes y no resuelve derivadas directamente; su función es invertir la operación de Laplace."
     }
   },
   {
     "question_id": "3-6",
-    "text": "Cual es la transformada de Laplace de e^(at)?",
+    "text": "¿Cuál es la transformada de Laplace de e^(at)?",
     "options": [
-      "1/s^2",
+      "1/s²",
       "s/(s+a)",
       "a/s",
       "1/(s-a)"
@@ -1001,198 +1001,198 @@
     "correct_answer": "1/(s-a)",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "easy",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es '1/(s-a)'."
+      "correct": "Excelente. La transformada de Laplace de e^(at) es 1/(s-a), válida para Re(s) > Re(a).",
+      "incorrect": "La respuesta correcta es '1/(s-a)'. 1/s² es la transformada de t, s/(s+a) es la transformada de cos(at) con un signo modificado, y a/s no corresponde a ninguna exponencial básica. La forma correcta es 1/(s-a)."
     }
   },
   {
     "question_id": "3-7",
-    "text": "Que propiedad permite desplazar funciones en el tiempo?",
+    "text": "¿Qué propiedad permite desplazar funciones en el tiempo?",
     "options": [
       "Linealidad",
       "Periodicidad",
       "Homogeneidad",
-      "Traslacion temporal"
+      "Traslación temporal"
     ],
-    "correct_answer": "Traslacion temporal",
+    "correct_answer": "Traslación temporal",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Traslacion temporal'."
+      "correct": "Correcto. La propiedad de traslación temporal (o segundo teorema de traslación) establece que L{u(t-a) f(t-a)} = e^{-as} F(s), permitiendo desplazar funciones en el eje temporal.",
+      "incorrect": "La respuesta correcta es 'Traslación temporal'. La linealidad permite sumar transformadas, la periodicidad se aplica a funciones que se repiten, y la homogeneidad es un caso particular de linealidad. La propiedad específica para desplazar en el tiempo es la traslación temporal."
     }
   },
   {
     "question_id": "3-8",
-    "text": "Que propiedad cumple L{af(t)+bg(t)}?",
+    "text": "¿Qué propiedad cumple L{af(t)+bg(t)}?",
     "options": [
-      "Derivacion",
-      "Integracion",
+      "Derivación",
+      "Integración",
       "Periodicidad",
       "Linealidad"
     ],
     "correct_answer": "Linealidad",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Linealidad'."
+      "correct": "Correcto. La transformada de Laplace es lineal, lo que significa que L{af(t)+bg(t)} = aL{f(t)} + bL{g(t)} para constantes a y b.",
+      "incorrect": "La respuesta correcta es 'Linealidad'. La derivación es otra propiedad (relaciona L{f'(t)} con sF(s)-f(0)), la integración también, y la periodicidad es para funciones periódicas. La propiedad que describe exactamente ese comportamiento es la linealidad."
     }
   },
   {
     "question_id": "3-9",
-    "text": "Cual es la transformada de Laplace de sen(at)?",
+    "text": "¿Cuál es la transformada de Laplace de sen(at)?",
     "options": [
-      "s/(s^2+a^2)",
-      "a/(s^2+a^2)",
+      "s/(s²+a²)",
+      "a/(s²+a²)",
       "1/(s+a)",
-      "a/s^2"
+      "a/s²"
     ],
-    "correct_answer": "a/(s^2+a^2)",
+    "correct_answer": "a/(s²+a²)",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'a/(s^2+a^2)'."
+      "correct": "Muy bien. La transformada de Laplace de sen(at) es a/(s²+a²), un resultado fundamental que se obtiene integrando la exponencial compleja.",
+      "incorrect": "La respuesta correcta es 'a/(s²+a²)'. s/(s²+a²) es la transformada de cos(at), 1/(s+a) es la transformada de e^{-at} y a/s² es la transformada de at. No confundas el seno con el coseno."
     }
   },
   {
     "question_id": "3-10",
-    "text": "Cual es la transformada de Laplace de cos(at)?",
+    "text": "¿Cuál es la transformada de Laplace de cos(at)?",
     "options": [
       "1/(s+a)",
-      "a/(s^2+a^2)",
-      "1/s^2",
-      "s/(s^2+a^2)"
+      "a/(s²+a²)",
+      "1/s²",
+      "s/(s²+a²)"
     ],
-    "correct_answer": "s/(s^2+a^2)",
+    "correct_answer": "s/(s²+a²)",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 's/(s^2+a^2)'."
+      "correct": "Correcto. La transformada de Laplace de cos(at) es s/(s²+a²), que se diferencia del seno en el numerador.",
+      "incorrect": "La respuesta correcta es 's/(s²+a²)'. 1/(s+a) es la transformada de e^{-at}, a/(s²+a²) es la del seno, y 1/s² es la de t. Recuerda que el coseno tiene 's' en el numerador."
     }
   },
   {
     "question_id": "3-11",
-    "text": "Que ocurre con las derivadas al aplicar Laplace?",
+    "text": "¿Qué ocurre con las derivadas al aplicar Laplace?",
     "options": [
       "Se convierten en expresiones algebraicas",
       "Desaparecen",
       "Se vuelven constantes",
-      "Se integran automaticamente"
+      "Se integran automáticamente"
     ],
     "correct_answer": "Se convierten en expresiones algebraicas",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Se convierten en expresiones algebraicas'."
+      "correct": "Correcto. La propiedad de derivación establece que L{f'(t)} = sF(s) - f(0), convirtiendo una derivada en una multiplicación por 's' menos la condición inicial, es decir, una expresión algebraica.",
+      "incorrect": "La respuesta correcta es 'Se convierten en expresiones algebraicas'. Las derivadas no desaparecen (se transforman), no se vuelven constantes y no se integran automáticamente. Su transformación a términos algebraicos es la clave del método."
     }
   },
   {
     "question_id": "3-12",
-    "text": "Que tecnica se usa junto con Laplace para simplificar expresiones racionales?",
+    "text": "¿Qué técnica se usa junto con Laplace para simplificar expresiones racionales?",
     "options": [
       "Matrices",
       "Fracciones parciales",
-      "Derivacion implicita",
-      "Limites"
+      "Derivación implícita",
+      "Límites"
     ],
     "correct_answer": "Fracciones parciales",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Fracciones parciales'."
+      "correct": "Correcto. La descomposición en fracciones parciales es esencial para descomponer funciones racionales complejas en términos más simples cuyas transformadas inversas sean reconocibles en las tablas.",
+      "incorrect": "La respuesta correcta es 'Fracciones parciales'. Las matrices se usan para sistemas de EDOs, la derivación implícita es otra técnica de derivación, y los límites no son el método principal. La técnica estándar para invertir transformadas racionales es la descomposición en fracciones parciales."
     }
   },
   {
     "question_id": "3-13",
-    "text": "Que representa una funcion escalon?",
+    "text": "¿Qué representa una función escalón?",
     "options": [
-      "Un cambio repentino en una funcion",
-      "Una funcion constante",
-      "Una funcion cuadratica",
+      "Un cambio repentino en una función",
+      "Una función constante",
+      "Una función cuadrática",
       "Una derivada continua"
     ],
-    "correct_answer": "Un cambio repentino en una funcion",
+    "correct_answer": "Un cambio repentino en una función",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Un cambio repentino en una funcion'."
+      "correct": "Correcto. La función escalón (como la función escalón unitario de Heaviside u(t-a)) modela cambios bruscos o discontinuidades, pasando de 0 a 1 (u otro valor) en un instante específico.",
+      "incorrect": "La respuesta correcta es 'Un cambio repentino en una función'. No es una función constante (cambia de valor), no es cuadrática y no es continua (tiene una discontinuidad de salto). Su esencia es precisamente el salto o cambio abrupto."
     }
   },
   {
     "question_id": "3-14",
-    "text": "Que propiedad permite modificar la variable s?",
+    "text": "¿Qué propiedad permite modificar la variable s?",
     "options": [
-      "Integracion definida",
-      "Traslacion en s",
+      "Integración definida",
+      "Traslación en s",
       "Periodicidad",
       "Linealidad"
     ],
-    "correct_answer": "Traslacion en s",
+    "correct_answer": "Traslación en s",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Traslacion en s'."
+      "correct": "Correcto. La propiedad de traslación en s (o primer teorema de traslación) establece que L{e^{at}f(t)} = F(s-a), desplazando la variable 's' en el dominio transformado.",
+      "incorrect": "La respuesta correcta es 'Traslación en s'. La integración definida no es una propiedad de desplazamiento, la periodicidad es para funciones que se repiten y la linealidad permite sumar transformadas. La propiedad que específicamente desplaza 's' es la traslación en s."
     }
   },
   {
     "question_id": "3-15",
-    "text": "Que problemas se resuelven frecuentemente usando Laplace?",
+    "text": "¿Qué problemas se resuelven frecuentemente usando Laplace?",
     "options": [
       "Funciones lineales simples",
       "Ecuaciones diferenciales",
-      "Problemas geometricos",
+      "Problemas geométricos",
       "Matrices cuadradas"
     ],
     "correct_answer": "Ecuaciones diferenciales",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
-    "difficulty": "hard",
+    "difficulty": "medium",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Ecuaciones diferenciales'."
+      "correct": "Correcto. La aplicación principal y más poderosa de la transformada de Laplace es la resolución de ecuaciones diferenciales lineales con condiciones iniciales, especialmente en ingeniería y física.",
+      "incorrect": "La respuesta correcta es 'Ecuaciones diferenciales'. Aunque puede aplicarse a otros problemas, su uso principal no son funciones lineales simples (esos son triviales), ni problemas geométricos (para eso está la geometría), ni matrices cuadradas (eso es álgebra lineal)."
     }
   },
   {
     "question_id": "3-16",
-    "text": "Que sucede al aplicar transformada inversa de Laplace?",
+    "text": "¿Qué sucede al aplicar transformada inversa de Laplace?",
     "options": [
       "Se eliminan derivadas",
-      "Se obtiene la funcion en el dominio del tiempo",
+      "Se obtiene la función en el dominio del tiempo",
       "Se calcula una integral triple",
-      "La ecuacion desaparece"
+      "La ecuación desaparece"
     ],
-    "correct_answer": "Se obtiene la funcion en el dominio del tiempo",
+    "correct_answer": "Se obtiene la función en el dominio del tiempo",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Se obtiene la funcion en el dominio del tiempo'."
+      "correct": "Correcto. La transformada inversa de Laplace (L⁻¹) recupera la función original f(t) en el dominio del tiempo a partir de su representación F(s) en el dominio de Laplace.",
+      "incorrect": "La respuesta correcta es 'Se obtiene la función en el dominio del tiempo'. No se eliminan derivadas (ya fueron transformadas previamente), no se calcula una integral triple (la inversa usa una integral de Bromwich, pero no es triple) y la ecuación no desaparece, se resuelve."
     }
   },
   {
     "question_id": "3-17",
-    "text": "Que representa la variable t?",
+    "text": "¿Qué representa la variable t?",
     "options": [
       "Trayectoria",
-      "Transformacion",
+      "Transformación",
       "Temperatura",
       "Tiempo"
     ],
@@ -1201,17 +1201,17 @@
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Tiempo'."
+      "correct": "Correcto. En el contexto de la transformada de Laplace, la variable 't' representa típicamente el tiempo, especialmente en problemas de ingeniería y sistemas dinámicos.",
+      "incorrect": "La respuesta correcta es 'Tiempo'. 't' no representa trayectoria, transformación (esa es la 'T' de Laplace) ni temperatura (aunque a veces se usa T para temperatura, pero con mayúscula y otro contexto). La convención universal es que 't' es el tiempo."
     }
   },
   {
     "question_id": "3-18",
-    "text": "Que propiedad se usa con funciones periodicas?",
+    "text": "¿Qué propiedad se usa con funciones periódicas?",
     "options": [
       "Periodicidad",
       "Linealidad",
-      "Separacion",
+      "Separación",
       "Homogeneidad"
     ],
     "correct_answer": "Periodicidad",
@@ -1219,134 +1219,134 @@
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Periodicidad'."
+      "correct": "Muy bien. Existe una propiedad específica para la transformada de Laplace de funciones periódicas. Si f(t) tiene período T, entonces L{f(t)} = (1/(1-e^{-sT})) ∫_0^T e^{-st} f(t) dt.",
+      "incorrect": "La respuesta correcta es 'Periodicidad'. La linealidad es general, la separación de variables es para EDOs, y la homogeneidad es un caso de linealidad. La propiedad diseñada específicamente para funciones que se repiten es la de periodicidad."
     }
   },
   {
     "question_id": "3-19",
-    "text": "Que metodo simplifica ecuaciones diferenciales complejas?",
+    "text": "¿Qué método simplifica ecuaciones diferenciales complejas?",
     "options": [
       "Matrices inversas",
-      "Factorizacion algebraica",
+      "Factorización algebraica",
       "Transformada de Laplace",
-      "Teorema de Pitagoras"
+      "Teorema de Pitágoras"
     ],
     "correct_answer": "Transformada de Laplace",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Transformada de Laplace'."
+      "correct": "Correcto. La transformada de Laplace simplifica drásticamente la resolución de EDOs lineales con condiciones iniciales al convertirlas en ecuaciones algebraicas en el dominio de 's'.",
+      "incorrect": "La respuesta correcta es 'Transformada de Laplace'. Las matrices inversas sirven para sistemas algebraicos lineales, la factorización algebraica es para polinomios y el teorema de Pitágoras es geométrico. Ninguno de ellos transforma EDOs en álgebra como lo hace Laplace."
     }
   },
   {
     "question_id": "3-20",
-    "text": "Que sucede con las condiciones iniciales al usar Laplace?",
+    "text": "¿Qué sucede con las condiciones iniciales al usar Laplace?",
     "options": [
       "Se vuelven negativas",
       "Se transforman en matrices",
-      "Se incorporan directamente en la ecuacion",
+      "Se incorporan directamente en la ecuación",
       "Desaparecen"
     ],
-    "correct_answer": "Se incorporan directamente en la ecuacion",
+    "correct_answer": "Se incorporan directamente en la ecuación",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Se incorporan directamente en la ecuacion'."
+      "correct": "Correcto. Una de las grandes ventajas de Laplace es que las condiciones iniciales (f(0), f'(0), etc.) se introducen automáticamente en la ecuación transformada a través de la propiedad de derivación, sin necesidad de calcular constantes después.",
+      "incorrect": "La respuesta correcta es 'Se incorporan directamente en la ecuación'. No se vuelven negativas (a menos que la condición inicial lo sea), no se transforman en matrices y no desaparecen. Al contrario, son esenciales y aparecen explícitamente en la ecuación transformada."
     }
   },
   {
     "question_id": "3-21",
-    "text": "Que representa L^-1?",
+    "text": "¿Qué representa L⁻¹?",
     "options": [
       "La transformada inversa de Laplace",
       "Una integral doble",
       "Una derivada",
-      "Una funcion periodica"
+      "Una función periódica"
     ],
     "correct_answer": "La transformada inversa de Laplace",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'La transformada inversa de Laplace'."
+      "correct": "Correcto. La notación L⁻¹ se usa para denotar la transformada inversa de Laplace, que recupera la función original f(t) a partir de su transformada F(s).",
+      "incorrect": "La respuesta correcta es 'La transformada inversa de Laplace'. No es una integral doble (es una integral compleja, pero no doble), no es una derivada y no es una función periódica. El superíndice -1 indica la operación inversa de la transformada de Laplace."
     }
   },
   {
     "question_id": "3-22",
-    "text": "Que propiedad relaciona multiplicacion por t con derivadas respecto a s?",
+    "text": "¿Qué propiedad relaciona multiplicación por t con derivadas respecto a s?",
     "options": [
       "Homogeneidad",
-      "Derivacion en s",
+      "Derivación en s",
       "Periodicidad",
-      "Traslacion"
+      "Traslación"
     ],
-    "correct_answer": "Derivacion en s",
+    "correct_answer": "Derivación en s",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Derivacion en s'."
+      "correct": "Correcto. La propiedad de derivación en el dominio de 's' (o multiplicación por t) establece que L{t f(t)} = - dF(s)/ds. Es decir, multiplicar por t en el tiempo equivale a derivar con respecto a 's' (con signo negativo) en el dominio de Laplace.",
+      "incorrect": "La respuesta correcta es 'Derivación en s'. La homogeneidad es un caso de linealidad, la periodicidad es para funciones que se repiten y la traslación es para desplazamientos. La propiedad que conecta específicamente la multiplicación por 't' con derivadas en 's' es la derivación en 's'."
     }
   },
   {
     "question_id": "3-23",
-    "text": "Que funciones aparecen frecuentemente en tablas de Laplace?",
+    "text": "¿Qué funciones aparecen frecuentemente en tablas de Laplace?",
     "options": [
-      "Funciones logaritmicas unicamente",
+      "Funciones logarítmicas únicamente",
       "Matrices cuadradas",
       "Vectores ortogonales",
-      "Trigonometricas y exponenciales"
+      "Trigonométricas y exponenciales"
     ],
-    "correct_answer": "Trigonometricas y exponenciales",
+    "correct_answer": "Trigonométricas y exponenciales",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Trigonometricas y exponenciales'."
+      "correct": "Correcto. Las funciones trigonométricas (seno, coseno) y exponenciales (e^{at}) son las más comunes en las tablas de transformadas de Laplace porque aparecen constantemente en la solución de EDOs lineales.",
+      "incorrect": "La respuesta correcta es 'Trigonométricas y exponenciales'. No son solo funciones logarítmicas (aunque aparecen), ni matrices cuadradas, ni vectores ortogonales (esos son del álgebra lineal). Las funciones más frecuentes y fundamentales son las trigonométricas y exponenciales."
     }
   },
   {
     "question_id": "3-24",
-    "text": "Que ventaja principal ofrece Laplace?",
+    "text": "¿Qué ventaja principal ofrece Laplace?",
     "options": [
-      "Resolver ecuaciones diferenciales mas facilmente",
+      "Resolver ecuaciones diferenciales más fácilmente",
       "Convertir integrales en derivadas",
       "Eliminar todas las variables",
       "Evitar condiciones iniciales"
     ],
-    "correct_answer": "Resolver ecuaciones diferenciales mas facilmente",
+    "correct_answer": "Resolver ecuaciones diferenciales más fácilmente",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Resolver ecuaciones diferenciales mas facilmente'."
+      "correct": "Excelente. La principal ventaja de la transformada de Laplace es que transforma ecuaciones diferenciales en ecuaciones algebraicas, que son mucho más sencillas de resolver, especialmente cuando hay condiciones iniciales.",
+      "incorrect": "La respuesta correcta es 'Resolver ecuaciones diferenciales más fácilmente'. No convierte integrales en derivadas (hace lo opuesto en cierto sentido), no elimina todas las variables (las transforma) y no evita las condiciones iniciales (las incorpora automáticamente). Su gran ventaja es la simplificación algebraica."
     }
   },
   {
     "question_id": "3-25",
-    "text": "En que areas se utiliza ampliamente la transformada de Laplace?",
+    "text": "¿En qué áreas se utiliza ampliamente la transformada de Laplace?",
     "options": [
-      "Solo en geometria",
-      "Ingenieria, fisica y control de sistemas",
-      "Exclusivamente en algebra",
-      "Unicamente en estadistica"
+      "Solo en geometría",
+      "Ingeniería, física y control de sistemas",
+      "Exclusivamente en álgebra",
+      "Únicamente en estadística"
     ],
-    "correct_answer": "Ingenieria, fisica y control de sistemas",
+    "correct_answer": "Ingeniería, física y control de sistemas",
     "academic_cut": 3,
     "subject": "Ecuaciones Diferenciales",
     "difficulty": "hard",
     "feedback": {
-      "correct": "Correcto.",
-      "incorrect": "La respuesta correcta es 'Ingenieria, fisica y control de sistemas'."
+      "correct": "Correcto. La transformada de Laplace es una herramienta fundamental en ingeniería eléctrica (circuitos), ingeniería de control (sistemas realimentados), física (oscilaciones, transferencia de calor) y muchas otras disciplinas.",
+      "incorrect": "La respuesta correcta es 'Ingeniería, física y control de sistemas'. No se limita solo a geometría, ni exclusivamente a álgebra (aunque la usa), ni únicamente a estadística (ahí se usa más la transformada de Fourier). Sus aplicaciones más potentes están en las ciencias físicas e ingenierías."
     }
   }
 ]
